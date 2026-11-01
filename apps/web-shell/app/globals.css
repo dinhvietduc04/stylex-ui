@@ -1,0 +1,4 @@
+@config '../tailwind.config.js';
+@import 'tailwindcss';
+@import '@repo/ui/globals.css';
+@import '@repo/stylex-ui/styles.css';

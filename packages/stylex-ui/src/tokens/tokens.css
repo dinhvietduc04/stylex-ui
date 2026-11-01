@@ -1,0 +1,161 @@
+/*
+ * @repo/stylex-ui — global CSS layer
+ * Channel variables stay in OKLCH so alpha can be composed anywhere:
+ *   oklch(var(--dfw-brand-lch) / 0.28)
+ */
+
+:root {
+  --dfw-brand-lch: 0.78 0.155 52;
+  --dfw-brand-hsl: 24 92% 60%;
+  --dfw-surface-lch: 1 0 0;
+  --dfw-canvas-lch: 0.982 0.006 72;
+  --dfw-fg-lch: 0.245 0.028 45;
+  --dfw-success-lch: 0.55 0.13 162;
+  --dfw-warning-lch: 0.66 0.16 62;
+  --dfw-error-lch: 0.55 0.19 25;
+  --dfw-info-lch: 0.53 0.11 240;
+  --dfw-alpha-subtle: 0.12;
+  --dfw-alpha-muted: 0.24;
+  --dfw-alpha-ring: 0.32;
+  --dfw-alpha-overlay: 0.55;
+}
+
+.dark,
+[data-theme='dark'] {
+  --dfw-brand-lch: 0.815 0.15 58;
+  --dfw-brand-hsl: 30 92% 66%;
+  --dfw-surface-lch: 0.212 0.014 48;
+  --dfw-canvas-lch: 0.165 0.012 48;
+  --dfw-fg-lch: 0.955 0.008 72;
+  --dfw-success-lch: 0.72 0.14 162;
+  --dfw-warning-lch: 0.79 0.15 68;
+  --dfw-error-lch: 0.66 0.19 25;
+  --dfw-info-lch: 0.72 0.11 235;
+  --dfw-alpha-subtle: 0.18;
+  --dfw-alpha-muted: 0.3;
+  --dfw-alpha-ring: 0.4;
+  --dfw-alpha-overlay: 0.72;
+}
+
+[data-brand='emerald'] {
+  --dfw-brand-lch: 0.455 0.108 166;
+  --dfw-brand-hsl: 162 62% 33%;
+  --dfw-canvas-lch: 0.984 0.005 168;
+  --dfw-fg-lch: 0.205 0.028 172;
+}
+
+.dark[data-brand='emerald'],
+[data-theme='dark'][data-brand='emerald'] {
+  --dfw-brand-lch: 0.7 0.14 164;
+  --dfw-brand-hsl: 161 62% 44%;
+  --dfw-canvas-lch: 0.152 0.018 170;
+  --dfw-fg-lch: 0.958 0.008 168;
+}
+
+/* Browser surfaces belong to the design system too. */
+::selection {
+  background-color: oklch(var(--dfw-brand-lch) / 0.26);
+  color: inherit;
+}
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: oklch(var(--dfw-brand-lch) / 0.45) transparent;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@keyframes dfw-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dfw-pulse-dot {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.85;
+  }
+  50% {
+    transform: scale(1.95);
+    opacity: 0;
+  }
+}
+
+@keyframes dfw-skeleton-shimmer {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.42;
+  }
+}
+
+@keyframes dfw-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes dfw-scale-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes dfw-slide-in-right {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes dfw-slide-in-left {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* One authored entrance, used only by the showcase hero. */
+@keyframes dfw-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}

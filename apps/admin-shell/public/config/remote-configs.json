@@ -1,0 +1,21 @@
+{
+  "users": {
+    "development": {
+      "url": "http://localhost:6517/remoteEntry.js",
+      "scope": "users",
+      "module": "./app"
+    },
+    "staging": {
+      "url": "https://staging-users.example.com/remoteEntry.js",
+      "scope": "users",
+      "module": "./app",
+      "cssUrl": "https://staging-users.example.com/assets/style.css"
+    },
+    "production": {
+      "url": "https://users.example.com/remoteEntry.js",
+      "scope": "users",
+      "module": "./app",
+      "cssUrl": "https://users.example.com/assets/style.css"
+    }
+  }
+}
