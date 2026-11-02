@@ -1,49 +1,40 @@
-import { auth } from '@repo/auth-next';
-import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { canWithPermissions, type Permission } from '@repo/rbac';
+import {
+  getMiddlewareAuth,
+  nextWithCleanSession,
+  redirectWithCleanSession,
+} from '@repo/auth-next/middleware';
 
 export async function middleware(request: NextRequest) {
-  try {
-    const session = await auth();
-    const path = request.nextUrl.pathname;
+  const auth = await getMiddlewareAuth(request);
+  const path = request.nextUrl.pathname;
 
-    // Skip middleware for login page and API routes
-    if (path === '/login' || path.startsWith('/api')) {
-      return NextResponse.next();
+  // Redirect to login if not authenticated
+  if (!auth.token) {
+    if (path.startsWith('/admin')) {
+      return redirectWithCleanSession(request, auth, '/login');
     }
-
-    // Redirect to login if not authenticated
-    if (!session) {
-      if (path.startsWith('/admin')) {
-        return NextResponse.redirect(new URL('/login', request.url));
-      }
-      return NextResponse.next();
-    }
-
-    // Map routes to required permissions
-    const routePermissions: Record<string, Permission> = {
-      '/admin/users': 'user:read',
-    };
-
-    const requiredPermission = routePermissions[path];
-    if (requiredPermission && session.user) {
-      const permissions = session.user.permissions || [];
-      if (!canWithPermissions(requiredPermission, permissions)) {
-        return NextResponse.redirect(
-          new URL('/admin/unauthorized', request.url),
-        );
-      }
-    }
-
-    return NextResponse.next();
-  } catch (error) {
-    console.error('Middleware error:', error);
-    // If middleware fails, redirect to login
-    return NextResponse.redirect(new URL('/login', request.url));
+    return nextWithCleanSession(request, auth);
   }
+
+  // Map routes to required permissions
+  const routePermissions: Record<string, Permission> = {
+    '/admin/users': 'user:read',
+  };
+
+  const requiredPermission = routePermissions[path];
+  if (requiredPermission) {
+    const permissions = auth.token.permissions || [];
+    if (!canWithPermissions(requiredPermission, permissions)) {
+      return redirectWithCleanSession(request, auth, '/admin/unauthorized');
+    }
+  }
+
+  return nextWithCleanSession(request, auth);
 }
 
 export const config = {
-  matcher: ['/admin/:path*'],
+  // Run on pages so a stale session cookie is cleared before it is rendered.
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
 };
