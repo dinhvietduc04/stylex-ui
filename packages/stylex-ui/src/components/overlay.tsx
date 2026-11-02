@@ -9,6 +9,7 @@ import { globalTokens } from '../tokens/global.stylex';
 import { semanticTokens } from '../tokens/semantic.stylex';
 import { componentTokens } from '../tokens/component.stylex';
 import { mergeStylexProps } from '../lib/stylex-utils';
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 const styles = stylex.create({
   backdrop: {
@@ -199,6 +200,7 @@ export interface ModalProps {
   size?: ModalSize;
   hideCloseButton?: boolean;
   sx?: StyleXStyles;
+  hideTitle?: boolean;
 }
 
 export function Modal({
@@ -212,6 +214,7 @@ export function Modal({
   footer,
   size = 'md',
   hideCloseButton = false,
+  hideTitle = false,
   sx: customSx,
 }: ModalProps) {
   const sizeMap = {
@@ -239,10 +242,22 @@ export function Modal({
             <div {...stylex.props(styles.header)}>
               <div {...stylex.props(styles.headerTitles)}>
                 {title ? (
+                hideTitle ? (
+                  <VisuallyHidden>
+                    <DialogPrimitive.Title>
+                      {title}
+                    </DialogPrimitive.Title>
+                  </VisuallyHidden>
+                ) : (
                   <DialogPrimitive.Title {...stylex.props(styles.title)}>
                     {title}
                   </DialogPrimitive.Title>
-                ) : null}
+                )
+              ) : (
+                <DialogPrimitive.Title>
+                  Dialog
+                </DialogPrimitive.Title>
+              )}
                 {description ? (
                   <DialogPrimitive.Description
                     {...stylex.props(styles.description)}

@@ -1,30 +1,23 @@
-import { auth } from '@repo/auth-next';
-import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import {
+  getMiddlewareAuth,
+  nextWithCleanSession,
+  redirectWithCleanSession,
+} from '@repo/auth-next/middleware';
 
 export async function middleware(request: NextRequest) {
-  try {
-    const session = await auth();
-    const path = request.nextUrl.pathname;
+  const auth = await getMiddlewareAuth(request);
+  const path = request.nextUrl.pathname;
 
-    // Skip middleware for login page and API routes
-    if (path === '/login' || path.startsWith('/api')) {
-      return NextResponse.next();
-    }
-
-    // Protect /account routes
-    if (path.startsWith('/account') && !session) {
-      return NextResponse.redirect(new URL('/login', request.url));
-    }
-
-    return NextResponse.next();
-  } catch (error) {
-    console.error('Middleware error:', error);
-    // If middleware fails, redirect to login
-    return NextResponse.redirect(new URL('/login', request.url));
+  // Protect /account routes
+  if (path.startsWith('/account') && !auth.token) {
+    return redirectWithCleanSession(request, auth, '/login');
   }
+
+  return nextWithCleanSession(request, auth);
 }
 
 export const config = {
-  matcher: ['/account/:path*'],
+  // Run on pages so a stale session cookie is cleared before it is rendered.
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
 };

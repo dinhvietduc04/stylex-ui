@@ -1,6 +1,7 @@
 import type { NextAuthConfig } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { jwtCallback, sessionCallback } from './callbacks';
+import { authSecret, useSecureCookies } from './secret';
 import type { AppUser } from './types';
 import type { Permission } from '@repo/auth-core';
 
@@ -36,14 +37,6 @@ async function validateCredentials(
     roles: [...roles], // Convert readonly array to mutable array
     permissions: [...permissions], // Convert readonly array to mutable array
   };
-}
-
-// Validate required environment variables
-if (!process.env.NEXTAUTH_SECRET) {
-  console.warn('⚠️  NEXTAUTH_SECRET is not set. Using fallback secret for development only.');
-}
-if (!process.env.NEXTAUTH_URL) {
-  console.warn('⚠️  NEXTAUTH_URL is not set. Using http://localhost:3000 as default.');
 }
 
 export const authConfig: NextAuthConfig = {
@@ -125,10 +118,10 @@ export const authConfig: NextAuthConfig = {
     maxAge: 30 * 24 * 60 * 60, // 30 days
     updateAge: 24 * 60 * 60, // 24 hours
   },
-  secret: process.env.NEXTAUTH_SECRET || 'fallback-secret-for-development',
+  secret: authSecret,
   trustHost: true, // Trust localhost for development
   // Add CSRF protection
-  useSecureCookies: process.env.NODE_ENV === 'production',
+  useSecureCookies,
   // Debug settings for development
   debug: process.env.NODE_ENV === 'development',
   // Additional security settings
