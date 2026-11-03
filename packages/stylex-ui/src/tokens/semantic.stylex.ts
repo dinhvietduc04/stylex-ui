@@ -54,37 +54,32 @@ export const semanticTokens = stylex.defineVars({
 
   // Status
   statusSuccess: 'oklch(0.55 0.13 162)',
-  statusSuccessBg:
-    'color-mix(in oklch, oklch(0.55 0.13 162) 14%, transparent)',
+  statusSuccessBg: 'color-mix(in oklch, oklch(0.55 0.13 162) 14%, transparent)',
   statusSuccessBorder:
     'color-mix(in oklch, oklch(0.55 0.13 162) 34%, transparent)',
   statusSuccessText: 'oklch(0.4 0.09 166)',
 
   statusWarning: 'oklch(0.66 0.16 62)',
-  statusWarningBg:
-    'color-mix(in oklch, oklch(0.66 0.16 62) 16%, transparent)',
+  statusWarningBg: 'color-mix(in oklch, oklch(0.66 0.16 62) 16%, transparent)',
   statusWarningBorder:
     'color-mix(in oklch, oklch(0.66 0.16 62) 36%, transparent)',
   statusWarningText: 'oklch(0.42 0.11 45)',
 
   statusError: 'oklch(0.55 0.19 25)',
   statusErrorHover: 'oklch(0.49 0.19 25)',
-  statusErrorBg:
-    'color-mix(in oklch, oklch(0.55 0.19 25) 13%, transparent)',
+  statusErrorBg: 'color-mix(in oklch, oklch(0.55 0.19 25) 13%, transparent)',
   statusErrorBorder:
     'color-mix(in oklch, oklch(0.55 0.19 25) 36%, transparent)',
   statusErrorText: 'oklch(0.46 0.17 26)',
 
   statusInfo: 'oklch(0.53 0.11 240)',
-  statusInfoBg:
-    'color-mix(in oklch, oklch(0.53 0.11 240) 14%, transparent)',
+  statusInfoBg: 'color-mix(in oklch, oklch(0.53 0.11 240) 14%, transparent)',
   statusInfoBorder:
     'color-mix(in oklch, oklch(0.53 0.11 240) 34%, transparent)',
   statusInfoText: 'oklch(0.4 0.09 242)',
 
   statusNeutral: 'oklch(0.5 0.02 60)',
-  statusNeutralBg:
-    'color-mix(in oklch, oklch(0.5 0.02 60) 12%, transparent)',
+  statusNeutralBg: 'color-mix(in oklch, oklch(0.5 0.02 60) 12%, transparent)',
   statusNeutralBorder:
     'color-mix(in oklch, oklch(0.5 0.02 60) 28%, transparent)',
   statusNeutralText: 'oklch(0.38 0.02 55)',

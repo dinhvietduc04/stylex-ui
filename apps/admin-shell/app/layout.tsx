@@ -1,9 +1,5 @@
 import type { Metadata } from 'next';
-import {
-  StylexThemeProvider,
-  ConfirmProvider,
-  Toaster,
-} from '@repo/stylex-ui'
+import { StylexThemeProvider, ConfirmProvider, Toaster } from '@repo/stylex-ui';
 
 import './globals.css';
 
@@ -20,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
-        <StylexThemeProvider defaultBrand='emerald' defaultMode="light">
+        <StylexThemeProvider defaultBrand="emerald" defaultMode="light">
           <ConfirmProvider>
             {children}
             <Toaster position="bottom-right" />

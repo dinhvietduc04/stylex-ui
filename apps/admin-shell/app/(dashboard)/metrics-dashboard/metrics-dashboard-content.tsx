@@ -1,0 +1,140 @@
+'use client';
+
+import { useState } from 'react';
+import type { MetricsRange } from '@repo/api-contracts';
+import {
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  Heading,
+  Icon,
+  SimpleSelect,
+  Skeleton,
+  SkeletonCard,
+  Text,
+} from '@repo/stylex-ui';
+import { RefreshCw } from 'lucide-react';
+import { ActivityLog } from './components/activity-log';
+import { KpiCard } from './components/kpi-card';
+import { MetricsChart } from './components/metrics-chart';
+import { useMetricsDashboard } from './use-metrics-dashboard';
+
+const RANGE_OPTIONS = [
+  { value: '24h', label: 'Last 24 hours' },
+  { value: '7d', label: 'Last 7 days' },
+  { value: '30d', label: 'Last 30 days' },
+  { value: '90d', label: 'Last 90 days' },
+];
+
+export function MetricsDashboardContent() {
+  const {
+    data,
+    logs,
+    range,
+    logLevel,
+    status,
+    logsStatus,
+    error,
+    logsError,
+    changeRange,
+    refresh,
+    changeLogLevel,
+    loadMoreLogs,
+    retryLogs,
+  } = useMetricsDashboard();
+
+  const [chartSeriesId, setChartSeriesId] = useState('revenue');
+
+  return (
+    <div className="space-y-6" aria-busy={status === 'loading'}>
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+        <div>
+          <Heading level={1}>Metrics dashboard</Heading>
+          <Text tone="secondary">
+            Users, orders, revenue, and recent activity at a glance.
+          </Text>
+        </div>
+
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+          <div className="w-full sm:w-48">
+            <SimpleSelect
+              aria-label="Metrics range"
+              options={RANGE_OPTIONS}
+              value={range}
+              onValueChange={(value) => changeRange(value as MetricsRange)}
+            />
+          </div>
+
+          <Button
+            variant="outline"
+            onClick={refresh}
+            isLoading={status === 'loading'}
+            leftIcon={<Icon icon={RefreshCw} size="sm" />}
+          >
+            Refresh
+          </Button>
+        </div>
+      </div>
+
+      {error ? (
+        <Card>
+          <CardContent>
+            <div
+              role="alert"
+              className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
+            >
+              <Text tone="error">{error}</Text>
+              <Button variant="outline" size="sm" onClick={refresh}>
+                Retry
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      ) : null}
+
+      {!data && status === 'error' ? null : (
+        <>
+          <section
+            aria-label="Key metrics"
+            className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4"
+          >
+            {data
+              ? data.kpis.map((kpi) => <KpiCard key={kpi.id} kpi={kpi} />)
+              : Array.from({ length: 4 }).map((_, index) => (
+                  <SkeletonCard key={index} />
+                ))}
+          </section>
+
+          {data ? (
+            <MetricsChart
+              chart={data.chart}
+              seriesId={chartSeriesId}
+              onSeriesChange={setChartSeriesId}
+            />
+          ) : (
+            <Card>
+              <CardHeader>
+                <Skeleton variant="text" width="35%" height={20} />
+                <Skeleton variant="text" width="55%" height={12} />
+              </CardHeader>
+              <CardContent>
+                <Skeleton variant="rounded" height={260} />
+              </CardContent>
+            </Card>
+          )}
+
+          <ActivityLog
+            logs={logs}
+            level={logLevel}
+            status={logsStatus}
+            error={logsError}
+            onLevelChange={changeLogLevel}
+            onLoadMore={loadMoreLogs}
+            onRetry={retryLogs}
+          />
+        </>
+      )}
+    </div>
+  );
+}

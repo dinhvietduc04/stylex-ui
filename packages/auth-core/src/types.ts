@@ -19,4 +19,8 @@ export interface Session {
   expiresAt: number;
 }
 
-export type AuthStatus = 'idle' | 'loading' | 'authenticated' | 'unauthenticated';
+export type AuthStatus =
+  | 'idle'
+  | 'loading'
+  | 'authenticated'
+  | 'unauthenticated';

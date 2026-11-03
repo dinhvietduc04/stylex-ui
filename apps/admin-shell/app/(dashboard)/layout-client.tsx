@@ -1,11 +1,6 @@
 'use client';
 
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { signOut } from 'next-auth/react';
 import Link from 'next/link';
@@ -25,10 +20,7 @@ import {
   useSidebarCollapsed,
   type NavigationItem,
 } from '@repo/stylex-ui';
-import {
-  initShellStore,
-  useUnreadNotificationsCount,
-} from '@repo/stores';
+import { initShellStore, useUnreadNotificationsCount } from '@repo/stores';
 import { toCoreSession } from '@repo/auth-next';
 import { preloadRemote } from '@/lib/module-federation-loader';
 import { AdminBrand, AdminBrandMark } from '@/components/layout/admin-brand';
@@ -53,10 +45,7 @@ export function AdminLayoutClient({
   const unreadCount = useUnreadNotificationsCount();
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const {
-    collapsed,
-    setCollapsed,
-  } = useSidebarCollapsed({
+  const { collapsed, setCollapsed } = useSidebarCollapsed({
     storageKey: 'admin:sidebar-collapsed',
     defaultCollapsed: true,
   });
@@ -91,10 +80,7 @@ export function AdminLayoutClient({
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (
-        (event.metaKey || event.ctrlKey) &&
-        event.key.toLowerCase() === 'b'
-      ) {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'b') {
         event.preventDefault();
         setCollapsed((value) => !value);
       }

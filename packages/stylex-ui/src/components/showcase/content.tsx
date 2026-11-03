@@ -124,17 +124,25 @@ export function TypographySection() {
       meta="4 headings · 3 body · 3 utility"
       description="One display face, one text face, one mono for values. Sizes are semantic tokens, so a heading is always the heading role — never an ad-hoc pixel value."
     >
-      <Specimen label="Scale" note="Set in production copy, at the size it ships." stack>
+      <Specimen
+        label="Scale"
+        note="Set in production copy, at the size it ships."
+        stack
+      >
         <div {...stylex.props(styles.typeList)}>
           <TypeRow
-            sample={<Typography variant="h1">Deploy with confidence.</Typography>}
+            sample={
+              <Typography variant="h1">Deploy with confidence.</Typography>
+            }
             name="h1"
             size="2.25rem"
             line="1.15"
           />
           <TypeRow
             sample={
-              <Typography variant="h2">Release channels and rollbacks.</Typography>
+              <Typography variant="h2">
+                Release channels and rollbacks.
+              </Typography>
             }
             name="h2"
             size="1.875rem"
@@ -193,7 +201,11 @@ export function TypographySection() {
             line="1.5"
           />
           <TypeRow
-            sample={<Typography variant="caption">Last synced 4 minutes ago</Typography>}
+            sample={
+              <Typography variant="caption">
+                Last synced 4 minutes ago
+              </Typography>
+            }
             name="caption"
             size="0.75rem"
             line="1.5"
@@ -274,7 +286,10 @@ export function ActionsSection() {
       meta="7 variants · 4 sizes"
       description="One button component covers the whole scale, from a quiet ghost action in a table row to a destructive confirmation. Loading owns the spinner, the label, and the disabled state so callers never wire that up by hand."
     >
-      <Specimen label="Variants" note="Primary is the only accent per screen; everything else defers.">
+      <Specimen
+        label="Variants"
+        note="Primary is the only accent per screen; everything else defers."
+      >
         <div {...stylex.props(styles.inlineStack)}>
           <Button variant="primary" rightIcon={<ArrowRight size={15} />}>
             Deploy
@@ -292,7 +307,10 @@ export function ActionsSection() {
         </div>
       </Specimen>
 
-      <Specimen label="Sizes" note="Heights come from component tokens, so they match inputs exactly.">
+      <Specimen
+        label="Sizes"
+        note="Heights come from component tokens, so they match inputs exactly."
+      >
         <div {...stylex.props(styles.inlineStack)}>
           <Button size="xs" variant="outline">
             Extra small
@@ -319,7 +337,12 @@ export function ActionsSection() {
         }
       >
         <div {...stylex.props(styles.inlineStack)}>
-          <Button variant="primary" onClick={runLoading} isLoading={loading} loadingText="Deploying">
+          <Button
+            variant="primary"
+            onClick={runLoading}
+            isLoading={loading}
+            loadingText="Deploying"
+          >
             {loading ? 'Deploying' : 'Run loading state'}
           </Button>
           <Button variant="outline" isLoading loadingText="Syncing" />
@@ -334,7 +357,11 @@ export function ActionsSection() {
         note="aria-label is required by the type — an icon-only control cannot ship unlabelled."
       >
         <div {...stylex.props(styles.inlineStack)}>
-          <IconButton aria-label="Add item" variant="primary" icon={<Plus size={16} />} />
+          <IconButton
+            aria-label="Add item"
+            variant="primary"
+            icon={<Plus size={16} />}
+          />
           <IconButton
             aria-label="Save to favourites"
             variant="outline"
@@ -363,8 +390,8 @@ export function ActionsSection() {
         label="Slot pattern"
         note={
           <>
-            <Mono>asChild</Mono> hands styling to the child, so a router link keeps
-            its navigation semantics.
+            <Mono>asChild</Mono> hands styling to the child, so a router link
+            keeps its navigation semantics.
           </>
         }
       >
@@ -380,7 +407,11 @@ export function ActionsSection() {
         </div>
       </Specimen>
 
-      <Specimen label="Icon system" note="One stroke weight, five sizes, decorative by default." last>
+      <Specimen
+        label="Icon system"
+        note="One stroke weight, five sizes, decorative by default."
+        last
+      >
         <div {...stylex.props(styles.columnStack)}>
           <div {...stylex.props(styles.iconRow)}>
             {iconSizes.map((i) => (

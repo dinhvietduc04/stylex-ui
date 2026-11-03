@@ -14,9 +14,22 @@ export class MockAuthClient implements AuthClient {
   async login(email: string, password: string): Promise<Session> {
     // Mock login - accept any credentials
     const roles = email.includes('admin')
-      ? ['admin', 'admin:access', 'user:read', 'user:write', 'product:read', 'product:write']
+      ? [
+          'admin',
+          'admin:access',
+          'user:read',
+          'user:write',
+          'product:read',
+          'product:write',
+        ]
       : email.includes('manager')
-        ? ['manager', 'admin:access', 'user:read', 'product:read', 'product:write']
+        ? [
+            'manager',
+            'admin:access',
+            'user:read',
+            'product:read',
+            'product:write',
+          ]
         : ['viewer', 'user:read', 'product:read'];
 
     const session: Session = {

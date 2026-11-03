@@ -106,7 +106,11 @@ export function LoadingSection() {
         />
       </Specimen>
 
-      <Specimen label="Card skeletons" note="Avatar, two text lines, and a media block." stack>
+      <Specimen
+        label="Card skeletons"
+        note="Avatar, two text lines, and a media block."
+        stack
+      >
         <div {...stylex.props(styles.grid)}>
           {skeleton ? (
             <>
@@ -119,7 +123,11 @@ export function LoadingSection() {
               <div key={item.name} {...stylex.props(styles.panel)}>
                 <div {...stylex.props(styles.panelTop)}>
                   <span {...stylex.props(styles.panelTitle)}>{item.name}</span>
-                  <Badge variant={item.badge === 'healthy' ? 'success' : 'primary'} size="sm" dot>
+                  <Badge
+                    variant={item.badge === 'healthy' ? 'success' : 'primary'}
+                    size="sm"
+                    dot
+                  >
                     {item.badge}
                   </Badge>
                 </div>
@@ -131,7 +139,12 @@ export function LoadingSection() {
         </div>
       </Specimen>
 
-      <Specimen label="Primitives" note="Text, circle, and rounded blocks compose any layout." stack last>
+      <Specimen
+        label="Primitives"
+        note="Text, circle, and rounded blocks compose any layout."
+        stack
+        last
+      >
         <div {...stylex.props(styles.grid)}>
           <div {...stylex.props(styles.panel)}>
             <div {...stylex.props(styles.primitiveRow)}>

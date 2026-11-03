@@ -7,9 +7,9 @@ import { useEffect, useState } from 'react';
  * This prevents React hook errors during SSR and client-side hydration
  */
 export function ModuleFederationWrapper({
-  children
+  children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   const [isClient, setIsClient] = useState(false);
 
@@ -30,7 +30,7 @@ export function ModuleFederationWrapper({
  */
 export function useRemoteComponent<T = any>(
   remoteName: string,
-  componentName: string
+  componentName: string,
 ): T | null {
   const [component, setComponent] = useState<T | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -52,7 +52,10 @@ export function useRemoteComponent<T = any>(
           setError(`Remote ${remoteName} not available`);
         }
       } catch (err) {
-        console.error(`Failed to load remote component ${componentName} from ${remoteName}:`, err);
+        console.error(
+          `Failed to load remote component ${componentName} from ${remoteName}:`,
+          err,
+        );
         setError(`Failed to load ${componentName}`);
       }
     };

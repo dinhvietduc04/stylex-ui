@@ -53,7 +53,9 @@ export interface ShellAppActions {
   setTenantId: (tenantId: string | null) => void;
 
   // UI actions
-  addNotification: (notification: Omit<Notification, 'id' | 'timestamp'>) => void;
+  addNotification: (
+    notification: Omit<Notification, 'id' | 'timestamp'>,
+  ) => void;
   clearNotifications: () => void;
   markNotificationRead: (notificationId: string) => void;
   removeNotification: (notificationId: string) => void;

@@ -58,7 +58,10 @@ export function mergeStylexProps(
   const combinedClassName = cn(resolved.className, external.className);
   const combinedStyle =
     resolved.style || external.style
-      ? ({ ...(resolved.style ?? {}), ...(external.style ?? {}) } as React.CSSProperties)
+      ? ({
+          ...(resolved.style ?? {}),
+          ...(external.style ?? {}),
+        } as React.CSSProperties)
       : undefined;
 
   return {
@@ -128,7 +131,8 @@ export function stylexVariants<V extends VariantRecord>(
         const { style: compoundStyle, ...conditions } = compound;
         const matchesAll = Object.entries(conditions).every(
           ([condKey, condVal]) =>
-            condVal === undefined || activeVariants[condKey] === String(condVal),
+            condVal === undefined ||
+            activeVariants[condKey] === String(condVal),
         );
         if (matchesAll) {
           result.push(compoundStyle);

@@ -7,12 +7,7 @@ import {
   toast as sonnerToast,
   type ExternalToast,
 } from 'sonner';
-import {
-  AlertTriangle,
-  Trash2,
-  Info,
-  CheckCircle2,
-} from 'lucide-react';
+import { AlertTriangle, Trash2, Info, CheckCircle2 } from 'lucide-react';
 import { globalTokens } from '../tokens/global.stylex';
 import { semanticTokens } from '../tokens/semantic.stylex';
 import { useStylexTheme } from '../themes/theme-provider';

@@ -1,6 +1,7 @@
 # Microfrontends Module Federation - Deployment Guide
 
 ## Overview
+
 This guide provides instructions for deploying the Microfrontends Module Federation project to various environments, including staging and production.
 
 ---
@@ -10,6 +11,7 @@ This guide provides instructions for deploying the Microfrontends Module Federat
 ### 1. Vercel Deployment (Recommended)
 
 #### Prerequisites
+
 - Vercel account
 - Vercel CLI installed (`npm install -g vercel`)
 - Project linked to Vercel
@@ -17,16 +19,19 @@ This guide provides instructions for deploying the Microfrontends Module Federat
 #### Deployment Steps
 
 1. **Install Vercel CLI**:
+
    ```bash
    npm install -g vercel
    ```
 
 2. **Link Project**:
+
    ```bash
    vercel link
    ```
 
 3. **Configure Project**:
+
    - Set up environment variables in Vercel dashboard
    - Configure build settings
    - Set up domain names
@@ -34,18 +39,21 @@ This guide provides instructions for deploying the Microfrontends Module Federat
 4. **Deploy Applications**:
 
    **Admin Shell**:
+
    ```bash
    cd apps/admin-shell
    vercel --prod
    ```
 
    **Web Shell**:
+
    ```bash
    cd apps/web-shell
    vercel --prod
    ```
 
    **Users Remote**:
+
    ```bash
    cd apps/users-remote
    vercel --prod
@@ -73,6 +81,7 @@ NODE_ENV=production
 ### 2. Docker Deployment
 
 #### Prerequisites
+
 - Docker installed
 - Docker Compose
 - Server with Docker support
@@ -82,21 +91,22 @@ NODE_ENV=production
 1. **Create Dockerfile for each application**:
 
    Example for admin-shell:
+
    ```dockerfile
    # apps/admin-shell/Dockerfile
    FROM node:18-alpine
-   
+
    WORKDIR /app
-   
+
    COPY package.json pnpm-lock.yaml ./
    RUN pnpm install --frozen-lockfile
-   
+
    COPY . .
-   
+
    RUN pnpm run build
-   
+
    EXPOSE 3000
-   
+
    CMD ["pnpm", "start"]
    ```
 
@@ -104,34 +114,34 @@ NODE_ENV=production
 
    ```yaml
    version: '3.8'
-   
+
    services:
      admin-shell:
        build: ./apps/admin-shell
        ports:
-         - "3000:3000"
+         - '3000:3000'
        environment:
          - NEXTAUTH_URL=https://your-domain.com
          - NEXTAUTH_SECRET=your-secret-key
          - API_BASE_URL=https://your-api-domain.com
          - NODE_ENV=production
        restart: unless-stopped
-     
+
      web-shell:
        build: ./apps/web-shell
        ports:
-         - "3000:3000"
+         - '3000:3000'
        environment:
          - NEXTAUTH_URL=https://your-domain.com
          - NEXTAUTH_SECRET=your-secret-key
          - API_BASE_URL=https://your-api-domain.com
          - NODE_ENV=production
        restart: unless-stopped
-     
+
      users-remote:
        build: ./apps/users-remote
        ports:
-         - "6517:6517"
+         - '6517:6517'
        environment:
          - NODE_ENV=production
        restart: unless-stopped
@@ -149,6 +159,7 @@ NODE_ENV=production
 ### 3. Kubernetes Deployment
 
 #### Prerequisites
+
 - Kubernetes cluster
 - kubectl configured
 - Helm (optional)
@@ -158,6 +169,7 @@ NODE_ENV=production
 1. **Create Kubernetes Manifests**:
 
    Example deployment for admin-shell:
+
    ```yaml
    # apps/admin-shell/k8s/deployment.yaml
    apiVersion: apps/v1
@@ -175,22 +187,22 @@ NODE_ENV=production
            app: admin-shell
        spec:
          containers:
-         - name: admin-shell
-           image: your-registry/admin-shell:latest
-           ports:
-           - containerPort: 3000
-           env:
-           - name: NEXTAUTH_URL
-             value: "https://your-domain.com"
-           - name: NEXTAUTH_SECRET
-             valueFrom:
-               secretKeyRef:
-                 name: auth-secrets
-                 key: nextauth-secret
-           - name: API_BASE_URL
-             value: "https://your-api-domain.com"
-           - name: NODE_ENV
-             value: "production"
+           - name: admin-shell
+             image: your-registry/admin-shell:latest
+             ports:
+               - containerPort: 3000
+             env:
+               - name: NEXTAUTH_URL
+                 value: 'https://your-domain.com'
+               - name: NEXTAUTH_SECRET
+                 valueFrom:
+                   secretKeyRef:
+                     name: auth-secrets
+                     key: nextauth-secret
+               - name: API_BASE_URL
+                 value: 'https://your-api-domain.com'
+               - name: NODE_ENV
+                 value: 'production'
    ```
 
 2. **Create Service**:
@@ -345,9 +357,9 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [main, develop]
   pull_request:
-    branches: [ main, develop ]
+    branches: [main, develop]
 
 jobs:
   test:
@@ -418,17 +430,20 @@ jobs:
 ### Common Deployment Issues
 
 1. **Module Federation Not Working**:
+
    - Verify remote URLs in `remote-configs.json` are correct
    - Check CORS settings
    - Ensure all remotes are deployed and accessible
    - Verify CSS URLs are set for production environment
 
 2. **Authentication Failures**:
+
    - Verify environment variables
    - Check session management
    - Test authentication flow
 
 3. **Performance Issues**:
+
    - Check server resources
    - Monitor response times
    - Optimize remote loading
@@ -452,6 +467,7 @@ jobs:
 ## Support
 
 For deployment issues, please:
+
 1. Check logs and error messages
 2. Review deployment documentation
 3. Contact infrastructure team

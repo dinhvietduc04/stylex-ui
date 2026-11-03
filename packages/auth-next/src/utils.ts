@@ -7,6 +7,8 @@ import type { Session as CoreSession } from '@repo/auth-core';
 export function toCoreSession(session: Session | null): CoreSession | null {
   if (!session?.user) return null;
 
+  const expiresAt = session.expires ? Date.parse(session.expires) : 0;
+
   return {
     user: {
       id: session.user.id,
@@ -16,6 +18,6 @@ export function toCoreSession(session: Session | null): CoreSession | null {
       permissions: session.user.permissions || [],
     },
     token: session.accessToken,
-    expiresAt: Date.now() + 7 * 24 * 60 * 60 * 1000, // Default 7 days
+    expiresAt: Number.isFinite(expiresAt) ? expiresAt : 0,
   };
 }

@@ -204,15 +204,9 @@ export function UserMenu({
           {...stylex.props(styles.content)}
         >
           <div {...stylex.props(styles.identity)}>
-            <Avatar
-              src={user.image}
-              name={user.name ?? user.email}
-              size="lg"
-            />
+            <Avatar src={user.image} name={user.name ?? user.email} size="lg" />
             <div {...stylex.props(styles.identityText)}>
-              <span {...stylex.props(styles.identityName)}>
-                {displayName}
-              </span>
+              <span {...stylex.props(styles.identityName)}>{displayName}</span>
               {user.email ? (
                 <span {...stylex.props(styles.identityEmail)}>
                   {user.email}

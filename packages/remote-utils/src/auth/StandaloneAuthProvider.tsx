@@ -5,7 +5,9 @@ interface StandaloneAuthContextValue {
   session: CoreSession;
 }
 
-const StandaloneAuthContext = createContext<StandaloneAuthContextValue | null>(null);
+const StandaloneAuthContext = createContext<StandaloneAuthContextValue | null>(
+  null,
+);
 
 interface StandaloneAuthProviderProps {
   children: ReactNode;
@@ -19,7 +21,7 @@ interface StandaloneAuthProviderProps {
 /**
  * Provider for standalone mode authentication
  * Provides a mock session for local development when running the remote app independently
- * 
+ *
  * @example
  * ```tsx
  * const createMockSession = () => ({
@@ -32,13 +34,16 @@ interface StandaloneAuthProviderProps {
  *   },
  *   expiresAt: Date.now() + 86400000,
  * });
- * 
+ *
  * <StandaloneAuthProvider createMockSession={createMockSession}>
  *   <App />
  * </StandaloneAuthProvider>
  * ```
  */
-export function StandaloneAuthProvider({ children, createMockSession }: StandaloneAuthProviderProps) {
+export function StandaloneAuthProvider({
+  children,
+  createMockSession,
+}: StandaloneAuthProviderProps) {
   const session = createMockSession();
 
   return (

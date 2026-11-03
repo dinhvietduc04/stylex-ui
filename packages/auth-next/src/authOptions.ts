@@ -50,14 +50,17 @@ export const authConfig: NextAuthConfig = {
       async authorize(credentials, request) {
         try {
           console.log('🔐 AUTHORIZE FUNCTION CALLED!');
-          console.log('🔐 Credentials received:', JSON.stringify(credentials, null, 2));
+          console.log(
+            '🔐 Credentials received:',
+            JSON.stringify(credentials, null, 2),
+          );
           console.log('🔐 Request headers:', request?.headers);
 
           if (!credentials?.email || !credentials?.password) {
             console.log('❌ Missing credentials - returning null');
             return null;
           }
-  
+
           console.log('🔍 Calling validateCredentials...');
           const user = await validateCredentials(
             credentials.email as string,
@@ -70,7 +73,7 @@ export const authConfig: NextAuthConfig = {
           }
 
           console.log('✅ User authenticated successfully:', user.email);
-          
+
           // Create user object with all required properties
           const userObject = {
             id: user.id,
@@ -81,8 +84,11 @@ export const authConfig: NextAuthConfig = {
             // Add standard JWT properties for proper session handling
             sub: user.id,
           };
-          
-          console.log('🔄 Returning user object:', JSON.stringify(userObject, null, 2));
+
+          console.log(
+            '🔄 Returning user object:',
+            JSON.stringify(userObject, null, 2),
+          );
           return userObject;
         } catch (error) {
           console.error('❌ Authorization error:', error);

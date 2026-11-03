@@ -38,7 +38,7 @@ const DEFAULT_STATE: ShellAppState = {
  */
 function mergeInitialState(
   state: ShellAppState,
-  initialState?: ShellInitialState
+  initialState?: ShellInitialState,
 ): ShellAppState {
   return {
     auth: {
@@ -63,7 +63,9 @@ function mergeInitialState(
   };
 }
 
-function createShellStore(initialState?: ShellInitialState): StoreApi<ShellStore> {
+function createShellStore(
+  initialState?: ShellInitialState,
+): StoreApi<ShellStore> {
   return createStore<ShellStore>((set) => ({
     // Initial state
     ...mergeInitialState(DEFAULT_STATE, initialState),
@@ -120,7 +122,7 @@ function createShellStore(initialState?: ShellInitialState): StoreApi<ShellStore
           notifications: state.ui.notifications.map((notification) =>
             notification.id === notificationId
               ? { ...notification, read: true }
-              : notification
+              : notification,
           ),
         },
       }));
@@ -131,7 +133,7 @@ function createShellStore(initialState?: ShellInitialState): StoreApi<ShellStore
         ui: {
           ...state.ui,
           notifications: state.ui.notifications.filter(
-            (notification) => notification.id !== notificationId
+            (notification) => notification.id !== notificationId,
           ),
         },
       }));
@@ -176,15 +178,21 @@ function createShellStore(initialState?: ShellInitialState): StoreApi<ShellStore
   }));
 }
 
-export function initShellStore(initialState?: ShellInitialState): StoreApi<ShellStore> {
+export function initShellStore(
+  initialState?: ShellInitialState,
+): StoreApi<ShellStore> {
   // Check if store already exists on globalThis/window
-  const existingStore = (globalThis as any).__SHELL_STORE__ || (typeof window !== 'undefined' ? (window as any).__SHELL_STORE__ : undefined);
+  const existingStore =
+    (globalThis as any).__SHELL_STORE__ ||
+    (typeof window !== 'undefined'
+      ? (window as any).__SHELL_STORE__
+      : undefined);
 
   if (existingStore) {
     // If store exists, deep-merge the provided initial state into the live state
     if (initialState) {
       existingStore.setState((state: ShellStore) =>
-        mergeInitialState(state, initialState)
+        mergeInitialState(state, initialState),
       );
     }
     return existingStore;
@@ -205,7 +213,11 @@ export function initShellStore(initialState?: ShellInitialState): StoreApi<Shell
 }
 
 export function getShellStore(): StoreApi<ShellStore> {
-  const store = (globalThis as any).__SHELL_STORE__ || (typeof window !== 'undefined' ? (window as any).__SHELL_STORE__ : undefined);
+  const store =
+    (globalThis as any).__SHELL_STORE__ ||
+    (typeof window !== 'undefined'
+      ? (window as any).__SHELL_STORE__
+      : undefined);
 
   if (!store) {
     // Auto-initialize the store if it doesn't exist

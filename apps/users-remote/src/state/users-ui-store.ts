@@ -1,5 +1,9 @@
 import { create } from 'zustand';
-import type { User, CreateUserRequest, UpdateUserRequest } from '@repo/api-contracts';
+import type {
+  User,
+  CreateUserRequest,
+  UpdateUserRequest,
+} from '@repo/api-contracts';
 
 interface UsersUIState {
   // Data state
@@ -50,11 +54,12 @@ export const useUsersUIStore = create<UsersUIState>((set, get) => ({
 
   setFormData: (formData) => set({ formData }),
 
-  resetForm: () => set({
-    formData: {
-      email: '',
-      name: '',
-      role: 'viewer',
-    },
-  }),
+  resetForm: () =>
+    set({
+      formData: {
+        email: '',
+        name: '',
+        role: 'viewer',
+      },
+    }),
 }));

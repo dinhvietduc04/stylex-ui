@@ -1,13 +1,7 @@
 import type { JWT } from 'next-auth/jwt';
 import type { Session } from 'next-auth';
 
-export function jwtCallback({
-  token,
-  user,
-}: {
-  token: JWT;
-  user?: any;
-}) {
+export function jwtCallback({ token, user }: { token: JWT; user?: any }) {
   if (user) {
     token.userId = user.id;
     token.roles = user.roles || [];
@@ -35,7 +29,7 @@ export function sessionCallback({
       roles: Array.isArray(token.roles) ? token.roles : [],
       permissions: Array.isArray(token.permissions) ? token.permissions : [],
     };
-    
+
     // Add additional token properties to session
     if (token.accessToken) {
       session.accessToken = token.accessToken;

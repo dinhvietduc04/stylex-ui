@@ -1,6 +1,7 @@
 # Microfrontends Module Federation - Development Workflow
 
 ## Overview
+
 This document outlines the development workflow, best practices, and guidelines for contributing to the Microfrontends Module Federation project.
 
 ---
@@ -8,12 +9,14 @@ This document outlines the development workflow, best practices, and guidelines 
 ## Development Environment Setup
 
 ### Prerequisites
+
 - Node.js v20.x (required)
 - pnpm v9.4.0 (required - specified in packageManager)
 - Git
 - VSCode (recommended IDE)
 
 ### Recommended VSCode Extensions
+
 - ESLint
 - Prettier
 - TypeScript Toolbox
@@ -90,24 +93,28 @@ git push origin feature/your-feature-name
 ## Coding Standards
 
 ### TypeScript
+
 - Use strict TypeScript types
 - Avoid `any` type
 - Use interfaces for object shapes
 - Use type aliases for complex types
 
 ### React
+
 - Use functional components with hooks
 - Follow the component folder structure
 - Use proper prop types
 - Implement error boundaries for critical components
 
 ### Module Federation
+
 - Expose components via the `exposes` configuration
 - Share common dependencies as singletons
 - Use the `preloadRemote` function for better performance
 - Implement proper error handling for remote loading
 
 ### State Management
+
 - Use the global shell store for shared state
 - Use Zustand for local component state
 - Avoid state duplication
@@ -118,6 +125,7 @@ git push origin feature/your-feature-name
 ## Testing
 
 ### Testing Strategy
+
 - **Unit Tests**: Test individual functions and components
 - **Integration Tests**: Test component interactions
 - **End-to-End Tests**: Test user flows
@@ -137,6 +145,7 @@ pnpm run test:watch
 ```
 
 ### Writing Tests
+
 - Use Jest for unit and integration tests
 - Use React Testing Library for component tests
 - Use Cypress for end-to-end tests
@@ -147,6 +156,7 @@ pnpm run test:watch
 ## Code Reviews
 
 ### Review Process
+
 1. At least one approval required for merging
 2. Reviews should focus on:
    - Code quality and readability
@@ -156,6 +166,7 @@ pnpm run test:watch
    - Test coverage
 
 ### Review Checklist
+
 - [ ] Code follows project conventions
 - [ ] Proper error handling implemented
 - [ ] Tests cover new functionality
@@ -168,15 +179,18 @@ pnpm run test:watch
 ## Continuous Integration
 
 ### CI Pipeline
+
 The project uses GitHub Actions for CI with the following workflows:
 
 1. **Pull Request Checks**:
+
    - Run linting and formatting
    - Execute unit tests
    - Build all applications
    - Check TypeScript types
 
 2. **Main Branch Protection**:
+
    - Require passing CI checks
    - Require at least one approval
    - Require up-to-date branch
@@ -191,6 +205,7 @@ The project uses GitHub Actions for CI with the following workflows:
 ## Deployment
 
 ### Deployment Strategy
+
 - **Staging**: Automatically deployed from `develop` branch
 - **Production**: Manually deployed from `main` branch using release tags
 - **Feature Previews**: Deployed from feature branches for testing
@@ -198,29 +213,31 @@ The project uses GitHub Actions for CI with the following workflows:
 ### Deployment Process
 
 1. **Staging Deployment**:
+
    ```bash
    # Merge to develop branch
    git checkout develop
    git merge feature/your-feature-name
    git push origin develop
-   
+
    # Staging deployment is automatic
    ```
 
 2. **Production Deployment**:
+
    ```bash
    # Create a release branch
    git checkout -b release/v1.0.0
-   
+
    # Update version and changelog
    pnpm run version
-   
+
    # Merge to main and tag
    git checkout main
    git merge release/v1.0.0
    git tag v1.0.0
    git push origin main --tags
-   
+
    # Production deployment is automatic
    ```
 
@@ -229,11 +246,13 @@ The project uses GitHub Actions for CI with the following workflows:
 ## Monitoring and Logging
 
 ### Error Tracking
+
 - Use Sentry for error tracking in production
 - Configure error boundaries in React components
 - Implement proper logging for debugging
 
 ### Performance Monitoring
+
 - Use Lighthouse for performance audits
 - Monitor bundle sizes
 - Track remote module loading times
@@ -243,24 +262,28 @@ The project uses GitHub Actions for CI with the following workflows:
 ## Best Practices
 
 ### Performance
+
 - Implement code splitting
 - Use lazy loading for non-critical components
 - Optimize images and assets
 - Minimize bundle size
 
 ### Security
+
 - Sanitize user inputs
 - Implement proper authentication and authorization
 - Use HTTPS for all communications
 - Keep dependencies updated
 
 ### Accessibility
+
 - Follow WCAG guidelines
 - Use semantic HTML
 - Implement proper ARIA attributes
 - Ensure keyboard navigation support
 
 ### Internationalization
+
 - Use proper localization libraries
 - Support multiple languages
 - Implement RTL support
@@ -272,16 +295,19 @@ The project uses GitHub Actions for CI with the following workflows:
 ### Common Development Issues
 
 1. **Module Federation Not Working**:
+
    - Check if all remote applications are running
    - Verify the remote URLs in configuration
    - Check browser console for errors
 
 2. **TypeScript Errors**:
+
    - Run `pnpm run type-check`
    - Ensure all dependencies are properly typed
    - Check for version mismatches
 
 3. **Build Failures**:
+
    - Clear cache: `pnpm run clean`
    - Reinstall dependencies: `pnpm install`
    - Check Node.js version compatibility
@@ -306,6 +332,7 @@ The project uses GitHub Actions for CI with the following workflows:
 ## Support
 
 For questions and issues, please:
+
 1. Check existing documentation
 2. Search GitHub issues
 3. Ask in team channels

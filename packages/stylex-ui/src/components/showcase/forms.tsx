@@ -9,7 +9,12 @@ import { semanticTokens } from '../../tokens/semantic.stylex';
 import { Input, PasswordInput, Textarea, FormField } from '../input';
 import { SimpleSelect, type SelectOption } from '../select';
 import { Combobox, type ComboboxOption } from '../combobox';
-import { Checkbox, RadioGroup, RadioGroupItem, Switch } from '../selection-controls';
+import {
+  Checkbox,
+  RadioGroup,
+  RadioGroupItem,
+  Switch,
+} from '../selection-controls';
 import { Button } from '../button';
 import { toast } from '../feedback';
 import { Section, Specimen, Mono } from './primitives';
@@ -141,7 +146,8 @@ export function FormsSection() {
       email: 'owner@company.io',
       role: 'engineer',
       department: 'design-systems',
-      notes: 'Shared tokens land before the first component, so no shell ships its own palette.',
+      notes:
+        'Shared tokens land before the first component, so no shell ships its own palette.',
       channel: 'production',
       requireReview: true,
       notifyOnDeploy: false,
@@ -171,8 +177,8 @@ export function FormsSection() {
         label="Text input"
         note={
           <>
-            Prefix icon, suffix slot, and a clear affordance that only appears when
-            there is something to clear.
+            Prefix icon, suffix slot, and a clear affordance that only appears
+            when there is something to clear.
           </>
         }
         stack
@@ -225,8 +231,16 @@ export function FormsSection() {
             />
           </FormField>
 
-          <FormField label="Disabled" htmlFor="demo-disabled" description="Inherited from the parent scope.">
-            <Input id="demo-disabled" defaultValue="cluster-eu-west-1" disabled />
+          <FormField
+            label="Disabled"
+            htmlFor="demo-disabled"
+            description="Inherited from the parent scope."
+          >
+            <Input
+              id="demo-disabled"
+              defaultValue="cluster-eu-west-1"
+              disabled
+            />
           </FormField>
         </div>
       </Specimen>
@@ -290,8 +304,8 @@ export function FormsSection() {
         label="Select and combobox"
         note={
           <>
-            Native-feeling <Mono>Select</Mono> for short lists; <Mono>Combobox</Mono>{' '}
-            filters on label, description, and keywords.
+            Native-feeling <Mono>Select</Mono> for short lists;{' '}
+            <Mono>Combobox</Mono> filters on label, description, and keywords.
           </>
         }
         stack
@@ -352,7 +366,11 @@ export function FormsSection() {
                     onValueChange={field.onChange}
                     orientation="horizontal"
                   >
-                    <RadioGroupItem value="production" card label="Production" />
+                    <RadioGroupItem
+                      value="production"
+                      card
+                      label="Production"
+                    />
                     <RadioGroupItem value="canary" card label="Canary" />
                     <RadioGroupItem value="internal" card label="Internal" />
                   </RadioGroup>
@@ -426,14 +444,20 @@ export function SelectionSection() {
       meta="Checkbox · radio · switch"
       description="Three ways to change state, three distinct shapes and motions. Space toggles, arrows move within a group, and every control keeps a visible focus ring."
     >
-      <Specimen label="Checkbox" note="Indeterminate is a first-class state, not a private prop." stack>
+      <Specimen
+        label="Checkbox"
+        note="Indeterminate is a first-class state, not a private prop."
+        stack
+      >
         <div {...stylex.props(styles.toggleCol)}>
           <Checkbox
             checked={all}
             onCheckedChange={toggleAll}
             aria-label="Select all scopes"
             label="All microfrontend scopes"
-            description={some && !all ? 'Partially selected' : 'Selects everything below'}
+            description={
+              some && !all ? 'Partially selected' : 'Selects everything below'
+            }
           />
           <div
             style={{
@@ -443,20 +467,22 @@ export function SelectionSection() {
               paddingLeft: '1.75rem',
             }}
           >
-            {['web-shell', 'admin-shell', 'users-remote'].map((scope, index) => (
-              <Checkbox
-                key={scope}
-                checked={checks[index] === true}
-                onCheckedChange={(next) =>
-                  setChecks((prev) => {
-                    const copy = [...prev];
-                    copy[index] = next;
-                    return copy;
-                  })
-                }
-                label={scope}
-              />
-            ))}
+            {['web-shell', 'admin-shell', 'users-remote'].map(
+              (scope, index) => (
+                <Checkbox
+                  key={scope}
+                  checked={checks[index] === true}
+                  onCheckedChange={(next) =>
+                    setChecks((prev) => {
+                      const copy = [...prev];
+                      copy[index] = next;
+                      return copy;
+                    })
+                  }
+                  label={scope}
+                />
+              ),
+            )}
           </div>
           <Checkbox
             checked="indeterminate"
@@ -468,7 +494,11 @@ export function SelectionSection() {
         </div>
       </Specimen>
 
-      <Specimen label="Radio group" note="Card radios are the default when each option needs a sentence." stack>
+      <Specimen
+        label="Radio group"
+        note="Card radios are the default when each option needs a sentence."
+        stack
+      >
         <div {...stylex.props(styles.radioCard)}>
           <RadioGroup defaultValue="standard">
             <RadioGroupItem
@@ -483,12 +513,22 @@ export function SelectionSection() {
               label="Strict"
               description="Manual approval between every stage."
             />
-            <RadioGroupItem value="paused" card label="Paused" disabled description="No deploys while frozen." />
+            <RadioGroupItem
+              value="paused"
+              card
+              label="Paused"
+              disabled
+              description="No deploys while frozen."
+            />
           </RadioGroup>
         </div>
       </Specimen>
 
-      <Specimen label="Switch" note="Use for a setting that applies immediately; use a checkbox for a value you submit." last>
+      <Specimen
+        label="Switch"
+        note="Use for a setting that applies immediately; use a checkbox for a value you submit."
+        last
+      >
         <div {...stylex.props(styles.toggleCol)}>
           <Switch
             defaultChecked
@@ -497,9 +537,24 @@ export function SelectionSection() {
           />
           <Switch label="Require hardware MFA" description="WebAuthn only." />
           <div {...stylex.props(styles.rangeRow)}>
-            <Switch size="sm" defaultChecked aria-label="Small switch" label="sm" />
-            <Switch size="md" defaultChecked aria-label="Medium switch" label="md" />
-            <Switch size="lg" defaultChecked aria-label="Large switch" label="lg" />
+            <Switch
+              size="sm"
+              defaultChecked
+              aria-label="Small switch"
+              label="sm"
+            />
+            <Switch
+              size="md"
+              defaultChecked
+              aria-label="Medium switch"
+              label="md"
+            />
+            <Switch
+              size="lg"
+              defaultChecked
+              aria-label="Large switch"
+              label="lg"
+            />
           </div>
         </div>
       </Specimen>

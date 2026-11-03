@@ -50,15 +50,13 @@ export const emberLightTheme = stylex.createTheme(semanticTokens, {
   ringColor: 'color-mix(in oklch, oklch(0.48 0.13 40) 40%, transparent)',
 
   statusSuccess: 'oklch(0.55 0.13 162)',
-  statusSuccessBg:
-    'color-mix(in oklch, oklch(0.55 0.13 162) 14%, transparent)',
+  statusSuccessBg: 'color-mix(in oklch, oklch(0.55 0.13 162) 14%, transparent)',
   statusSuccessBorder:
     'color-mix(in oklch, oklch(0.55 0.13 162) 34%, transparent)',
   statusSuccessText: 'oklch(0.4 0.09 166)',
 
   statusWarning: 'oklch(0.66 0.16 62)',
-  statusWarningBg:
-    'color-mix(in oklch, oklch(0.66 0.16 62) 16%, transparent)',
+  statusWarningBg: 'color-mix(in oklch, oklch(0.66 0.16 62) 16%, transparent)',
   statusWarningBorder:
     'color-mix(in oklch, oklch(0.66 0.16 62) 36%, transparent)',
   statusWarningText: 'oklch(0.42 0.11 45)',
@@ -95,8 +93,7 @@ export const emberDarkTheme = stylex.createTheme(semanticTokens, {
   bgSurfaceMuted: 'oklch(0.285 0.018 48)',
   bgSurfaceHover: 'oklch(0.268 0.018 48)',
   bgOverlay: 'oklch(0.1 0.01 48 / 0.72)',
-  bgGlass:
-    'color-mix(in oklch, oklch(0.212 0.014 48) 82%, transparent)',
+  bgGlass: 'color-mix(in oklch, oklch(0.212 0.014 48) 82%, transparent)',
 
   textPrimary: 'oklch(0.955 0.008 72)',
   textSecondary: 'oklch(0.775 0.015 65)',
@@ -131,15 +128,13 @@ export const emberDarkTheme = stylex.createTheme(semanticTokens, {
   ringColor: 'color-mix(in oklch, oklch(0.86 0.12 62) 45%, transparent)',
 
   statusSuccess: 'oklch(0.72 0.14 162)',
-  statusSuccessBg:
-    'color-mix(in oklch, oklch(0.72 0.14 162) 18%, transparent)',
+  statusSuccessBg: 'color-mix(in oklch, oklch(0.72 0.14 162) 18%, transparent)',
   statusSuccessBorder:
     'color-mix(in oklch, oklch(0.72 0.14 162) 40%, transparent)',
   statusSuccessText: 'oklch(0.86 0.1 165)',
 
   statusWarning: 'oklch(0.79 0.15 68)',
-  statusWarningBg:
-    'color-mix(in oklch, oklch(0.79 0.15 68) 18%, transparent)',
+  statusWarningBg: 'color-mix(in oklch, oklch(0.79 0.15 68) 18%, transparent)',
   statusWarningBorder:
     'color-mix(in oklch, oklch(0.79 0.15 68) 40%, transparent)',
   statusWarningText: 'oklch(0.9 0.1 78)',
@@ -211,15 +206,13 @@ export const emeraldLightTheme = stylex.createTheme(semanticTokens, {
   ringColor: 'color-mix(in oklch, oklch(0.42 0.1 166) 34%, transparent)',
 
   statusSuccess: 'oklch(0.55 0.13 162)',
-  statusSuccessBg:
-    'color-mix(in oklch, oklch(0.55 0.13 162) 14%, transparent)',
+  statusSuccessBg: 'color-mix(in oklch, oklch(0.55 0.13 162) 14%, transparent)',
   statusSuccessBorder:
     'color-mix(in oklch, oklch(0.55 0.13 162) 34%, transparent)',
   statusSuccessText: 'oklch(0.4 0.09 166)',
 
   statusWarning: 'oklch(0.66 0.16 62)',
-  statusWarningBg:
-    'color-mix(in oklch, oklch(0.66 0.16 62) 16%, transparent)',
+  statusWarningBg: 'color-mix(in oklch, oklch(0.66 0.16 62) 16%, transparent)',
   statusWarningBorder:
     'color-mix(in oklch, oklch(0.66 0.16 62) 36%, transparent)',
   statusWarningText: 'oklch(0.42 0.11 45)',
@@ -257,8 +250,7 @@ export const emeraldDarkTheme = stylex.createTheme(semanticTokens, {
   bgSurfaceMuted: 'oklch(0.28 0.028 170)',
   bgSurfaceHover: 'oklch(0.262 0.026 170)',
   bgOverlay: 'oklch(0.09 0.012 170 / 0.72)',
-  bgGlass:
-    'color-mix(in oklch, oklch(0.202 0.024 170) 82%, transparent)',
+  bgGlass: 'color-mix(in oklch, oklch(0.202 0.024 170) 82%, transparent)',
 
   textPrimary: 'oklch(0.958 0.008 168)',
   textSecondary: 'oklch(0.78 0.02 168)',
@@ -293,15 +285,13 @@ export const emeraldDarkTheme = stylex.createTheme(semanticTokens, {
   ringColor: 'color-mix(in oklch, oklch(0.8 0.13 164) 45%, transparent)',
 
   statusSuccess: 'oklch(0.72 0.14 162)',
-  statusSuccessBg:
-    'color-mix(in oklch, oklch(0.72 0.14 162) 18%, transparent)',
+  statusSuccessBg: 'color-mix(in oklch, oklch(0.72 0.14 162) 18%, transparent)',
   statusSuccessBorder:
     'color-mix(in oklch, oklch(0.72 0.14 162) 40%, transparent)',
   statusSuccessText: 'oklch(0.86 0.1 165)',
 
   statusWarning: 'oklch(0.79 0.15 68)',
-  statusWarningBg:
-    'color-mix(in oklch, oklch(0.79 0.15 68) 18%, transparent)',
+  statusWarningBg: 'color-mix(in oklch, oklch(0.79 0.15 68) 18%, transparent)',
   statusWarningBorder:
     'color-mix(in oklch, oklch(0.79 0.15 68) 40%, transparent)',
   statusWarningText: 'oklch(0.9 0.1 78)',

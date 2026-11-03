@@ -9,7 +9,7 @@ import {
   CardTitle,
   Heading,
   Text,
-} from "@repo/stylex-ui"
+} from '@repo/stylex-ui';
 import type { Session } from 'next-auth';
 import { canWithPermissions, type Permission } from '@repo/rbac';
 
@@ -50,14 +50,14 @@ export function DashboardContent({ session }: DashboardContentProps) {
         {stats.map((stat) => (
           <Card key={stat.title}>
             <CardHeader>
-              <CardTitle>
-                {stat.title}
-              </CardTitle>
+              <CardTitle>{stat.title}</CardTitle>
             </CardHeader>
 
             <CardContent>
               <Heading level={3}>{stat.value}</Heading>
-              <Text size="sm" tone="muted">{stat.description}</Text>
+              <Text size="sm" tone="muted">
+                {stat.description}
+              </Text>
             </CardContent>
           </Card>
         ))}
@@ -71,15 +71,15 @@ export function DashboardContent({ session }: DashboardContentProps) {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          {permissions.length > 0? (
-          <div className="flex flex-wrap gap-2">
-            {permissions.map((permission) => (
-              <Badge key={permission} variant="primary">
-                {permission}
-              </Badge>
-            ))}
-          </div>
-          ) : ( 
+          {permissions.length > 0 ? (
+            <div className="flex flex-wrap gap-2">
+              {permissions.map((permission) => (
+                <Badge key={permission} variant="primary">
+                  {permission}
+                </Badge>
+              ))}
+            </div>
+          ) : (
             <Text size="sm" tone="muted">
               No permissions assigned.
             </Text>

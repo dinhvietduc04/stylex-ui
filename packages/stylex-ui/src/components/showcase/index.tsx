@@ -118,7 +118,11 @@ const previewTokens = [
   { name: 'brand.primary', role: 'accent', value: semanticTokens.brandPrimary },
   { name: 'surface.default', role: 'surface', value: semanticTokens.bgSurface },
   { name: 'text.primary', role: 'ink', value: semanticTokens.textPrimary },
-  { name: 'status.success', role: 'status', value: semanticTokens.statusSuccess },
+  {
+    name: 'status.success',
+    role: 'status',
+    value: semanticTokens.statusSuccess,
+  },
 ];
 
 const setupSteps = [
@@ -138,7 +142,7 @@ const setupSteps = [
     title: 'Render a component',
     body: 'Import from the package root. Variants, sizes, and states are typed props — never ad-hoc class names.',
     file: 'any component',
-    code: "import { Button } from '@repo/stylex-ui';\n\n<Button variant=\"primary\">Deploy</Button>",
+    code: 'import { Button } from \'@repo/stylex-ui\';\n\n<Button variant="primary">Deploy</Button>',
   },
 ];
 
@@ -837,7 +841,9 @@ function Shell() {
   const preset = BRAND_PRESETS[brand];
 
   const goTo = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document
+      .getElementById(id)
+      ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   return (
@@ -991,8 +997,12 @@ function Shell() {
                         style={{ backgroundColor: token.value }}
                       />
                     </span>
-                    <span {...stylex.props(styles.tokenName)}>{token.name}</span>
-                    <span {...stylex.props(styles.tokenRole)}>{token.role}</span>
+                    <span {...stylex.props(styles.tokenName)}>
+                      {token.name}
+                    </span>
+                    <span {...stylex.props(styles.tokenRole)}>
+                      {token.role}
+                    </span>
                   </div>
                 ))}
               </div>

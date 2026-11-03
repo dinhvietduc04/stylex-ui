@@ -11,19 +11,19 @@
 
 ## Design Health Score
 
-| # | Heuristic | Score | Key Issue |
-|---|-----------|-------|-----------|
-| 1 | Visibility of System Status | 3 | Breadcrumbs and unread badge are solid; the collapsed rail gives no current-page label and routes have no loading feedback. |
-| 2 | Match System / Real World | 2 | Raw scopes (`admin:access`), "Access control" wrapping a single Users link, and mock-login instructions in product UI. |
-| 3 | User Control and Freedom | 2 | No undo for delete or clear-all; deep-link destination is lost after sign-in; sign-out gives no acknowledgement. |
-| 4 | Consistency and Standards | 1 | Emerald shell vs. a black/purple Users remote; native `confirm()` on delete vs. a polished custom confirm on clear-all. |
-| 5 | Error Prevention | 2 | Required fields and confirmations help, but role is free text, duplicate emails are allowed, and delete confirmation does not name the user. |
-| 6 | Recognition Rather Than Recall | 2 | Icon-only collapsed rail, Users buried two levels deep, and core row actions invisible until hover. |
-| 7 | Flexibility and Efficiency | 2 | Ctrl+B and remote preload are good; no search, filter, bulk actions, or command surface. |
-| 8 | Aesthetic and Minimalist Design | 2 | Shell is restrained; the remote's gradients, heavy rules, and empty third dashboard column fight Operate mode. |
-| 9 | Error Recovery | 2 | "Invalid credentials. Please try again." is clear but offers no next step; denial does not state the required permission. |
-| 10 | Help and Documentation | 1 | No help or shortcut surface; the mock-login hint is the only guidance in the product. |
-| **Total** | | **20/40** | **Acceptable** (lower band) |
+| #         | Heuristic                       | Score     | Key Issue                                                                                                                                    |
+| --------- | ------------------------------- | --------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1         | Visibility of System Status     | 3         | Breadcrumbs and unread badge are solid; the collapsed rail gives no current-page label and routes have no loading feedback.                  |
+| 2         | Match System / Real World       | 2         | Raw scopes (`admin:access`), "Access control" wrapping a single Users link, and mock-login instructions in product UI.                       |
+| 3         | User Control and Freedom        | 2         | No undo for delete or clear-all; deep-link destination is lost after sign-in; sign-out gives no acknowledgement.                             |
+| 4         | Consistency and Standards       | 1         | Emerald shell vs. a black/purple Users remote; native `confirm()` on delete vs. a polished custom confirm on clear-all.                      |
+| 5         | Error Prevention                | 2         | Required fields and confirmations help, but role is free text, duplicate emails are allowed, and delete confirmation does not name the user. |
+| 6         | Recognition Rather Than Recall  | 2         | Icon-only collapsed rail, Users buried two levels deep, and core row actions invisible until hover.                                          |
+| 7         | Flexibility and Efficiency      | 2         | Ctrl+B and remote preload are good; no search, filter, bulk actions, or command surface.                                                     |
+| 8         | Aesthetic and Minimalist Design | 2         | Shell is restrained; the remote's gradients, heavy rules, and empty third dashboard column fight Operate mode.                               |
+| 9         | Error Recovery                  | 2         | "Invalid credentials. Please try again." is clear but offers no next step; denial does not state the required permission.                    |
+| 10        | Help and Documentation          | 1         | No help or shortcut surface; the mock-login hint is the only guidance in the product.                                                        |
+| **Total** |                                 | **20/40** | **Acceptable** (lower band)                                                                                                                  |
 
 **Cognitive load: 2/8 failures** — single focus (the dashboard has no primary task) and working memory (icon-only rail, nested Users, truncated mobile crumbs). Moderate, not critical.
 
