@@ -1,4 +1,10 @@
 import type { Metadata } from 'next';
+import {
+  StylexThemeProvider,
+  ConfirmProvider,
+  Toaster,
+} from '@repo/stylex-ui'
+
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -12,8 +18,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <body>
+        <StylexThemeProvider defaultBrand='emerald' defaultMode="light">
+          <ConfirmProvider>
+            {children}
+            <Toaster position="bottom-right" />
+          </ConfirmProvider>
+        </StylexThemeProvider>
+      </body>
     </html>
   );
 }

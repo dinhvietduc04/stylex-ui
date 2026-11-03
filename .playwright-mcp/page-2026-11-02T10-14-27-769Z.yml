@@ -1,0 +1,60 @@
+- generic [ref=f7e1]:
+  - generic [ref=f7e2]:
+    - generic [ref=f7e3]:
+      - link "Skip to content" [ref=f7e4] [cursor=pointer]:
+        - /url: "#app-main"
+      - complementary "Admin navigation" [ref=f7e54]:
+        - generic [ref=f7e55]:
+          - generic [ref=f7e56]:
+            - link "Admin Portal home" [ref=f7e58] [cursor=pointer]:
+              - /url: /admin
+            - button "Expand sidebar" [ref=f7e64] [cursor=pointer]
+          - navigation "Admin navigation" [ref=f7e67]:
+            - list [ref=f7e69]:
+              - listitem [ref=f7e70]:
+                - link "Dashboard" [ref=f7e71] [cursor=pointer]:
+                  - /url: /admin
+            - list [ref=f7e79]:
+              - listitem [ref=f7e80]:
+                - button "Access control" [ref=f7e81] [cursor=pointer]
+      - generic [ref=f7e5]:
+        - banner [ref=f7e6]:
+          - navigation "Breadcrumb" [ref=f7e10]:
+            - list [ref=f7e11]:
+              - listitem [ref=f7e12]:
+                - link "Dashboard" [ref=f7e18] [cursor=pointer]:
+                  - /url: /admin
+              - listitem [ref=f7e19]:
+                - generic [ref=f7e22]: Unauthorized
+          - generic [ref=f7e23]:
+            - group "Theme controls" [ref=f7e24]:
+              - radiogroup "Color mode" [ref=f7e25]:
+                - radio "Light mode" [ref=f7e26] [cursor=pointer]
+                - radio "Dark mode" [checked] [ref=f7e33] [cursor=pointer]
+            - button "Notifications" [ref=f7e37] [cursor=pointer]
+            - button "Open account menu for viewer" [expanded] [ref=f7e42] [cursor=pointer]:
+              - generic [aria-hidden] [ref=f7e44]: VI
+              - generic [ref=f7e86]:
+                - generic [ref=f7e87]: viewer
+                - generic [ref=f7e88]: viewer@example.com
+        - main [ref=f7e45]:
+          - generic [ref=f7e47]:
+            - generic [ref=f7e48]:
+              - heading "Access Denied" [level=3] [ref=f7e49]
+              - paragraph [ref=f7e50]: You don't have permission to access this resource.
+            - generic [ref=f7e51]:
+              - paragraph [ref=f7e52]: Please contact your administrator if you believe this is an error.
+              - link "Go to Dashboard" [ref=f7e53] [cursor=pointer]:
+                - /url: /admin
+    - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=f7e96] [cursor=pointer]
+  - alert [ref=f7e100]
+  - dialog "viewer account menu" [active] [ref=f7e102]:
+    - generic [ref=f7e103]:
+      - generic [aria-hidden] [ref=f7e105]: VI
+      - generic [ref=f7e106]:
+        - generic [ref=f7e107]: viewer
+        - generic [ref=f7e108]: viewer@example.com
+    - generic [ref=f7e109]: viewer
+    - separator [ref=f7e111]
+    - button "Sign out" [ref=f7e113] [cursor=pointer]

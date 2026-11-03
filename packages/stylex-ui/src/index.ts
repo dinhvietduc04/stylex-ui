@@ -37,6 +37,14 @@ export * from './components/feedback';
 export * from './components/skeleton';
 export * from './components/card';
 
+// Task 4.1: App Shell & Navigation
+export * from './components/avatar';
+export * from './components/breadcrumbs';
+export * from './components/sidebar';
+export * from './components/app-shell';
+export * from './components/app-header';
+export * from './components/user-menu';
+
 // The design-system showcase is intentionally NOT exported from the package
 // root. It only backs the /design-system route and is exposed at
 // `@repo/stylex-ui/showcase`.

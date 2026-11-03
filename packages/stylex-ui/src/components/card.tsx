@@ -98,16 +98,22 @@ export const CardHeader = React.forwardRef<HTMLDivElement, CardProps>(
 );
 CardHeader.displayName = 'CardHeader';
 
-export const CardTitle = React.forwardRef<
-  HTMLHeadingElement,
-  React.HTMLAttributes<HTMLHeadingElement> & { sx?: StyleXStyles }
->(({ sx: customSx, className, style, ...props }, ref) => (
-  <h3
-    ref={ref}
-    {...mergeStylexProps({ className, style, sx: customSx }, styles.title)}
-    {...props}
-  />
-));
+export interface CardTitleProps
+  extends React.HTMLAttributes<HTMLHeadingElement> {
+  /** Heading element to render. Defaults to `h3`. */
+  as?: 'h1' | 'h2' | 'h3' | 'h4';
+  sx?: StyleXStyles;
+}
+
+export const CardTitle = React.forwardRef<HTMLHeadingElement, CardTitleProps>(
+  ({ as: Comp = 'h3', sx: customSx, className, style, ...props }, ref) => (
+    <Comp
+      ref={ref}
+      {...mergeStylexProps({ className, style, sx: customSx }, styles.title)}
+      {...props}
+    />
+  ),
+);
 CardTitle.displayName = 'CardTitle';
 
 export const CardDescription = React.forwardRef<

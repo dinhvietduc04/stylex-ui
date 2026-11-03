@@ -3,7 +3,7 @@
 import * as React from 'react';
 import * as stylex from '@stylexjs/stylex';
 import type { StyleXStyles } from '@stylexjs/stylex';
-import { X, AlertCircle } from 'lucide-react';
+import { AlertCircle, Eye, EyeOff, X } from 'lucide-react';
 import { globalTokens } from '../tokens/global.stylex';
 import { semanticTokens } from '../tokens/semantic.stylex';
 import { componentTokens } from '../tokens/component.stylex';
@@ -117,6 +117,39 @@ const styles = stylex.create({
       outline: `2px solid ${semanticTokens.borderFocus}`,
     },
   },
+  passwordToggle: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '2rem',
+    height: '2rem',
+    borderRadius: globalTokens.radiusSm,
+    borderWidth: 0,
+    padding: 0,
+    backgroundColor: 'transparent',
+    color: semanticTokens.textMuted,
+    cursor: 'pointer',
+    transitionProperty: 'background-color, color',
+    transitionDuration: globalTokens.durationFast,
+    transitionTimingFunction: globalTokens.easeStandard,
+    ':hover': {
+      backgroundColor: semanticTokens.bgSurfaceMuted,
+      color: semanticTokens.textPrimary,
+    },
+    ':active': {
+      backgroundColor: semanticTokens.bgSurfaceHover,
+    },
+    ':focus-visible': {
+      outlineWidth: 2,
+      outlineStyle: 'solid',
+      outlineColor: semanticTokens.borderFocus,
+      outlineOffset: 1,
+    },
+    ':disabled': {
+      opacity: 0.55,
+      cursor: 'not-allowed',
+    },
+  },
 
   // Textarea styles
   textareaContainer: {
@@ -222,6 +255,18 @@ const styles = stylex.create({
   },
 });
 
+interface FormFieldControlA11y {
+  descriptionId?: string;
+  errorId?: string;
+  hasError: boolean;
+}
+
+const FormFieldContext = React.createContext<FormFieldControlA11y | null>(null);
+
+function useFormFieldA11y(): FormFieldControlA11y | null {
+  return React.useContext(FormFieldContext);
+}
+
 export interface InputProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size' | 'prefix'> {
   /** Input height scale */
@@ -256,10 +301,18 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       containerSx,
       className,
       style,
+      'aria-describedby': ariaDescribedByProp,
       ...props
     },
     ref,
   ) => {
+    const fieldA11y = useFormFieldA11y();
+    const hasError = error || fieldA11y?.hasError;
+    const describedBy =
+      [ariaDescribedByProp, fieldA11y?.descriptionId, fieldA11y?.errorId]
+        .filter(Boolean)
+        .join(' ') || undefined;
+
     const internalRef = React.useRef<HTMLInputElement | null>(null);
     const [uncontrolledHasValue, setUncontrolledHasValue] = React.useState(
       () => Boolean(defaultValue !== undefined && String(defaultValue).length > 0),
@@ -317,7 +370,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       { className, style, sx: containerSx },
       styles.inputContainer,
       sizeStyle,
-      error && styles.containerError,
+      hasError && styles.containerError,
       disabled && styles.containerDisabled,
     );
 
@@ -331,7 +384,8 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         <input
           ref={setRefs}
           disabled={disabled}
-          aria-invalid={error || undefined}
+          aria-invalid={hasError || undefined}
+          aria-describedby={describedBy}
           value={value}
           defaultValue={defaultValue}
           onChange={handleChange}
@@ -365,6 +419,69 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
   },
 );
 Input.displayName = 'Input';
+
+export interface PasswordInputProps
+  extends Omit<InputProps, 'type' | 'suffixIcon'> {
+  /** Start with the password visible */
+  defaultVisible?: boolean;
+  /** Accessible label for the reveal toggle while the password is hidden */
+  showPasswordLabel?: string;
+  /** Accessible label for the reveal toggle while the password is visible */
+  hidePasswordLabel?: string;
+}
+
+/**
+ * Password field with an accessible show/hide toggle. It forwards every
+ * `Input` prop (including `error`, `disabled`, `clearable`, and `size`) and
+ * ref, so it can be registered directly with React Hook Form.
+ */
+export const PasswordInput = React.forwardRef<
+  HTMLInputElement,
+  PasswordInputProps
+>(
+  (
+    {
+      defaultVisible = false,
+      showPasswordLabel = 'Show password',
+      hidePasswordLabel = 'Hide password',
+      disabled,
+      ...props
+    },
+    ref,
+  ) => {
+    const [visible, setVisible] = React.useState(defaultVisible);
+    const toggleLabel = visible ? hidePasswordLabel : showPasswordLabel;
+
+    return (
+      <Input
+        ref={ref}
+        type={visible ? 'text' : 'password'}
+        disabled={disabled}
+        suffixIcon={
+          <button
+            type="button"
+            aria-label={toggleLabel}
+            aria-pressed={visible}
+            title={toggleLabel}
+            disabled={disabled}
+            onClick={() => {
+              setVisible((current) => !current);
+            }}
+            {...stylex.props(styles.passwordToggle)}
+          >
+            {visible ? (
+              <EyeOff size={16} aria-hidden="true" />
+            ) : (
+              <Eye size={16} aria-hidden="true" />
+            )}
+          </button>
+        }
+        {...props}
+      />
+    );
+  },
+);
+PasswordInput.displayName = 'PasswordInput';
 
 export interface TextareaProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
@@ -401,10 +518,18 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
       containerSx,
       className,
       style,
+      'aria-describedby': ariaDescribedByProp,
       ...props
     },
     ref,
   ) => {
+    const fieldA11y = useFormFieldA11y();
+    const hasError = error || fieldA11y?.hasError;
+    const describedBy =
+      [ariaDescribedByProp, fieldA11y?.descriptionId, fieldA11y?.errorId]
+        .filter(Boolean)
+        .join(' ') || undefined;
+
     const internalRef = React.useRef<HTMLTextAreaElement | null>(null);
     const [charLength, setCharLength] = React.useState(() =>
       String(value ?? defaultValue ?? '').length,
@@ -448,7 +573,7 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
     const containerProps = mergeStylexProps(
       { className, style, sx: containerSx },
       styles.textareaContainer,
-      error && styles.containerError,
+      hasError && styles.containerError,
       disabled && styles.containerDisabled,
     );
 
@@ -462,7 +587,8 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
             ref={setRefs}
             disabled={disabled}
             maxLength={maxLength}
-            aria-invalid={error || undefined}
+            aria-invalid={hasError || undefined}
+            aria-describedby={describedBy}
             value={value}
             defaultValue={defaultValue}
             onChange={handleChange}
@@ -534,6 +660,9 @@ export const FormField = React.forwardRef<HTMLDivElement, FormFieldProps>(
       { className, style, sx: customSx },
       styles.fieldRoot,
     );
+    const fieldId = React.useId();
+    const descriptionId = description ? `${fieldId}-description` : undefined;
+    const errorId = error ? `${fieldId}-error` : undefined;
 
     return (
       <div ref={ref} {...styleProps} {...props}>
@@ -557,13 +686,19 @@ export const FormField = React.forwardRef<HTMLDivElement, FormFieldProps>(
         ) : null}
 
         {description ? (
-          <p {...stylex.props(styles.descriptionText)}>{description}</p>
+          <p id={descriptionId} {...stylex.props(styles.descriptionText)}>
+            {description}
+          </p>
         ) : null}
 
-        {children}
+        <FormFieldContext.Provider
+          value={{ descriptionId, errorId, hasError: Boolean(error) }}
+        >
+          {children}
+        </FormFieldContext.Provider>
 
         {error ? (
-          <p role="alert" {...stylex.props(styles.errorRow)}>
+          <p id={errorId} role="alert" {...stylex.props(styles.errorRow)}>
             <AlertCircle size={14} aria-hidden="true" />
             <span>{error}</span>
           </p>

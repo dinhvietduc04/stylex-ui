@@ -6,7 +6,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { Check, Hash, Lock, Mail, Search, Send, User } from 'lucide-react';
 import { globalTokens } from '../../tokens/global.stylex';
 import { semanticTokens } from '../../tokens/semantic.stylex';
-import { Input, Textarea, FormField } from '../input';
+import { Input, PasswordInput, Textarea, FormField } from '../input';
 import { SimpleSelect, type SelectOption } from '../select';
 import { Combobox, type ComboboxOption } from '../combobox';
 import { Checkbox, RadioGroup, RadioGroupItem, Switch } from '../selection-controls';
@@ -164,7 +164,7 @@ export function FormsSection() {
       id="forms"
       eyebrow="Components"
       title="Forms"
-      meta="Input · textarea · select · combobox"
+      meta="Input · password · textarea · select · combobox"
       description="Text entry, dropdowns, and search share one geometry: same height, same radius token, same focus ring. Every control below is bound to React Hook Form and reports its own error to the screen reader."
     >
       <Specimen
@@ -227,6 +227,40 @@ export function FormsSection() {
 
           <FormField label="Disabled" htmlFor="demo-disabled" description="Inherited from the parent scope.">
             <Input id="demo-disabled" defaultValue="cluster-eu-west-1" disabled />
+          </FormField>
+        </div>
+      </Specimen>
+
+      <Specimen
+        label="Password input"
+        note="A reveal toggle that keeps the field fully keyboard-accessible."
+        stack
+      >
+        <div {...stylex.props(styles.twoCol)}>
+          <FormField
+            label="Password"
+            htmlFor="demo-password"
+            required
+            description="Use the eye button to check what you typed."
+          >
+            <PasswordInput
+              id="demo-password"
+              autoComplete="new-password"
+              placeholder="Enter a password"
+            />
+          </FormField>
+
+          <FormField
+            label="Password with error"
+            htmlFor="demo-password-error"
+            error="Password must be at least 12 characters."
+          >
+            <PasswordInput
+              id="demo-password-error"
+              autoComplete="new-password"
+              defaultValue="short"
+              error
+            />
           </FormField>
         </div>
       </Specimen>

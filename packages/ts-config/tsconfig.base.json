@@ -10,8 +10,7 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "allowArbitraryExtensions": true,
-    "strict": true,
-    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
+    "strict": true
   },
   "include": ["**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]

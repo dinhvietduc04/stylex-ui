@@ -68,4 +68,19 @@ export const componentTokens = stylex.defineVars({
   skeletonBaseBg: semanticTokens.bgSurfaceMuted,
   skeletonHighlightBg: semanticTokens.bgSurfaceSubtle,
   skeletonRadius: globalTokens.radiusMd,
+
+  // Navigation & App Shell
+  sidebarWidthExpanded: '17rem',
+  sidebarWidthCollapsed: '4.5rem',
+  sidebarBg: semanticTokens.bgSurface,
+  sidebarBorder: semanticTokens.borderDefault,
+  sidebarItemHeight: '2.25rem',
+  sidebarItemRadius: globalTokens.radiusMd,
+  sidebarItemActiveBg: semanticTokens.brandPrimarySubtle,
+  sidebarItemHoverBg: semanticTokens.bgSurfaceHover,
+  sidebarItemActiveText: semanticTokens.brandText,
+  sidebarSectionLabel: semanticTokens.textMuted,
+  headerHeight: '3.75rem',
+  headerBg: semanticTokens.bgSurface,
+  headerBorder: semanticTokens.borderDefault,
 });

@@ -282,7 +282,9 @@ export function Toaster({
         style: {
           background: semanticTokens.bgSurfaceElevated,
           color: semanticTokens.textPrimary,
-          border: `1px solid ${semanticTokens.borderDefault}`,
+          borderWidth: '1px',
+          borderStyle: 'solid',
+          borderColor: semanticTokens.borderDefault,
           borderRadius: globalTokens.radiusLg,
           boxShadow: globalTokens.shadowLg,
           fontFamily: globalTokens.fontSans,
@@ -290,6 +292,32 @@ export function Toaster({
       }}
     />
   );
+}
+
+type ToastVariant = 'success' | 'error' | 'warning' | 'info';
+
+/**
+ * Border colors per toast type, mapped to the same status tokens as badges.
+ * Applied per-toast so the type stays visible even without relying on the icon.
+ */
+const toastVariantBorderColor: Record<ToastVariant, string> = {
+  success: semanticTokens.statusSuccess,
+  error: semanticTokens.statusError,
+  warning: semanticTokens.statusWarning,
+  info: semanticTokens.statusInfo,
+};
+
+function withToastVariantBorder(
+  variant: ToastVariant,
+  data?: ExternalToast,
+): ExternalToast {
+  return {
+    ...data,
+    style: {
+      borderColor: toastVariantBorderColor[variant],
+      ...data?.style,
+    },
+  };
 }
 
 export interface ToastApi {
@@ -303,13 +331,13 @@ export interface ToastApi {
 
 export const toast: ToastApi = {
   success: (message: React.ReactNode, data?: ExternalToast) =>
-    sonnerToast.success(message, data),
+    sonnerToast.success(message, withToastVariantBorder('success', data)),
   error: (message: React.ReactNode, data?: ExternalToast) =>
-    sonnerToast.error(message, data),
+    sonnerToast.error(message, withToastVariantBorder('error', data)),
   warning: (message: React.ReactNode, data?: ExternalToast) =>
-    sonnerToast.warning(message, data),
+    sonnerToast.warning(message, withToastVariantBorder('warning', data)),
   info: (message: React.ReactNode, data?: ExternalToast) =>
-    sonnerToast.info(message, data),
+    sonnerToast.info(message, withToastVariantBorder('info', data)),
   message: (message: React.ReactNode, data?: ExternalToast) =>
     sonnerToast.message(message, data),
   dismiss: (id?: number | string) => sonnerToast.dismiss(id),

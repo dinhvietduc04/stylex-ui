@@ -4,7 +4,7 @@ import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import { useCallback, useRef } from 'react';
 import { ModuleFederationRemote } from './ModuleFederationRemote';
 import type { Session as CoreSession } from '@repo/auth-core';
-import type { RoutingProps } from '@repo/api-contracts';
+import { SkeletonCard } from '@repo/stylex-ui';
 
 interface UsersRemoteProps {
   session: CoreSession | null;
@@ -60,9 +60,7 @@ export function UsersRemote({ session }: UsersRemoteProps) {
         session={session}
         routingProps={routingProps}
         fallback={
-          <div className="flex h-64 items-center justify-center">
-            <div className="text-muted-foreground">Loading users remote...</div>
-          </div>
+          <SkeletonCard />
         }
       />
     </div>
