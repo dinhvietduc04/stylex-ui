@@ -1,0 +1,40 @@
+- generic [ref=f2e2]:
+  - generic [ref=f2e3]:
+    - link "Skip to content" [ref=f2e4] [cursor=pointer]:
+      - /url: "#app-main"
+    - complementary "Admin navigation" [ref=f2e5]:
+      - generic [ref=f2e6]:
+        - generic [ref=f2e7]:
+          - link "Admin Portal home" [ref=f2e9] [cursor=pointer]:
+            - /url: /admin
+          - button "Expand sidebar" [ref=f2e15] [cursor=pointer]
+        - navigation "Admin navigation" [ref=f2e18]:
+          - list [ref=f2e20]:
+            - listitem [ref=f2e21]:
+              - link "Dashboard" [ref=f2e22] [cursor=pointer]:
+                - /url: /admin
+          - list [ref=f2e30]:
+            - listitem [ref=f2e31]:
+              - button "Access control" [ref=f2e32] [cursor=pointer]
+    - generic [ref=f2e37]:
+      - banner [ref=f2e38]:
+        - navigation "Breadcrumb" [ref=f2e40]:
+          - list [ref=f2e41]:
+            - listitem [ref=f2e42]:
+              - link "Dashboard" [ref=f2e48] [cursor=pointer]:
+                - /url: /admin
+            - listitem [ref=f2e49]:
+              - generic [ref=f2e57]: Users
+        - generic [ref=f2e58]:
+          - group "Theme controls" [ref=f2e59]:
+            - radiogroup "Color mode" [ref=f2e60]:
+              - radio "Light mode" [checked] [ref=f2e61] [cursor=pointer]
+              - radio "Dark mode" [ref=f2e68] [cursor=pointer]
+          - button "Notifications" [ref=f2e72] [cursor=pointer]
+          - button "Open account menu for viewer" [ref=f2e77] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f2e79]: VI
+            - generic [ref=f2e80]:
+              - generic [ref=f2e81]: viewer
+              - generic [ref=f2e82]: viewer@example.com
+      - main [ref=f2e85]
+  - region "Notifications alt+T"

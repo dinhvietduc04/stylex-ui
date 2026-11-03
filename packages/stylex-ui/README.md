@@ -8,10 +8,10 @@ Zero-runtime, type-safe internal design system and component library built on **
 | :--- | :--- | :--- |
 | **1.1** | `src/tokens/` | **3-Tier Token System** (`globalTokens`, `semanticTokens`, `componentTokens`) via `stylex.defineVars` + OKLCH/HSL alpha transparency utilities (`withAlpha`, `oklchChannel`, `hslChannel`). |
 | **1.2** | `src/themes/` | **Multi-Theme & Brand Preset Engine** (`StylexThemeProvider`, `useStylexTheme`, `ThemeSwitcher`) integrating `next-themes` (Light/Dark) with 2 brand presets: **Ember** (warm amber) and **Emerald** (deep green) via `stylex.createTheme`. |
-| **1.3** | `src/lib/` | **StyleX Variant Engine & Utilities** (`stylexVariants`, `mergeStylexProps`, `sx`, `cn`) separating component variants/sizes from JSX logic. |
+| **1.3** | `src/lib/` | **StyleX Variant Engine & Utilities** (`stylexVariants`, `mergeStylexProps`, `sx`, `cn`) separating component variants/sizes from JSX logic, plus `useZodForm` for schema-validated forms. |
 | **1.4** | `src/components/typography.tsx`, `icon.tsx` | **Typography & Iconography System** (`Typography`, `Heading`, `Text`, `Caption`, `Code`, and accessible Lucide `<Icon>` wrapper). |
 | **2.1** | `src/components/button.tsx` | **Button & IconButton** with variants, sizes, loading spinner, Radix `Slot` (`asChild`), and mandatory `aria-label` on `IconButton`. |
-| **2.2** | `src/components/input.tsx` | **Input, Textarea & FormField** with prefix/suffix icons, clear button, character counter, and error/disabled states. |
+| **2.2** | `src/components/input.tsx` | **Input, PasswordInput, Textarea & FormField** with prefix/suffix icons, password reveal, clear button, character counter, and error/disabled states. |
 | **2.3** | `src/components/select.tsx`, `combobox.tsx` | **Select & Searchable Combobox** on Radix UI with client-side search filtering and keyboard navigation. |
 | **2.4** | `src/components/selection-controls.tsx` | **Checkbox, RadioGroup & Switch** with smooth spring transitions, indeterminate state, and `react-hook-form` compatibility. |
 | **3.1** | `src/components/badge.tsx` | **Badge, Tag & StatusDot** with `success`, `warning`, `error`, `info`, `neutral`, `primary` variants and pulsing status indicators. |
@@ -49,6 +49,67 @@ Zero-runtime, type-safe internal design system and component library built on **
      );
    }
    ```
+
+## Forms
+
+`useZodForm` wires React Hook Form to a Zod schema with `onTouched` validation.
+`PasswordInput` forwards the full `Input` API and adds an accessible reveal
+toggle, so both can be registered directly:
+
+```tsx
+import { z } from 'zod';
+import {
+  Button,
+  FormField,
+  Input,
+  PasswordInput,
+  useZodForm,
+} from '@repo/stylex-ui';
+
+const schema = z.object({
+  email: z.string().trim().email('Enter a valid email address.'),
+  password: z.string().min(1, 'Enter your password.'),
+});
+
+function SignIn() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useZodForm(schema);
+
+  return (
+    <form onSubmit={handleSubmit(save)} noValidate>
+      <FormField label="Email" htmlFor="email" error={errors.email?.message}>
+        <Input
+          id="email"
+          type="email"
+          error={Boolean(errors.email)}
+          disabled={isSubmitting}
+          {...register('email')}
+        />
+      </FormField>
+
+      <FormField
+        label="Password"
+        htmlFor="password"
+        error={errors.password?.message}
+      >
+        <PasswordInput
+          id="password"
+          error={Boolean(errors.password)}
+          disabled={isSubmitting}
+          {...register('password')}
+        />
+      </FormField>
+
+      <Button type="submit" isLoading={isSubmitting}>
+        Sign in
+      </Button>
+    </form>
+  );
+}
+```
 
 ## Brand presets
 

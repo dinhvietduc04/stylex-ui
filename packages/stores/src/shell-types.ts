@@ -9,6 +9,13 @@ export interface Notification {
   read?: boolean;
 }
 
+/** Load state tracked for each federated remote exposed to the shell. */
+export interface RemoteStatus {
+  loaded: boolean;
+  loading: boolean;
+  error: string | null;
+}
+
 export interface ShellAppState {
   auth: {
     session: Session | null;
@@ -19,8 +26,22 @@ export interface ShellAppState {
   ui: {
     notifications: Notification[];
   };
+  remotes: {
+    users: RemoteStatus;
+  };
+}
+
+/**
+ * Shape accepted by `initShellStore`. Every level is optional so callers can
+ * hydrate just the slice they know about, while the store state itself stays
+ * fully defined.
+ */
+export interface ShellInitialState {
+  auth?: Partial<ShellAppState['auth']>;
+  tenant?: Partial<ShellAppState['tenant']>;
+  ui?: Partial<ShellAppState['ui']>;
   remotes?: {
-    users?: { loaded: boolean; loading: boolean; error: string | null };
+    users?: Partial<RemoteStatus>;
   };
 }
 

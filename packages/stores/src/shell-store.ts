@@ -1,6 +1,12 @@
 import { createStore } from 'zustand/vanilla';
 import type { StoreApi } from 'zustand/vanilla';
-import type { ShellAppState, ShellAppActions, ShellStore, Notification } from './shell-types';
+import type {
+  Notification,
+  RemoteStatus,
+  ShellAppState,
+  ShellInitialState,
+  ShellStore,
+} from './shell-types';
 
 const STORE_KEY = '__SHELL_STORE__';
 
@@ -10,26 +16,57 @@ function generateNotificationId(): string {
   return `notification-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
 }
 
-function createShellStore(initialState?: Partial<ShellAppState>): StoreApi<ShellStore> {
-  return createStore<ShellStore>((set, get) => ({
-    // Initial state
+const DEFAULT_REMOTE_STATUS: RemoteStatus = {
+  loaded: false,
+  loading: false,
+  error: null,
+};
+
+const DEFAULT_STATE: ShellAppState = {
+  auth: { session: null },
+  tenant: { tenantId: null },
+  ui: { notifications: [] },
+  remotes: {
+    users: { ...DEFAULT_REMOTE_STATUS },
+  },
+};
+
+/**
+ * Deep-merge a partial initial state into an existing app state. The store
+ * state stays fully defined, so every remote entry always carries a complete
+ * `RemoteStatus`.
+ */
+function mergeInitialState(
+  state: ShellAppState,
+  initialState?: ShellInitialState
+): ShellAppState {
+  return {
     auth: {
-      session: null,
+      ...state.auth,
       ...initialState?.auth,
     },
     tenant: {
-      tenantId: null,
+      ...state.tenant,
       ...initialState?.tenant,
     },
     ui: {
-      notifications: [],
+      ...state.ui,
       ...initialState?.ui,
     },
-    // Add a new state for tracking remote module loading status
     remotes: {
-      users: { loaded: false, loading: false, error: null },
-      ...initialState?.remotes,
+      ...state.remotes,
+      users: {
+        ...state.remotes.users,
+        ...initialState?.remotes?.users,
+      },
     },
+  };
+}
+
+function createShellStore(initialState?: ShellInitialState): StoreApi<ShellStore> {
+  return createStore<ShellStore>((set) => ({
+    // Initial state
+    ...mergeInitialState(DEFAULT_STATE, initialState),
 
     // Auth actions
     setSession: (session) => {
@@ -106,7 +143,7 @@ function createShellStore(initialState?: Partial<ShellAppState>): StoreApi<Shell
         remotes: {
           ...state.remotes,
           [remoteName]: {
-            ...state.remotes?.[remoteName],
+            ...state.remotes[remoteName],
             loading,
           },
         },
@@ -118,7 +155,7 @@ function createShellStore(initialState?: Partial<ShellAppState>): StoreApi<Shell
         remotes: {
           ...state.remotes,
           [remoteName]: {
-            ...state.remotes?.[remoteName],
+            ...state.remotes[remoteName],
             loaded,
           },
         },
@@ -130,7 +167,7 @@ function createShellStore(initialState?: Partial<ShellAppState>): StoreApi<Shell
         remotes: {
           ...state.remotes,
           [remoteName]: {
-            ...state.remotes?.[remoteName],
+            ...state.remotes[remoteName],
             error,
           },
         },
@@ -139,17 +176,16 @@ function createShellStore(initialState?: Partial<ShellAppState>): StoreApi<Shell
   }));
 }
 
-export function initShellStore(initialState?: Partial<ShellAppState>): StoreApi<ShellStore> {
+export function initShellStore(initialState?: ShellInitialState): StoreApi<ShellStore> {
   // Check if store already exists on globalThis/window
   const existingStore = (globalThis as any).__SHELL_STORE__ || (typeof window !== 'undefined' ? (window as any).__SHELL_STORE__ : undefined);
 
   if (existingStore) {
-    // If store exists, just update initial state if provided
+    // If store exists, deep-merge the provided initial state into the live state
     if (initialState) {
-      existingStore.setState((state: ShellStore) => ({
-        ...state,
-        ...initialState,
-      }));
+      existingStore.setState((state: ShellStore) =>
+        mergeInitialState(state, initialState)
+      );
     }
     return existingStore;
   }

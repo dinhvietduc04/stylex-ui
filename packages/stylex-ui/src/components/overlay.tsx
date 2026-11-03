@@ -304,6 +304,9 @@ export interface DrawerProps {
   side?: DrawerSide;
   hideCloseButton?: boolean;
   sx?: StyleXStyles;
+  headerSx?: StyleXStyles;
+  bodySx?: StyleXStyles;
+  hideHeader?: boolean;
 }
 
 export function Drawer({
@@ -319,6 +322,9 @@ export function Drawer({
   side = 'right',
   hideCloseButton = false,
   sx: customSx,
+  headerSx,
+  bodySx,
+  hideHeader = false,
 }: DrawerProps) {
   const sizeMap = {
     sm: styles.drawerSm,
@@ -345,32 +351,49 @@ export function Drawer({
             customSx,
           )}
         >
-          <div {...stylex.props(styles.header)}>
-            <div {...stylex.props(styles.headerTitles)}>
+          {hideHeader ? (
+            <>
               {title ? (
-                <DialogPrimitive.Title {...stylex.props(styles.title)}>
-                  {title}
-                </DialogPrimitive.Title>
+                <VisuallyHidden>
+                  <DialogPrimitive.Title>{title}</DialogPrimitive.Title>
+                </VisuallyHidden>
               ) : null}
               {description ? (
-                <DialogPrimitive.Description
-                  {...stylex.props(styles.description)}
+                <VisuallyHidden>
+                  <DialogPrimitive.Description>
+                    {description}
+                  </DialogPrimitive.Description>
+                </VisuallyHidden>
+              ) : null}
+            </>
+          ) : (
+            <div {...stylex.props(styles.header, headerSx)}>
+              <div {...stylex.props(styles.headerTitles)}>
+                {title ? (
+                  <DialogPrimitive.Title {...stylex.props(styles.title)}>
+                    {title}
+                  </DialogPrimitive.Title>
+                ) : null}
+                {description ? (
+                  <DialogPrimitive.Description
+                    {...stylex.props(styles.description)}
+                  >
+                    {description}
+                  </DialogPrimitive.Description>
+                ) : null}
+              </div>
+              {!hideCloseButton ? (
+                <DialogPrimitive.Close
+                  aria-label="Close drawer"
+                  {...stylex.props(styles.closeButton)}
                 >
-                  {description}
-                </DialogPrimitive.Description>
+                  <X size={18} aria-hidden="true" />
+                </DialogPrimitive.Close>
               ) : null}
             </div>
-            {!hideCloseButton ? (
-              <DialogPrimitive.Close
-                aria-label="Close drawer"
-                {...stylex.props(styles.closeButton)}
-              >
-                <X size={18} aria-hidden="true" />
-              </DialogPrimitive.Close>
-            ) : null}
-          </div>
+          )}
 
-          <div {...stylex.props(styles.body)}>{children}</div>
+          <div {...stylex.props(styles.body, bodySx)}>{children}</div>
 
           {footer ? (
             <div {...stylex.props(styles.footer)}>{footer}</div>

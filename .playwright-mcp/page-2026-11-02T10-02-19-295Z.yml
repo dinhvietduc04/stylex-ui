@@ -1,0 +1,110 @@
+- generic [active] [ref=f2e1]:
+  - generic [ref=f2e2]:
+    - generic [ref=f2e3]:
+      - link "Skip to content" [ref=f2e4] [cursor=pointer]:
+        - /url: "#app-main"
+      - complementary "Admin navigation" [ref=f2e5]:
+        - generic [ref=f2e6]:
+          - generic [ref=f2e7]:
+            - link "Admin Portal home" [ref=f2e9] [cursor=pointer]:
+              - /url: /admin
+            - button "Expand sidebar" [ref=f2e15] [cursor=pointer]
+          - navigation "Admin navigation" [ref=f2e18]:
+            - list [ref=f2e20]:
+              - listitem [ref=f2e21]:
+                - link "Dashboard" [ref=f2e22] [cursor=pointer]:
+                  - /url: /admin
+            - list [ref=f2e30]:
+              - listitem [ref=f2e31]:
+                - button "Access control" [ref=f2e32] [cursor=pointer]
+      - generic [ref=f2e37]:
+        - banner [ref=f2e38]:
+          - navigation "Breadcrumb" [ref=f2e40]:
+            - list [ref=f2e41]:
+              - listitem [ref=f2e42]:
+                - link "Dashboard" [ref=f2e48] [cursor=pointer]:
+                  - /url: /admin
+              - listitem [ref=f2e49]:
+                - generic [ref=f2e57]: Users
+          - generic [ref=f2e58]:
+            - group "Theme controls" [ref=f2e59]:
+              - radiogroup "Color mode" [ref=f2e60]:
+                - radio "Light mode" [ref=f2e61] [cursor=pointer]
+                - radio "Dark mode" [checked] [ref=f2e68] [cursor=pointer]
+            - button "Notifications, 1 unread" [ref=f2e126] [cursor=pointer]:
+              - generic [ref=f2e73]: "1"
+            - button "Open account menu for admin" [ref=f2e77] [cursor=pointer]:
+              - generic [aria-hidden] [ref=f2e79]: AD
+              - generic [ref=f2e80]:
+                - generic [ref=f2e81]: admin
+                - generic [ref=f2e82]: admin@example.com
+        - main [ref=f2e85]:
+          - generic [ref=f2e86]:
+            - generic [ref=f2e128]:
+              - generic [ref=f2e129]:
+                - heading "Users" [level=1] [ref=f2e130]
+                - paragraph [ref=f2e131]: Manage user accounts and permissions
+              - button "Add User" [ref=f2e132]
+            - generic [ref=f2e133]:
+              - generic [ref=f2e136]:
+                - heading "User Directory" [level=3] [ref=f2e137]
+                - paragraph [ref=f2e140]: 4 users registered
+              - table [ref=f2e144]:
+                - rowgroup [ref=f2e145]:
+                  - row [ref=f2e146]:
+                    - columnheader "Name" [ref=f2e147]
+                    - columnheader "Email" [ref=f2e148]
+                    - columnheader "Role" [ref=f2e149]
+                    - columnheader "Actions" [ref=f2e150]
+                - rowgroup [ref=f2e151]:
+                  - row [ref=f2e152]:
+                    - cell [ref=f2e153]:
+                      - link "JD John Doe" [ref=f2e154] [cursor=pointer]:
+                        - /url: /1
+                        - generic [ref=f2e155]: JD
+                        - generic [ref=f2e156]: John Doe
+                    - cell "john@example.com" [ref=f2e157]
+                    - cell "admin" [ref=f2e158]
+                    - cell [ref=f2e161]:
+                      - generic [ref=f2e162]:
+                        - button "Edit" [ref=f2e163]
+                        - button "Delete" [ref=f2e164]
+                  - row [ref=f2e165]:
+                    - cell [ref=f2e166]:
+                      - link "JS Jane Smith" [ref=f2e167] [cursor=pointer]:
+                        - /url: /2
+                        - generic [ref=f2e168]: JS
+                        - generic [ref=f2e169]: Jane Smith
+                    - cell "jane@example.com" [ref=f2e170]
+                    - cell "manager" [ref=f2e171]
+                    - cell [ref=f2e174]:
+                      - generic [ref=f2e175]:
+                        - button "Edit" [ref=f2e176]
+                        - button "Delete" [ref=f2e177]
+                  - row [ref=f2e178]:
+                    - cell [ref=f2e179]:
+                      - link "BJ Bob Johnson" [ref=f2e180] [cursor=pointer]:
+                        - /url: /3
+                        - generic [ref=f2e181]: BJ
+                        - generic [ref=f2e182]: Bob Johnson
+                    - cell "bob@example.com" [ref=f2e183]
+                    - cell "viewer" [ref=f2e184]
+                    - cell [ref=f2e187]:
+                      - generic [ref=f2e188]:
+                        - button "Edit" [ref=f2e189]
+                        - button "Delete" [ref=f2e190]
+                  - row [ref=f2e191]:
+                    - cell [ref=f2e192]:
+                      - link "TR Test Reviewer" [ref=f2e193] [cursor=pointer]:
+                        - /url: /4
+                        - generic [ref=f2e194]: TR
+                        - generic [ref=f2e195]: Test Reviewer
+                    - cell "test.reviewer@example.com" [ref=f2e196]
+                    - cell "viewer" [ref=f2e197]
+                    - cell [ref=f2e200]:
+                      - generic [ref=f2e201]:
+                        - button "Edit" [ref=f2e202]
+                        - button "Delete" [ref=f2e203]
+    - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=f2e102] [cursor=pointer]
+  - alert [ref=f2e204]

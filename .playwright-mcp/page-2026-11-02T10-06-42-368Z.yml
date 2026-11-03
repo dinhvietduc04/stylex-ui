@@ -1,0 +1,125 @@
+- generic:
+  - generic:
+    - generic [aria-hidden]:
+      - link:
+        - /url: "#app-main"
+        - text: Skip to content
+      - generic:
+        - banner:
+          - generic:
+            - button
+            - navigation:
+              - list:
+                - listitem:
+                  - link:
+                    - /url: /admin
+                    - text: Dashboard
+                - listitem:
+                  - generic: Users
+          - generic:
+            - group:
+              - radiogroup:
+                - radio
+                - radio [checked]
+            - button:
+              - generic: "1"
+            - button:
+              - generic [aria-hidden]:
+                - generic [aria-hidden]: AD
+        - main:
+          - generic:
+            - generic:
+              - generic:
+                - heading [level=1]: Users
+                - paragraph: Manage user accounts and permissions
+              - button: Add User
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - heading [level=3]: User Directory
+                    - paragraph: 3 users registered
+              - generic:
+                - generic:
+                  - generic:
+                    - table:
+                      - rowgroup:
+                        - row:
+                          - columnheader: Name
+                          - columnheader: Email
+                          - columnheader: Role
+                          - columnheader: Actions
+                      - rowgroup:
+                        - row:
+                          - cell:
+                            - link:
+                              - /url: /1
+                              - generic: JD
+                              - generic: John Doe
+                          - cell: john@example.com
+                          - cell:
+                            - generic: admin
+                          - cell:
+                            - generic:
+                              - button: Edit
+                              - button: Delete
+                        - row:
+                          - cell:
+                            - link:
+                              - /url: /2
+                              - generic: JS
+                              - generic: Jane Smith
+                          - cell: jane@example.com
+                          - cell:
+                            - generic: manager
+                          - cell:
+                            - generic:
+                              - button: Edit
+                              - button: Delete
+                        - row:
+                          - cell:
+                            - link:
+                              - /url: /3
+                              - generic: BJ
+                              - generic: Bob Johnson
+                          - cell: bob@example.com
+                          - cell:
+                            - generic: viewer
+                          - cell:
+                            - generic:
+                              - button: Edit
+                              - button: Delete
+    - region "Notifications alt+T"
+  - generic [ref=f2e101] [cursor=pointer]:
+    - button "Open Next.js Dev Tools" [ref=f2e102]
+    - generic [ref=f2e234]:
+      - button "Open issues overlay" [ref=f2e235]:
+        - generic [ref=f2e236]:
+          - generic [aria-hidden] [ref=f2e237]: "0"
+          - generic [ref=f2e238]: "1"
+        - generic [ref=f2e239]: Issue
+      - button "Collapse issues badge" [ref=f2e240]
+  - alert
+  - dialog [ref=f2e259]:
+    - heading "Navigation" [level=2] [ref=f2e261]
+    - generic [ref=f2e263]:
+      - generic [ref=f2e264]:
+        - link "Admin Portal" [ref=f2e266] [cursor=pointer]:
+          - /url: /admin
+        - button "Close navigation" [active] [ref=f2e274] [cursor=pointer]
+      - navigation "Admin navigation" [ref=f2e278]:
+        - generic [ref=f2e279]:
+          - generic [ref=f2e280]: Overview
+          - list [ref=f2e281]:
+            - listitem [ref=f2e282]:
+              - link "Dashboard" [ref=f2e283] [cursor=pointer]:
+                - /url: /admin
+        - generic [ref=f2e290]:
+          - generic [ref=f2e291]: Management
+          - list [ref=f2e292]:
+            - listitem [ref=f2e293]:
+              - button "Access control" [expanded] [ref=f2e294] [cursor=pointer]
+              - list [ref=f2e301]:
+                - listitem [ref=f2e302]:
+                  - link "Users" [ref=f2e303] [cursor=pointer]:
+                    - /url: /admin/users

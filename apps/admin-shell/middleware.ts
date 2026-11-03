@@ -19,14 +19,18 @@ export async function middleware(request: NextRequest) {
   }
 
   // Map routes to required permissions
-  const routePermissions: Record<string, Permission> = {
-    '/admin/users': 'user:read',
-  };
+  const routePermissions: Array<{
+    prefix: string;
+    permission: Permission;
+  }> = [{
+    prefix: '/admin/users', permission: 'user:read'},
+  ];
 
-  const requiredPermission = routePermissions[path];
+  const requiredPermission = routePermissions.find(({ prefix }) => path === prefix || path.startsWith(`${prefix}/`));
+
   if (requiredPermission) {
     const permissions = auth.token.permissions || [];
-    if (!canWithPermissions(requiredPermission, permissions)) {
+    if (!canWithPermissions(requiredPermission.permission, permissions)) {
       return redirectWithCleanSession(request, auth, '/admin/unauthorized');
     }
   }

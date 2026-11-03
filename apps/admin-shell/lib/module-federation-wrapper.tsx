@@ -42,8 +42,8 @@ export function useRemoteComponent<T = any>(
         if (typeof window !== 'undefined' && (window as any)[remoteName]) {
           const remote = (window as any)[remoteName];
           if (remote && typeof remote.get === 'function') {
-            const module = await remote.get(componentName);
-            const Component = await module();
+            const factory = await remote.get(componentName);
+            const Component = await factory();
             setComponent(Component);
           } else {
             setError(`Remote ${remoteName} does not have get method`);

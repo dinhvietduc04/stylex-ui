@@ -15,8 +15,13 @@
   },
   "devDependencies": {
     "@types/node": "^20",
+    "@types/react": "^19",
     "eslint-config-custom": "workspace:*",
+    "react": "^19.1.0",
     "ts-config": "workspace:*",
     "typescript": "^5"
+  },
+  "peerDependencies": {
+    "react": "^19.1.0"
   }
 }

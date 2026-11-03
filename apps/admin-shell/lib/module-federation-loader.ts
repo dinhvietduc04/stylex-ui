@@ -874,9 +874,9 @@ export async function loadRemoteComponent<T = any>(
 
     // Now it's safe to execute the factory, which will evaluate the module code
     // and trigger top-level imports of shared modules
-    let module: any;
+    let federationModule: any;
     try {
-      module = factory();
+      federationModule = factory();
     } catch (e) {
       const evalMsg = e instanceof Error ? e.message : String(e);
       // The remote's module evaluation can still hit loadShare before the runtime
@@ -917,13 +917,13 @@ export async function loadRemoteComponent<T = any>(
         await ensureRemoteContainerInitialized(remoteName, fresh);
 
         const freshFactory = await fresh.get(config.module);
-        module = freshFactory();
+        federationModule = freshFactory();
       } else {
         throw e;
       }
     }
 
-    return (module.default || module) as T;
+    return (federationModule.default || federationModule) as T;
   };
 
   try {

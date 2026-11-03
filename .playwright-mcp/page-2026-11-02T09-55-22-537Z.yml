@@ -1,0 +1,80 @@
+- generic [ref=f2e1]:
+  - generic [ref=f2e2]:
+    - generic [ref=f2e3]:
+      - link "Skip to content" [ref=f2e4] [cursor=pointer]:
+        - /url: "#app-main"
+      - complementary "Admin navigation" [ref=f2e5]:
+        - generic [ref=f2e6]:
+          - generic [ref=f2e7]:
+            - link "Admin Portal" [ref=f2e105] [cursor=pointer]:
+              - /url: /admin
+            - button "Collapse sidebar" [ref=f2e113] [cursor=pointer]
+          - navigation "Admin navigation" [ref=f2e18]:
+            - generic [ref=f2e19]:
+              - generic [ref=f2e116]: Overview
+              - list [ref=f2e20]:
+                - listitem [ref=f2e21]:
+                  - link "Dashboard" [ref=f2e22] [cursor=pointer]:
+                    - /url: /admin
+            - generic [ref=f2e29]:
+              - generic [ref=f2e117]: Management
+              - list [ref=f2e30]:
+                - listitem [ref=f2e31]:
+                  - button "Access control" [ref=f2e32] [cursor=pointer]
+      - generic [ref=f2e37]:
+        - banner [ref=f2e38]:
+          - navigation "Breadcrumb" [ref=f2e40]:
+            - list [ref=f2e41]:
+              - listitem [ref=f2e42]:
+                - generic [ref=f2e48]: Dashboard
+          - generic [ref=f2e49]:
+            - group "Theme controls" [ref=f2e50]:
+              - radiogroup "Color mode" [ref=f2e51]:
+                - radio "Light mode" [checked] [ref=f2e52] [cursor=pointer]
+                - radio "Dark mode" [ref=f2e59] [cursor=pointer]
+            - button "Notifications" [active] [ref=f2e63] [cursor=pointer]
+            - button "Open account menu for admin" [ref=f2e68] [cursor=pointer]:
+              - generic [aria-hidden] [ref=f2e70]: AD
+              - generic [ref=f2e71]:
+                - generic [ref=f2e72]: admin
+                - generic [ref=f2e73]: admin@example.com
+        - main [ref=f2e76]:
+          - generic [ref=f2e77]:
+            - generic [ref=f2e78]:
+              - heading "Dashboard" [level=1] [ref=f2e79]
+              - paragraph [ref=f2e80]: Welcome back, admin
+            - generic [ref=f2e81]:
+              - generic [ref=f2e82]:
+                - heading "Users" [level=3] [ref=f2e84]
+                - generic [ref=f2e85]:
+                  - heading "0" [level=3] [ref=f2e86]
+                  - paragraph [ref=f2e87]: Total users
+              - generic [ref=f2e88]:
+                - heading "Permissions" [level=3] [ref=f2e90]
+                - generic [ref=f2e91]:
+                  - heading "5" [level=3] [ref=f2e92]
+                  - paragraph [ref=f2e93]: Active permissions
+            - generic [ref=f2e94]:
+              - generic [ref=f2e95]:
+                - heading "Your Permissions" [level=3] [ref=f2e96]
+                - paragraph [ref=f2e97]: Current roles and permissions assigned to your account
+              - generic [ref=f2e99]:
+                - generic [ref=f2e100]: admin:access
+                - generic [ref=f2e101]: user:read
+                - generic [ref=f2e102]: user:write
+                - generic [ref=f2e103]: product:read
+                - generic [ref=f2e104]: product:write
+    - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=f2e125] [cursor=pointer]
+  - alert [ref=f2e129]
+  - generic [ref=f2e132]:
+    - generic [ref=f2e134]:
+      - generic [ref=f2e135]:
+        - generic [ref=f2e136]: overused font
+        - generic [ref=f2e137]: "Primary font: inter (74% of text)"
+      - generic [ref=f2e138]:
+        - generic [ref=f2e139]: skipped heading level
+        - generic [ref=f2e140]: <h1> "Dashboard" followed by <h3> "Users" (missing h2)
+    - generic [ref=f2e141]:
+      - button "◉" [ref=f2e142] [cursor=pointer]
+      - button "×" [ref=f2e143] [cursor=pointer]

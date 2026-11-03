@@ -1,0 +1,83 @@
+- generic:
+  - generic:
+    - generic [aria-hidden]:
+      - link:
+        - /url: "#app-main"
+        - text: Skip to content
+      - complementary:
+        - generic:
+          - generic:
+            - generic:
+              - link:
+                - /url: /admin
+            - button
+          - navigation:
+            - generic:
+              - list:
+                - listitem:
+                  - link:
+                    - /url: /admin
+                    - generic: Dashboard
+            - generic:
+              - list:
+                - listitem:
+                  - button:
+                    - generic: Access control
+      - generic:
+        - banner:
+          - generic:
+            - navigation:
+              - list:
+                - listitem:
+                  - generic: Dashboard
+          - generic:
+            - group:
+              - radiogroup:
+                - radio [checked]
+                - radio
+            - button
+            - button:
+              - generic [aria-hidden]:
+                - generic [aria-hidden]: AD
+              - generic:
+                - generic: admin
+                - generic: admin@example.com
+        - main:
+          - generic:
+            - generic:
+              - heading [level=1]: Dashboard
+              - paragraph: Welcome back, admin
+            - generic:
+              - generic:
+                - generic:
+                  - heading [level=3]: Users
+                - generic:
+                  - heading [level=3]: "0"
+                  - paragraph: Total users
+              - generic:
+                - generic:
+                  - heading [level=3]: Permissions
+                - generic:
+                  - heading [level=3]: "5"
+                  - paragraph: Active permissions
+            - generic:
+              - generic:
+                - heading [level=3]: Your Permissions
+                - paragraph: Current roles and permissions assigned to your account
+              - generic:
+                - generic:
+                  - generic: admin:access
+                  - generic: user:read
+                  - generic: user:write
+                  - generic: product:read
+                  - generic: product:write
+    - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=f1e110] [cursor=pointer]
+  - alert
+  - dialog [ref=f1e116]:
+    - generic [ref=f1e117]:
+      - heading "Notifications" [level=2] [ref=f1e119]
+      - button "Close drawer" [active] [ref=f1e120] [cursor=pointer]
+    - generic [ref=f1e125]:
+      - paragraph [ref=f1e129]: No new notifications
+      - paragraph [ref=f1e130]: You are all caught up!

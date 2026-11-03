@@ -1,0 +1,137 @@
+- generic:
+  - generic:
+    - generic [aria-hidden]:
+      - link:
+        - /url: "#app-main"
+        - text: Skip to content
+      - complementary:
+        - generic:
+          - generic:
+            - generic:
+              - link:
+                - /url: /admin
+            - button
+          - navigation:
+            - generic:
+              - list:
+                - listitem:
+                  - link:
+                    - /url: /admin
+                    - generic: Dashboard
+            - generic:
+              - list:
+                - listitem:
+                  - button:
+                    - generic: Access control
+      - generic:
+        - banner:
+          - generic:
+            - navigation:
+              - list:
+                - listitem:
+                  - link:
+                    - /url: /admin
+                    - text: Dashboard
+                - listitem:
+                  - generic: Users
+          - generic:
+            - group:
+              - radiogroup:
+                - radio
+                - radio [checked]
+            - button
+            - button:
+              - generic [aria-hidden]:
+                - generic [aria-hidden]: AD
+              - generic:
+                - generic: admin
+                - generic: admin@example.com
+        - main:
+          - generic:
+            - generic:
+              - generic:
+                - heading [level=1]: Users
+                - paragraph: Manage user accounts and permissions
+              - button: Add User
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - heading [level=3]: User Directory
+                    - paragraph: 3 users registered
+              - generic:
+                - generic:
+                  - generic:
+                    - table:
+                      - rowgroup:
+                        - row:
+                          - columnheader: Name
+                          - columnheader: Email
+                          - columnheader: Role
+                          - columnheader: Actions
+                      - rowgroup:
+                        - row:
+                          - cell:
+                            - link:
+                              - /url: /1
+                              - generic: JD
+                              - generic: John Doe
+                          - cell: john@example.com
+                          - cell:
+                            - generic: admin
+                          - cell:
+                            - generic:
+                              - button: Edit
+                              - button: Delete
+                        - row:
+                          - cell:
+                            - link:
+                              - /url: /2
+                              - generic: JS
+                              - generic: Jane Smith
+                          - cell: jane@example.com
+                          - cell:
+                            - generic: manager
+                          - cell:
+                            - generic:
+                              - button: Edit
+                              - button: Delete
+                        - row:
+                          - cell:
+                            - link:
+                              - /url: /3
+                              - generic: BJ
+                              - generic: Bob Johnson
+                          - cell: bob@example.com
+                          - cell:
+                            - generic: viewer
+                          - cell:
+                            - generic:
+                              - button: Edit
+                              - button: Delete
+    - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=f2e102] [cursor=pointer]
+  - alert
+  - dialog [ref=f2e107]:
+    - generic [ref=f2e108]:
+      - heading "Create New User" [level=2] [ref=f2e109]
+      - paragraph [ref=f2e110]: Fill in the details to create a new user account.
+    - generic [ref=f2e111]:
+      - generic [ref=f2e112]:
+        - text: Full Name *
+        - textbox "Full Name *" [active] [ref=f2e113]:
+          - /placeholder: Enter full name
+      - generic [ref=f2e114]:
+        - text: Email Address *
+        - textbox "Email Address *" [ref=f2e115]:
+          - /placeholder: user@example.com
+      - generic [ref=f2e116]:
+        - text: Role *
+        - textbox "Role *" [ref=f2e117]:
+          - /placeholder: admin, manager, viewer
+          - text: viewer
+        - paragraph [ref=f2e118]: "Common roles: admin, manager, viewer"
+    - generic [ref=f2e119]:
+      - button "Cancel" [ref=f2e120]
+      - button "Create User" [disabled]
+    - button "Close" [ref=f2e121]

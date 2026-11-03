@@ -10,6 +10,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "zod": "^4.6.7",
     "zustand": "^5.0.2"
   },
   "devDependencies": {

@@ -13,6 +13,15 @@ const distDir = path.join(packageRoot, 'dist');
 // Staging keeps `dist` fully populated while it is being rewritten, so a
 // watching dev server never sees a half-deleted package.
 const stageDir = path.join(packageRoot, 'node_modules', '.stylex-build');
+// Dedicated incremental state for the declaration emit. It must never be shared
+// with the `typecheck` task, otherwise a previous `tsc --noEmit` run makes the
+// declaration build believe everything is up to date and it emits nothing.
+const declarationsCachePath = path.join(
+  packageRoot,
+  'node_modules',
+  '.cache',
+  'tsbuildinfo.build.json',
+);
 
 function getAllSourceFiles(dir, fileList = []) {
   if (!fs.existsSync(dir)) return fileList;
@@ -173,11 +182,23 @@ async function build() {
 
   fs.writeFileSync(path.join(stageDir, 'styles.css'), combinedCss, 'utf8');
 
-  // Generate TypeScript declarations
+  // Generate TypeScript declarations. The incremental state is cleared so the
+  // declarations are always written into the freshly created staging directory.
+  fs.rmSync(declarationsCachePath, { force: true });
   execSync(`pnpm exec tsc -p tsconfig.build.json --outDir "${stageDir}"`, {
     cwd: packageRoot,
     stdio: 'inherit',
   });
+
+  // Never publish a `dist` that has runtime JS but no type declarations: without
+  // `.d.ts` files consumers silently fall back to the compiled JS and every
+  // component prop loses its type.
+  const declarationEntry = path.join(stageDir, 'index.d.ts');
+  if (!fs.existsSync(declarationEntry)) {
+    throw new Error(
+      `[@repo/stylex-ui] Declaration emit did not produce ${declarationEntry}. Aborting to avoid publishing a dist without types.`,
+    );
+  }
 
   mirrorDirectory(stageDir, distDir);
   fs.rmSync(stageDir, { recursive: true, force: true });

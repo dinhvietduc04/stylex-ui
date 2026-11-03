@@ -1,0 +1,65 @@
+- generic [active] [ref=f4e1]:
+  - generic [ref=f4e2]:
+    - generic [ref=f4e3]:
+      - link "Skip to content" [ref=f4e4] [cursor=pointer]:
+        - /url: "#app-main"
+      - complementary "Admin navigation" [ref=f4e5]:
+        - generic [ref=f4e6]:
+          - generic [ref=f4e7]:
+            - link "Admin Portal home" [ref=f4e105] [cursor=pointer]:
+              - /url: /admin
+            - button "Expand sidebar" [ref=f4e15] [cursor=pointer]
+          - navigation "Admin navigation" [ref=f4e18]:
+            - list [ref=f4e20]:
+              - listitem [ref=f4e21]:
+                - link "Dashboard" [ref=f4e22] [cursor=pointer]:
+                  - /url: /admin
+            - list [ref=f4e30]:
+              - listitem [ref=f4e31]:
+                - button "Access control" [ref=f4e32] [cursor=pointer]
+      - generic [ref=f4e37]:
+        - banner [ref=f4e38]:
+          - navigation "Breadcrumb" [ref=f4e40]:
+            - list [ref=f4e41]:
+              - listitem [ref=f4e42]:
+                - generic [ref=f4e48]: Dashboard
+          - generic [ref=f4e49]:
+            - group "Theme controls" [ref=f4e50]:
+              - radiogroup "Color mode" [ref=f4e51]:
+                - radio "Light mode" [checked] [ref=f4e52] [cursor=pointer]
+                - radio "Dark mode" [ref=f4e59] [cursor=pointer]
+            - button "Notifications" [ref=f4e63] [cursor=pointer]
+            - button "Open account menu for admin" [ref=f4e68] [cursor=pointer]:
+              - generic [aria-hidden] [ref=f4e70]: AD
+              - generic [ref=f4e71]:
+                - generic [ref=f4e72]: admin
+                - generic [ref=f4e73]: admin@example.com
+        - main [ref=f4e76]:
+          - generic [ref=f4e77]:
+            - generic [ref=f4e78]:
+              - heading "Dashboard" [level=1] [ref=f4e79]
+              - paragraph [ref=f4e80]: Welcome back, admin
+            - generic [ref=f4e81]:
+              - generic [ref=f4e82]:
+                - heading "Users" [level=3] [ref=f4e84]
+                - generic [ref=f4e85]:
+                  - heading "0" [level=3] [ref=f4e86]
+                  - paragraph [ref=f4e87]: Total users
+              - generic [ref=f4e88]:
+                - heading "Permissions" [level=3] [ref=f4e90]
+                - generic [ref=f4e91]:
+                  - heading "5" [level=3] [ref=f4e92]
+                  - paragraph [ref=f4e93]: Active permissions
+            - generic [ref=f4e94]:
+              - generic [ref=f4e95]:
+                - heading "Your Permissions" [level=3] [ref=f4e96]
+                - paragraph [ref=f4e97]: Current roles and permissions assigned to your account
+              - generic [ref=f4e99]:
+                - generic [ref=f4e100]: admin:access
+                - generic [ref=f4e101]: user:read
+                - generic [ref=f4e102]: user:write
+                - generic [ref=f4e103]: product:read
+                - generic [ref=f4e104]: product:write
+    - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=f4e118] [cursor=pointer]
+  - alert [ref=f4e122]
