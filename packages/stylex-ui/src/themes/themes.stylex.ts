@@ -1,6 +1,7 @@
 import * as stylex from '@stylexjs/stylex';
 import { semanticTokens } from '../tokens/semantic.stylex';
 import { componentTokens } from '../tokens/component.stylex';
+import { chartTokens, chartTokenValues } from '../tokens/chart.stylex';
 
 /**
  * BRAND PRESET 1 — EMBER (light)
@@ -79,6 +80,15 @@ export const emberLightTheme = stylex.createTheme(semanticTokens, {
   statusNeutralBorder:
     'color-mix(in oklch, oklch(0.5 0.02 60) 28%, transparent)',
   statusNeutralText: 'oklch(0.38 0.02 55)',
+
+  chartSeries1: 'oklch(0.62 0.16 48)',
+  chartSeries2: 'oklch(0.55 0.15 250)',
+  chartSeries3: 'oklch(0.55 0.12 176)',
+  chartSeries4: 'oklch(0.6 0.19 22)',
+  chartSeries5: 'oklch(0.55 0.17 300)',
+  chartSeries6: 'oklch(0.6 0.11 215)',
+  chartSeries7: 'oklch(0.52 0.03 60)',
+  chartSeries8: 'oklch(0.64 0.15 350)',
 });
 
 /**
@@ -157,6 +167,15 @@ export const emberDarkTheme = stylex.createTheme(semanticTokens, {
   statusNeutralBorder:
     'color-mix(in oklch, oklch(0.68 0.015 60) 36%, transparent)',
   statusNeutralText: 'oklch(0.87 0.01 60)',
+
+  chartSeries1: 'oklch(0.8 0.15 58)',
+  chartSeries2: 'oklch(0.72 0.13 250)',
+  chartSeries3: 'oklch(0.74 0.12 176)',
+  chartSeries4: 'oklch(0.72 0.16 25)',
+  chartSeries5: 'oklch(0.74 0.14 300)',
+  chartSeries6: 'oklch(0.78 0.1 215)',
+  chartSeries7: 'oklch(0.7 0.02 60)',
+  chartSeries8: 'oklch(0.78 0.13 350)',
 });
 
 /**
@@ -236,6 +255,15 @@ export const emeraldLightTheme = stylex.createTheme(semanticTokens, {
   statusNeutralBorder:
     'color-mix(in oklch, oklch(0.48 0.018 168) 28%, transparent)',
   statusNeutralText: 'oklch(0.36 0.018 168)',
+
+  chartSeries1: 'oklch(0.5 0.11 166)',
+  chartSeries2: 'oklch(0.5 0.14 265)',
+  chartSeries3: 'oklch(0.6 0.15 65)',
+  chartSeries4: 'oklch(0.55 0.14 240)',
+  chartSeries5: 'oklch(0.58 0.18 22)',
+  chartSeries6: 'oklch(0.55 0.16 300)',
+  chartSeries7: 'oklch(0.5 0.025 170)',
+  chartSeries8: 'oklch(0.58 0.1 205)',
 });
 
 /**
@@ -314,6 +342,15 @@ export const emeraldDarkTheme = stylex.createTheme(semanticTokens, {
   statusNeutralBorder:
     'color-mix(in oklch, oklch(0.7 0.015 168) 36%, transparent)',
   statusNeutralText: 'oklch(0.87 0.012 168)',
+
+  chartSeries1: 'oklch(0.72 0.14 164)',
+  chartSeries2: 'oklch(0.72 0.13 265)',
+  chartSeries3: 'oklch(0.8 0.14 70)',
+  chartSeries4: 'oklch(0.74 0.12 240)',
+  chartSeries5: 'oklch(0.72 0.16 25)',
+  chartSeries6: 'oklch(0.74 0.14 300)',
+  chartSeries7: 'oklch(0.7 0.02 170)',
+  chartSeries8: 'oklch(0.76 0.1 205)',
 });
 
 /**
@@ -336,3 +373,13 @@ export const emberComponentTheme = stylex.createTheme(componentTokens, {
   cardRadius: '0.875rem',
   modalRadius: '1.125rem',
 });
+
+/**
+ * Chart aliases must be scoped to the same element as the active semantic
+ * theme so their `var()` references resolve against the current brand/mode
+ * instead of the root defaults.
+ */
+export const chartThemeScope = stylex.createTheme(
+  chartTokens,
+  chartTokenValues,
+);

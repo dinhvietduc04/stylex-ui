@@ -45,7 +45,11 @@ function rewriteRelativeImports(code, sourceFileDir) {
     if (!spec.startsWith('./') && !spec.startsWith('../')) {
       return spec;
     }
-    if (spec.endsWith('.js') || spec.endsWith('.css') || spec.endsWith('.json')) {
+    if (
+      spec.endsWith('.js') ||
+      spec.endsWith('.css') ||
+      spec.endsWith('.json')
+    ) {
       return spec;
     }
     const candidatePath = path.resolve(sourceFileDir, spec);
@@ -66,7 +70,51 @@ function rewriteRelativeImports(code, sourceFileDir) {
     .replace(
       /(import\s+['"])(\.\.?\/[^'"]+)(['"])/g,
       (_, prefix, spec, suffix) => `${prefix}${resolveSpec(spec)}${suffix}`,
+    )
+    .replace(
+      /(import\(\s*['"])(\.\.?\/[^'"]+)(['"]\s*\))/g,
+      (_, prefix, spec, suffix) => `${prefix}${resolveSpec(spec)}${suffix}`,
     );
+}
+
+/**
+ * The chart engine must stay behind `@repo/stylex-ui/charts`. This guard keeps
+ * a stray `recharts` import from creeping into the root entry or any shared
+ * component and silently inflating every consumer bundle.
+ */
+function assertChartBoundary(dir) {
+  const engineImport =
+    /(?:from\s*|import\s*\(\s*|import\s+|require\s*\(\s*)['"]recharts['"]/;
+  // A static import of an impl module would pull the engine into a wrapper
+  // chunk. Only type imports are allowed there, and Babel erases those.
+  const staticImplImport = /from\s*['"][^'"]*\/impl\/[^'"]*['"]/;
+
+  for (const relPath of listRelativeFiles(dir)) {
+    const normalized = relPath.replace(/\\/g, '/');
+    if (!normalized.endsWith('.js')) continue;
+
+    const source = fs.readFileSync(path.join(dir, relPath), 'utf8');
+    const isChartFile = normalized.startsWith('charts/');
+    const isChartImpl = normalized.startsWith('charts/impl/');
+
+    if (!isChartFile && engineImport.test(source)) {
+      throw new Error(
+        `[@repo/stylex-ui] Chart engine import escaped the charts boundary: ${normalized}`,
+      );
+    }
+
+    if (isChartFile && !isChartImpl && engineImport.test(source)) {
+      throw new Error(
+        `[@repo/stylex-ui] Chart engine import must stay under charts/impl: ${normalized}`,
+      );
+    }
+
+    if (isChartFile && !isChartImpl && staticImplImport.test(source)) {
+      throw new Error(
+        `[@repo/stylex-ui] Chart impl modules must be loaded dynamically: ${normalized}`,
+      );
+    }
+  }
 }
 
 function listRelativeFiles(dir, base = dir, acc = []) {
@@ -119,9 +167,7 @@ async function build() {
 
   for (const file of files) {
     const relPath = path.relative(srcDir, file);
-    const outPath = path
-      .join(stageDir, relPath)
-      .replace(/\.(tsx|ts)$/, '.js');
+    const outPath = path.join(stageDir, relPath).replace(/\.(tsx|ts)$/, '.js');
     fs.mkdirSync(path.dirname(outPath), { recursive: true });
 
     const sourceCode = fs.readFileSync(file, 'utf8');
@@ -131,7 +177,10 @@ async function build() {
       configFile: false,
       presets: [
         ['@babel/preset-react', { runtime: 'automatic' }],
-        ['@babel/preset-typescript', { isTSX: file.endsWith('.tsx'), allExtensions: true }],
+        [
+          '@babel/preset-typescript',
+          { isTSX: file.endsWith('.tsx'), allExtensions: true },
+        ],
       ],
       plugins: [
         [
@@ -181,6 +230,8 @@ async function build() {
     .join('\n\n');
 
   fs.writeFileSync(path.join(stageDir, 'styles.css'), combinedCss, 'utf8');
+
+  assertChartBoundary(stageDir);
 
   // Generate TypeScript declarations. The incremental state is cleared so the
   // declarations are always written into the freshly created staging directory.

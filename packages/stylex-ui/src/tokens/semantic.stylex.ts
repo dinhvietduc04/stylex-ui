@@ -83,4 +83,16 @@ export const semanticTokens = stylex.defineVars({
   statusNeutralBorder:
     'color-mix(in oklch, oklch(0.5 0.02 60) 28%, transparent)',
   statusNeutralText: 'oklch(0.38 0.02 55)',
+
+  // Data visualization
+  // A categorical palette for chart series. Keep these distinct from the
+  // status colors so a category never implies success or failure by accident.
+  chartSeries1: 'oklch(0.62 0.16 48)',
+  chartSeries2: 'oklch(0.55 0.15 250)',
+  chartSeries3: 'oklch(0.55 0.12 176)',
+  chartSeries4: 'oklch(0.6 0.19 22)',
+  chartSeries5: 'oklch(0.55 0.17 300)',
+  chartSeries6: 'oklch(0.6 0.11 215)',
+  chartSeries7: 'oklch(0.52 0.03 60)',
+  chartSeries8: 'oklch(0.64 0.15 350)',
 });

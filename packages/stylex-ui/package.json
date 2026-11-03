@@ -10,6 +10,11 @@
       "default": "./dist/index.js"
     },
     "./styles.css": "./dist/styles.css",
+    "./charts": {
+      "types": "./dist/charts/index.d.ts",
+      "import": "./dist/charts/index.js",
+      "default": "./dist/charts/index.js"
+    },
     "./showcase": {
       "types": "./dist/components/showcase/index.d.ts",
       "import": "./dist/components/showcase/index.js",
@@ -41,6 +46,8 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-hook-form": "^7.54.2",
+    "react-is": "^19.1.0",
+    "recharts": "^3.10.1",
     "sonner": "^2.0.1",
     "zod": "^4.6.7"
   },

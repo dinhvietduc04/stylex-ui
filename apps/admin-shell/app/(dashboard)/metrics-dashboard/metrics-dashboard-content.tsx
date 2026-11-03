@@ -6,18 +6,21 @@ import {
   Button,
   Card,
   CardContent,
-  CardHeader,
   Heading,
   Icon,
   SimpleSelect,
-  Skeleton,
-  SkeletonCard,
   Text,
 } from '@repo/stylex-ui';
 import { RefreshCw } from 'lucide-react';
 import { ActivityLog } from './components/activity-log';
 import { KpiCard } from './components/kpi-card';
 import { MetricsChart } from './components/metrics-chart';
+import {
+  KpiCardSkeleton,
+  MetricsChartSkeleton,
+  OrderStatusChartSkeleton,
+} from './components/metrics-skeletons';
+import { OrderStatusChart } from './components/order-status-chart';
 import { useMetricsDashboard } from './use-metrics-dashboard';
 
 const RANGE_OPTIONS = [
@@ -45,9 +48,18 @@ export function MetricsDashboardContent() {
   } = useMetricsDashboard();
 
   const [chartSeriesId, setChartSeriesId] = useState('revenue');
-
+  const [isTestingSkeleton, setIsTestingSkeleton] = useState(true);
+  
   return (
     <div className="space-y-6" aria-busy={status === 'loading'}>
+      <p className="sr-only" role="status">
+        {status === 'loading'
+          ? data
+            ? 'Updating metrics dashboard.'
+            : 'Loading metrics dashboard.'
+          : ''}
+      </p>
+
       <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div>
           <Heading level={1}>Metrics dashboard</Heading>
@@ -102,27 +114,33 @@ export function MetricsDashboardContent() {
             {data
               ? data.kpis.map((kpi) => <KpiCard key={kpi.id} kpi={kpi} />)
               : Array.from({ length: 4 }).map((_, index) => (
-                  <SkeletonCard key={index} />
+                  <KpiCardSkeleton key={index} />
                 ))}
           </section>
 
-          {data ? (
-            <MetricsChart
-              chart={data.chart}
-              seriesId={chartSeriesId}
-              onSeriesChange={setChartSeriesId}
-            />
-          ) : (
-            <Card>
-              <CardHeader>
-                <Skeleton variant="text" width="35%" height={20} />
-                <Skeleton variant="text" width="55%" height={12} />
-              </CardHeader>
-              <CardContent>
-                <Skeleton variant="rounded" height={260} />
-              </CardContent>
-            </Card>
-          )}
+          <div className="grid gap-6 xl:grid-cols-3 xl:items-start">
+            <div className="xl:col-span-2">
+              {data ? (
+                <MetricsChart
+                  chart={data.chart}
+                  seriesId={chartSeriesId}
+                  loading={status === 'loading'}
+                  onSeriesChange={setChartSeriesId}
+                />
+              ) : (
+                <MetricsChartSkeleton />
+              )}
+            </div>
+
+            {data ? (
+              <OrderStatusChart
+                kpis={data.kpis}
+                loading={status === 'loading'}
+              />
+            ) : (
+              <OrderStatusChartSkeleton />
+            )}
+          </div>
 
           <ActivityLog
             logs={logs}
