@@ -11,10 +11,7 @@ interface WebLayoutClientProps {
   session: Session | null;
 }
 
-export function WebLayoutClient({
-  children,
-  session,
-}: WebLayoutClientProps) {
+export function WebLayoutClient({ children, session }: WebLayoutClientProps) {
   const handleLogout = async () => {
     await signOut({ callbackUrl: '/' });
   };

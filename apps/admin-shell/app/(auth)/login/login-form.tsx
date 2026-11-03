@@ -23,7 +23,11 @@ const INVALID_CREDENTIALS_MESSAGE =
 const UNEXPECTED_ERROR_MESSAGE =
   'We could not sign you in. Please try again in a moment.';
 
-export function LoginForm() {
+interface LoginFormProps {
+  callbackUrl?: string;
+}
+
+export function LoginForm({ callbackUrl }: LoginFormProps) {
   const router = useRouter();
   const {
     register,
@@ -52,7 +56,7 @@ export function LoginForm() {
         toast.success('Signed in successfully', {
           description: 'Taking you to your dashboard…',
         });
-        router.replace('/admin');
+        router.replace(resolveCallbackUrl(callbackUrl));
         router.refresh();
         return;
       }
@@ -73,6 +77,27 @@ export function LoginForm() {
       });
     }
   };
+
+  function resolveCallbackUrl(callbackUrl?: string): string {
+    if (!callbackUrl) return 'admin';
+
+    try {
+      const target = new URL(callbackUrl, window.location.origin);
+
+      if (target.origin !== window.location.origin) return '/admin';
+
+      if (
+        target.pathname === '/login' ||
+        target.pathname.startsWith('/login/')
+      ) {
+        return '/admin';
+      }
+
+      return `${target.pathname}${target.search}${target.hash}`;
+    } catch {
+      return '/admin';
+    }
+  }
 
   const serverError = errors.root?.server?.message;
 

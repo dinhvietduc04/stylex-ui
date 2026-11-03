@@ -1,17 +1,10 @@
-import {
-  LayoutDashboard,
-  ShieldCheck,
-  Users,
-} from 'lucide-react';
+import { BarChart3, LayoutDashboard, ShieldCheck, Users } from 'lucide-react';
 import type {
   BreadcrumbItem,
   NavigationItem,
   NavigationSection,
 } from '@repo/stylex-ui';
-import {
-  canWithPermissions,
-  type Permission,
-} from '@repo/rbac';
+import { canWithPermissions, type Permission } from '@repo/rbac';
 
 export interface AdminNavigationItem extends NavigationItem {
   permission?: Permission;
@@ -32,6 +25,14 @@ export const adminNavigation: AdminNavigationSection[] = [
         href: '/admin',
         icon: LayoutDashboard,
         exact: true,
+      },
+      {
+        id: 'metrics-dashboard',
+        label: 'Metrics',
+        href: '/metrics-dashboard',
+        icon: BarChart3,
+        exact: true,
+        permission: 'admin:access',
       },
     ],
   },
@@ -126,8 +127,6 @@ export function getVisibleAdminNavigation(
   return adminNavigation.flatMap((section) => {
     const items = filterItems(section.items, can);
 
-    return items.length > 0
-      ? [{ ...section, items }]
-      : [];
+    return items.length > 0 ? [{ ...section, items }] : [];
   });
 }

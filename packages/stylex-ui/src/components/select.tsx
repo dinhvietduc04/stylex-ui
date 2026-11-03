@@ -154,26 +154,31 @@ export interface SelectTriggerProps
 export const SelectTrigger = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Trigger>,
   SelectTriggerProps
->(({ error = false, sx: customSx, className, style, children, ...props }, ref) => {
-  const styleProps = mergeStylexProps(
-    { className, style, sx: customSx },
-    styles.trigger,
-    error && styles.triggerError,
-  );
+>(
+  (
+    { error = false, sx: customSx, className, style, children, ...props },
+    ref,
+  ) => {
+    const styleProps = mergeStylexProps(
+      { className, style, sx: customSx },
+      styles.trigger,
+      error && styles.triggerError,
+    );
 
-  return (
-    <SelectPrimitive.Trigger ref={ref} {...styleProps} {...props}>
-      {children}
-      <SelectPrimitive.Icon asChild>
-        <ChevronDown
-          size={16}
-          aria-hidden="true"
-          {...stylex.props(styles.chevronIcon)}
-        />
-      </SelectPrimitive.Icon>
-    </SelectPrimitive.Trigger>
-  );
-});
+    return (
+      <SelectPrimitive.Trigger ref={ref} {...styleProps} {...props}>
+        {children}
+        <SelectPrimitive.Icon asChild>
+          <ChevronDown
+            size={16}
+            aria-hidden="true"
+            {...stylex.props(styles.chevronIcon)}
+          />
+        </SelectPrimitive.Icon>
+      </SelectPrimitive.Trigger>
+    );
+  },
+);
 SelectTrigger.displayName = SelectPrimitive.Trigger.displayName;
 
 export const SelectContent = React.forwardRef<
@@ -309,11 +314,7 @@ export function SimpleSelect({
       </SelectTrigger>
       <SelectContent>
         {options.map((opt) => (
-          <SelectItem
-            key={opt.value}
-            value={opt.value}
-            disabled={opt.disabled}
-          >
+          <SelectItem key={opt.value} value={opt.value} disabled={opt.disabled}>
             {opt.label}
           </SelectItem>
         ))}

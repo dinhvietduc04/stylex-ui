@@ -109,8 +109,9 @@ export function OverlaysSection() {
         label="Modal"
         note={
           <>
-            Size is a token, not a magic number. <span {...stylex.props(styles.key)}>Tab</span>{' '}
-            cycles inside, <span {...stylex.props(styles.key)}>Esc</span> closes.
+            Size is a token, not a magic number.{' '}
+            <span {...stylex.props(styles.key)}>Tab</span> cycles inside,{' '}
+            <span {...stylex.props(styles.key)}>Esc</span> closes.
           </>
         }
       >
@@ -126,7 +127,11 @@ export function OverlaysSection() {
           size="md"
           footer={
             <>
-              <Button variant="outline" size="sm" onClick={() => setModalOpen(false)}>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setModalOpen(false)}
+              >
                 Cancel
               </Button>
               <Button
@@ -149,7 +154,14 @@ export function OverlaysSection() {
               <StatusDot variant="success" pulse />
               Canary held 0.02% error rate for 42 minutes.
             </div>
-            <p style={{ margin: 0, fontSize: '0.875rem', lineHeight: 1.6, color: semanticTokens.textSecondary }}>
+            <p
+              style={{
+                margin: 0,
+                fontSize: '0.875rem',
+                lineHeight: 1.6,
+                color: semanticTokens.textSecondary,
+              }}
+            >
               Promoting rewrites the production alias. The previous build stays
               addressable by its commit hash for rollback.
             </p>
@@ -177,7 +189,11 @@ export function OverlaysSection() {
           size="md"
           footer={
             <>
-              <Button variant="outline" size="sm" onClick={() => setDrawerOpen(false)}>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setDrawerOpen(false)}
+              >
                 Cancel
               </Button>
               <Button
@@ -229,7 +245,10 @@ export function OverlaysSection() {
         </Drawer>
       </Specimen>
 
-      <Specimen label="Confirm" note="Returns a promise — branch on the answer without wiring modal state.">
+      <Specimen
+        label="Confirm"
+        note="Returns a promise — branch on the answer without wiring modal state."
+      >
         <div {...stylex.props(styles.wrap)}>
           <Button
             variant="destructive"
@@ -254,7 +273,11 @@ export function OverlaysSection() {
         </div>
       </Specimen>
 
-      <Specimen label="Toast" note="Mapped to the same status tokens as badges — one source of truth." last>
+      <Specimen
+        label="Toast"
+        note="Mapped to the same status tokens as badges — one source of truth."
+        last
+      >
         <div {...stylex.props(styles.wrap)}>
           <Button
             size="xs"
@@ -292,7 +315,9 @@ export function OverlaysSection() {
           <Button
             size="xs"
             variant="secondary"
-            onClick={() => toast.info('Preset switched', { description: 'Tokens reloaded.' })}
+            onClick={() =>
+              toast.info('Preset switched', { description: 'Tokens reloaded.' })
+            }
           >
             Info
           </Button>

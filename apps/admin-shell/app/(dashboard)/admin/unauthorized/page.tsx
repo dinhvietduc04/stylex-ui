@@ -8,7 +8,7 @@ import {
   CardTitle,
   Text,
   globalTokens,
-} from "@repo/stylex-ui"
+} from '@repo/stylex-ui';
 
 export default function UnauthorizedPage() {
   return (
@@ -22,12 +22,15 @@ export default function UnauthorizedPage() {
         </CardHeader>
 
         <CardContent>
-          <Text tone="muted" style={{
-            marginBottom: globalTokens.space4
-          }}>
+          <Text
+            tone="muted"
+            style={{
+              marginBottom: globalTokens.space4,
+            }}
+          >
             Please contact your administrator if you believe this is an error.
           </Text>
-          
+
           <Button asChild>
             <Link href="/admin">Go to Dashboard</Link>
           </Button>

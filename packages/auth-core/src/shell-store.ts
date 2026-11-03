@@ -14,7 +14,9 @@ export interface ShellState {
   can: (permission: string) => boolean;
 }
 
-export function createShellStore(authClient: AuthClient = new MockAuthClient()) {
+export function createShellStore(
+  authClient: AuthClient = new MockAuthClient(),
+) {
   return createStore<ShellState>((set, get) => ({
     session: null,
     status: 'idle',

@@ -1,6 +1,7 @@
 # Microfrontends Module Federation - Setup Guide
 
 ## Overview
+
 This guide provides step-by-step instructions for setting up the Microfrontends Module Federation project for development and production environments.
 
 ---
@@ -8,12 +9,14 @@ This guide provides step-by-step instructions for setting up the Microfrontends 
 ## Prerequisites
 
 ### System Requirements
+
 - Node.js v20.x (required)
 - pnpm v9.4.0 (required)
 - Git
 - Operating System: macOS, Linux, or Windows (WSL recommended for Windows)
 
 ### Required Tools
+
 - VSCode (recommended IDE)
 - Docker (for containerized development, optional)
 - Vercel CLI (for deployment, optional)
@@ -23,25 +26,30 @@ This guide provides step-by-step instructions for setting up the Microfrontends 
 ## Installation
 
 ### 1. Clone the Repository
+
 ```bash
 git clone https://github.com/your-org/mfe-module-federation.git
 cd mfe-module-federation
 ```
 
 ### 2. Install Dependencies
+
 ```bash
 # Install project dependencies
 pnpm install
 ```
 
 ### 3. Set Up Environment Variables
+
 This repo does not ship `.env.example` files. Create `.env.local` files per app as needed.
 
 Minimum required variables:
+
 - `NEXTAUTH_URL`: Base URL for NextAuth.js callbacks (e.g. `http://localhost:3000` or `http://localhost:3001`)
 - `NEXTAUTH_SECRET`: Secret key for NextAuth.js (generate with `openssl rand -base64 32`)
 
 Notes:
+
 - The current auth implementation is **mock credentials** (see `packages/auth-next/src/authOptions.ts`). If you add a real backend, you can introduce an `API_BASE_URL` (or similar) and wire it into `validateCredentials()`.
 - `users-remote` can run in **federated mode** (default) or **standalone mode** using `STANDALONE_MODE=true`.
 
@@ -59,6 +67,7 @@ pnpm run dev
 ```
 
 This will start:
+
 - Web Shell: `http://localhost:3000`
 - Admin Shell: `http://localhost:3001`
 - Users Remote: `http://localhost:6517`
@@ -128,6 +137,7 @@ Use the standard checks instead:
 ## Development Best Practices
 
 ### Code Style and Formatting
+
 - The project uses ESLint and Prettier for code formatting
 - Run formatting before committing:
   ```bash
@@ -135,17 +145,20 @@ Use the standard checks instead:
   ```
 
 ### TypeScript
+
 - All code should be type-safe
 - Use proper TypeScript interfaces and types
 - Avoid using `any` type
 
 ### Module Federation
+
 - Remote modules should expose their components via the `exposes` configuration
 - Shared dependencies should be marked as singletons when appropriate
 - Use the `preloadRemote` function for better performance
 - The host (`admin-shell`) loads environment-specific remote URLs from `apps/admin-shell/public/config/remote-configs.json`
 
 ### State Management
+
 - Use the global shell store for shared state
 - Avoid duplicating state across modules
 - Use Zustand for local component state when needed
@@ -157,23 +170,26 @@ Use the standard checks instead:
 ### Vercel Deployment
 
 1. Install Vercel CLI:
+
    ```bash
    npm install -g vercel
    ```
 
 2. Link your project to Vercel:
+
    ```bash
    vercel link
    ```
 
 3. Deploy the applications:
+
    ```bash
    # Deploy admin-shell
    vercel --prod --scope your-team-name
-   
+
    # Deploy web-shell
    vercel --prod --scope your-team-name
-   
+
    # Deploy users-remote
    vercel --prod --scope your-team-name
    ```
@@ -192,6 +208,7 @@ NODE_ENV=production
 ### CI/CD Configuration
 
 The project includes a GitHub Actions workflow for CI/CD. The workflow:
+
 - Runs tests on push to main branch
 - Builds and deploys applications on push to production branch
 - Runs linting and formatting checks
@@ -203,15 +220,18 @@ The project includes a GitHub Actions workflow for CI/CD. The workflow:
 ### Common Issues
 
 1. **Module Federation Loading Errors**:
+
    - Ensure all remote applications are running
    - Check the browser console for detailed error messages
    - Verify the remote URLs in `module-federation-loader.ts`
 
 2. **Authentication Issues**:
+
    - Verify the `NEXTAUTH_URL` and `NEXTAUTH_SECRET` are correctly configured
    - Check the session management in `shell-store.ts`
 
 3. **TypeScript Errors**:
+
    - Run `pnpm run type-check` to identify type errors
    - Ensure all dependencies are properly typed
 

@@ -292,7 +292,9 @@ export const Checkbox = React.forwardRef<
         )}
         {...props}
       >
-        <CheckboxPrimitive.Indicator {...stylex.props(styles.checkboxIndicator)}>
+        <CheckboxPrimitive.Indicator
+          {...stylex.props(styles.checkboxIndicator)}
+        >
           {currentChecked === 'indeterminate' ? (
             <Minus size={12} strokeWidth={3} />
           ) : (
@@ -341,13 +343,7 @@ export const RadioGroup = React.forwardRef<
   RadioGroupProps
 >(
   (
-    {
-      orientation = 'vertical',
-      sx: customSx,
-      className,
-      style,
-      ...props
-    },
+    { orientation = 'vertical', sx: customSx, className, style, ...props },
     ref,
   ) => {
     const styleProps = mergeStylexProps(

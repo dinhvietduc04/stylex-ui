@@ -1,34 +1,34 @@
-import type * as React from 'react'
-import type { LucideIcon } from 'lucide-react'
+import type * as React from 'react';
+import type { LucideIcon } from 'lucide-react';
 
 export interface NavigationItem {
-    id?: string;
-    label: string;
-    href?: string;
-    icon?: LucideIcon;
-    badge?: React.ReactNode;
-    children?: NavigationItem[];
-    exact?: boolean;
-    disabled?: boolean;
+  id?: string;
+  label: string;
+  href?: string;
+  icon?: LucideIcon;
+  badge?: React.ReactNode;
+  children?: NavigationItem[];
+  exact?: boolean;
+  disabled?: boolean;
 }
 
 export interface NavigationSection<T extends NavigationItem = NavigationItem> {
-    id?: string;
-    label?: string;
-    items: T[];
+  id?: string;
+  label?: string;
+  items: T[];
 }
 
 export interface BreadcrumbItem {
-    label: string;
-    href?: string;
-    icon?: LucideIcon;
+  label: string;
+  href?: string;
+  icon?: LucideIcon;
 }
 
 export function normalizePath(path: string): string {
-    const cleaned = (path || '/').split(/[?#]/, 1)[0] ?? '/';
-    const slashed = cleaned.replace(/\/+/g, '/');
+  const cleaned = (path || '/').split(/[?#]/, 1)[0] ?? '/';
+  const slashed = cleaned.replace(/\/+/g, '/');
 
-    return slashed === '/' ? '/' : slashed.replace(/\/+$/, '') || '/';
+  return slashed === '/' ? '/' : slashed.replace(/\/+$/, '') || '/';
 }
 
 export function isPathActive(
@@ -57,10 +57,7 @@ export function findActiveTrail(
     depth: number;
   }> = [];
 
-  const visit = (
-    item: NavigationItem,
-    ancestors: NavigationItem[],
-  ): void => {
+  const visit = (item: NavigationItem, ancestors: NavigationItem[]): void => {
     const trail = [...ancestors, item];
 
     if (item.href && isPathActive(pathname, item.href, item.exact)) {
@@ -80,9 +77,7 @@ export function findActiveTrail(
     visit(item, []);
   });
 
-  candidates.sort(
-    (a, b) => b.hrefLength - a.hrefLength || b.depth - a.depth,
-  );
+  candidates.sort((a, b) => b.hrefLength - a.hrefLength || b.depth - a.depth);
 
   return candidates[0]?.trail ?? [];
 }
@@ -140,20 +135,17 @@ export function buildBreadcrumbs({
 
   const match = entries
     .filter(
-      ({ item }) =>
-        item.href && isPathActive(path, item.href, item.exact),
+      ({ item }) => item.href && isPathActive(path, item.href, item.exact),
     )
     .sort(
       (a, b) =>
-        normalizePath(b.item.href!).length -
-        normalizePath(a.item.href!).length,
+        normalizePath(b.item.href!).length - normalizePath(a.item.href!).length,
     )[0];
 
   const crumbs: BreadcrumbItem[] = [];
   const rootPath = root?.href ? normalizePath(root.href) : null;
   const pathUnderRoot =
-    rootPath !== null &&
-    (path === rootPath || path.startsWith(`${rootPath}/`));
+    rootPath !== null && (path === rootPath || path.startsWith(`${rootPath}/`));
 
   if (match?.item.href) {
     for (const entry of [...match.ancestors, match.item]) {
@@ -193,9 +185,7 @@ export function buildBreadcrumbs({
       resolveSegment?.(segment, { index, parentPath }) ??
       humanizeSegment(segment);
 
-    parentPath = parentPath
-      ? `${parentPath}/${segment}`
-      : `/${segment}`;
+    parentPath = parentPath ? `${parentPath}/${segment}` : `/${segment}`;
 
     crumbs.push({ label, href: parentPath });
   });

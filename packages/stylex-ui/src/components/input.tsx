@@ -314,8 +314,8 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         .join(' ') || undefined;
 
     const internalRef = React.useRef<HTMLInputElement | null>(null);
-    const [uncontrolledHasValue, setUncontrolledHasValue] = React.useState(
-      () => Boolean(defaultValue !== undefined && String(defaultValue).length > 0),
+    const [uncontrolledHasValue, setUncontrolledHasValue] = React.useState(() =>
+      Boolean(defaultValue !== undefined && String(defaultValue).length > 0),
     );
 
     const setRefs = React.useCallback(
@@ -531,8 +531,8 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         .join(' ') || undefined;
 
     const internalRef = React.useRef<HTMLTextAreaElement | null>(null);
-    const [charLength, setCharLength] = React.useState(() =>
-      String(value ?? defaultValue ?? '').length,
+    const [charLength, setCharLength] = React.useState(
+      () => String(value ?? defaultValue ?? '').length,
     );
 
     const setRefs = React.useCallback(
@@ -548,9 +548,7 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
     );
 
     const isControlled = value !== undefined;
-    const currentLen = isControlled
-      ? String(value ?? '').length
-      : charLength;
+    const currentLen = isControlled ? String(value ?? '').length : charLength;
 
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       if (!isControlled) {
@@ -680,7 +678,9 @@ export const FormField = React.forwardRef<HTMLDivElement, FormFieldProps>(
                   </span>
                 ) : null}
               </label>
-            ) : <span />}
+            ) : (
+              <span />
+            )}
             {labelAction}
           </div>
         ) : null}

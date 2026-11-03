@@ -20,30 +20,39 @@ export function UsersRemote({ session }: UsersRemoteProps) {
   const basePath = '/admin/users';
   // Normalize pathname: remove basePath and ensure it starts with /
   const pathWithoutBase = pathname.replace(basePath, '');
-  const subPath = pathWithoutBase === '' ? '/' : pathWithoutBase.startsWith('/') ? pathWithoutBase : '/' + pathWithoutBase;
+  const subPath =
+    pathWithoutBase === ''
+      ? '/'
+      : pathWithoutBase.startsWith('/')
+        ? pathWithoutBase
+        : '/' + pathWithoutBase;
   const search = searchParams.toString();
 
-  const handleNavigate = useCallback((to: string) => {
-    // Normalize the 'to' path
-    const normalizedTo = to.startsWith('/') ? to : '/' + to;
-    const newPath = basePath + normalizedTo;
-    
-    // Normalize paths for comparison (remove trailing slashes except for root)
-    const normalizeForCompare = (p: string) => p === basePath ? basePath : p.replace(/\/$/, '');
-    const normalizedNewPath = normalizeForCompare(newPath);
-    const normalizedCurrentPath = normalizeForCompare(pathname);
-    
-    // Prevent navigation loops:
-    // 1. Don't navigate if it's the same path
-    // 2. Don't navigate if we just navigated to this path
-    if (
-      normalizedNewPath !== normalizedCurrentPath &&
-      normalizedNewPath !== lastNavigatedPath.current
-    ) {
-      lastNavigatedPath.current = normalizedNewPath;
-      router.push(newPath);
-    }
-  }, [pathname, router]);
+  const handleNavigate = useCallback(
+    (to: string) => {
+      // Normalize the 'to' path
+      const normalizedTo = to.startsWith('/') ? to : '/' + to;
+      const newPath = basePath + normalizedTo;
+
+      // Normalize paths for comparison (remove trailing slashes except for root)
+      const normalizeForCompare = (p: string) =>
+        p === basePath ? basePath : p.replace(/\/$/, '');
+      const normalizedNewPath = normalizeForCompare(newPath);
+      const normalizedCurrentPath = normalizeForCompare(pathname);
+
+      // Prevent navigation loops:
+      // 1. Don't navigate if it's the same path
+      // 2. Don't navigate if we just navigated to this path
+      if (
+        normalizedNewPath !== normalizedCurrentPath &&
+        normalizedNewPath !== lastNavigatedPath.current
+      ) {
+        lastNavigatedPath.current = normalizedNewPath;
+        router.push(newPath);
+      }
+    },
+    [pathname, router],
+  );
 
   const routingProps = {
     mode: 'hosted' as const,
@@ -59,9 +68,7 @@ export function UsersRemote({ session }: UsersRemoteProps) {
         remoteName="users"
         session={session}
         routingProps={routingProps}
-        fallback={
-          <SkeletonCard />
-        }
+        fallback={<SkeletonCard />}
       />
     </div>
   );

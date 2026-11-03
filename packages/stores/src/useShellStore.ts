@@ -8,7 +8,7 @@ export function useShellStore<T>(selector: (state: ShellStore) => T): T {
   return useSyncExternalStore(
     store.subscribe,
     () => selector(store.getState()),
-    () => selector(store.getState()) // No server-side fallback since we don't SSR the store
+    () => selector(store.getState()), // No server-side fallback since we don't SSR the store
   );
 }
 
@@ -22,8 +22,8 @@ export function useNotifications() {
 }
 
 export function useUnreadNotificationsCount() {
-  return useShellStore((state) =>
-    state.ui.notifications.filter((n) => !n.read).length
+  return useShellStore(
+    (state) => state.ui.notifications.filter((n) => !n.read).length,
   );
 }
 
@@ -31,7 +31,7 @@ export function useUnreadNotificationsCount() {
 export function useShellActions() {
   const store = getShellStore();
   const state = store.getState();
-  
+
   return {
     setSession: state.setSession,
     setTenantId: state.setTenantId,

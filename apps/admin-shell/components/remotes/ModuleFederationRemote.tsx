@@ -39,7 +39,9 @@ export function ModuleFederationRemote({
   routingProps,
   fallback = <RemoteSkeleton />,
 }: ModuleFederationRemoteProps) {
-  const [Component, setComponent] = useState<React.ComponentType<any> | null>(null);
+  const [Component, setComponent] = useState<React.ComponentType<any> | null>(
+    null,
+  );
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -60,48 +62,51 @@ export function ModuleFederationRemote({
         }
       } catch (err) {
         console.error(`Failed to load remote ${remoteName}:`, err);
-        
+
         // Extract a more helpful error message
         let errorMessage = 'Failed to load remote';
         if (err instanceof Error) {
           errorMessage = err.message;
           // Check for common connection errors
-          if (err.message.includes('Failed to fetch') || 
-              err.message.includes('NetworkError') ||
-              err.message.includes('Failed to connect')) {
+          if (
+            err.message.includes('Failed to fetch') ||
+            err.message.includes('NetworkError') ||
+            err.message.includes('Failed to connect')
+          ) {
             errorMessage = `Cannot connect to ${remoteName} remote server. Make sure the remote dev server is running.`;
           } else if (err.message.includes('Unknown remote')) {
             errorMessage = `Remote configuration not found for ${remoteName}. Check remote-configs.json.`;
           }
         }
-        
+
         if (mounted) {
           setError(errorMessage);
           setIsLoading(false);
         }
-        
+
         // Implement retry logic with exponential backoff (only if error is retryable)
-        const isRetryable = err instanceof Error && 
+        const isRetryable =
+          err instanceof Error &&
           !err.message.includes('Unknown remote') &&
           !err.message.includes('not available');
-        
+
         if (isRetryable) {
           const maxRetries = 2; // Reduced retries since loader already has extensive retry logic
           const baseDelay = 2000; // 2 seconds
-          
+
           for (let attempt = 0; attempt < maxRetries; attempt++) {
             if (!mounted) break;
-            
+
             const delay = baseDelay * Math.pow(2, attempt); // Exponential backoff
             console.warn(
               `[MF] Attempt ${attempt + 1} of ${maxRetries}: Retrying to load remote ${remoteName} in ${delay}ms...`,
               err,
             );
-            
+
             await new Promise((r) => setTimeout(r, delay));
-            
+
             if (!mounted) break;
-            
+
             try {
               const RemoteComponent = await loadRemoteComponent(remoteName);
               if (mounted) {
@@ -117,9 +122,10 @@ export function ModuleFederationRemote({
                   retryErr,
                 );
                 if (mounted) {
-                  const retryErrorMessage = retryErr instanceof Error 
-                    ? retryErr.message 
-                    : 'Failed to load remote after retries';
+                  const retryErrorMessage =
+                    retryErr instanceof Error
+                      ? retryErr.message
+                      : 'Failed to load remote after retries';
                   setError(retryErrorMessage);
                 }
               }

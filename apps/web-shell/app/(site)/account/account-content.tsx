@@ -1,6 +1,12 @@
 'use client';
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@repo/ui';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@repo/ui';
 import type { Session } from 'next-auth';
 
 interface AccountContentProps {
@@ -18,7 +24,9 @@ export function AccountContent({ session }: AccountContentProps) {
         <CardContent className="space-y-4">
           <div>
             <p className="text-sm font-medium">Email</p>
-            <p className="text-sm text-muted-foreground">{session.user.email}</p>
+            <p className="text-sm text-muted-foreground">
+              {session.user.email}
+            </p>
           </div>
           <div>
             <p className="text-sm font-medium">Name</p>

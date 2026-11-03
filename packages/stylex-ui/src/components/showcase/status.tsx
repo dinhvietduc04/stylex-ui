@@ -60,11 +60,41 @@ const INITIAL_TAGS: TagItem[] = [
 ];
 
 const services = [
-  { name: 'API gateway', status: 'Operational', variant: 'success' as const, uptime: '99.99%', pulse: true },
-  { name: 'Release queue', status: 'Backlog', variant: 'warning' as const, uptime: '412 jobs', pulse: true },
-  { name: 'Legacy node', status: 'Offline', variant: 'error' as const, uptime: '3h 12m', pulse: false },
-  { name: 'Token sync', status: 'Deploying', variant: 'info' as const, uptime: 'v1.0.0', pulse: true },
-  { name: 'Archive', status: 'Idle', variant: 'neutral' as const, uptime: '—', pulse: false },
+  {
+    name: 'API gateway',
+    status: 'Operational',
+    variant: 'success' as const,
+    uptime: '99.99%',
+    pulse: true,
+  },
+  {
+    name: 'Release queue',
+    status: 'Backlog',
+    variant: 'warning' as const,
+    uptime: '412 jobs',
+    pulse: true,
+  },
+  {
+    name: 'Legacy node',
+    status: 'Offline',
+    variant: 'error' as const,
+    uptime: '3h 12m',
+    pulse: false,
+  },
+  {
+    name: 'Token sync',
+    status: 'Deploying',
+    variant: 'info' as const,
+    uptime: 'v1.0.0',
+    pulse: true,
+  },
+  {
+    name: 'Archive',
+    status: 'Idle',
+    variant: 'neutral' as const,
+    uptime: '—',
+    pulse: false,
+  },
 ];
 
 export function StatusSection() {
@@ -78,7 +108,10 @@ export function StatusSection() {
       meta="Badge · tag · status dot"
       description="Six semantic variants, one grammar. Fill carries weight, tint carries context, and the pulse is reserved for something genuinely live."
     >
-      <Specimen label="Badge" note="Subtle by default; switch to solid when the badge must survive a busy background.">
+      <Specimen
+        label="Badge"
+        note="Subtle by default; switch to solid when the badge must survive a busy background."
+      >
         <div {...stylex.props(styles.wrap)}>
           <Badge variant="success" dot>
             Operational
@@ -118,7 +151,10 @@ export function StatusSection() {
         </div>
       </Specimen>
 
-      <Specimen label="Tag" note="Removable tags keep their own hit target so the label itself stays a label.">
+      <Specimen
+        label="Tag"
+        note="Removable tags keep their own hit target so the label itself stays a label."
+      >
         <div {...stylex.props(styles.wrap)}>
           {tags.map((tag) => (
             <Tag
@@ -145,7 +181,12 @@ export function StatusSection() {
         </div>
       </Specimen>
 
-      <Specimen label="Status dot" note="The ring pulses behind the dot; the dot itself never moves." stack last>
+      <Specimen
+        label="Status dot"
+        note="The ring pulses behind the dot; the dot itself never moves."
+        stack
+        last
+      >
         <div {...stylex.props(styles.dotList)}>
           {services.map((service, index) => (
             <div
@@ -160,7 +201,13 @@ export function StatusSection() {
                 pulse={service.pulse}
                 label={service.name}
               />
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.75rem',
+                }}
+              >
                 <span {...stylex.props(styles.dotMeta)}>{service.uptime}</span>
                 <Badge variant={service.variant} size="sm">
                   {service.status}

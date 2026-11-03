@@ -84,11 +84,7 @@ function collapseItems(
     return items;
   }
 
-  return [
-    items[0]!,
-    { label: '…', ellipsis: true },
-    ...items.slice(-2),
-  ];
+  return [items[0]!, { label: '…', ellipsis: true }, ...items.slice(-2)];
 }
 
 export interface BreadcrumbsProps {
@@ -134,10 +130,7 @@ export function Breadcrumbs({
               ) : null}
 
               {!isLast && !item.ellipsis && item.href ? (
-                <LinkComponent
-                  href={item.href}
-                  {...stylex.props(styles.link)}
-                >
+                <LinkComponent href={item.href} {...stylex.props(styles.link)}>
                   {item.label}
                 </LinkComponent>
               ) : (

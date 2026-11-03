@@ -41,11 +41,8 @@ export function NotificationsDrawer({
 }: NotificationsDrawerProps) {
   const notifications = useNotifications();
   const unreadCount = useUnreadNotificationsCount();
-  const {
-    markNotificationRead,
-    removeNotification,
-    clearNotifications,
-  } = useShellActions();
+  const { markNotificationRead, removeNotification, clearNotifications } =
+    useShellActions();
   const confirm = useConfirm();
 
   const handleClearAll = async () => {
@@ -66,9 +63,7 @@ export function NotificationsDrawer({
       open={open}
       onOpenChange={onOpenChange}
       title="Notifications"
-      description={
-        unreadCount > 0 ? `${unreadCount} unread` : undefined
-      }
+      description={unreadCount > 0 ? `${unreadCount} unread` : undefined}
       side="right"
       size="md"
       footer={

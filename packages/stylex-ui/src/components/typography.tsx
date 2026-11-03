@@ -208,7 +208,8 @@ export const Typography = React.forwardRef<HTMLElement, TypographyProps>(
     },
     ref,
   ) => {
-    const Component = (as ?? defaultElementMap[variant ?? 'body']) as React.ElementType;
+    const Component = (as ??
+      defaultElementMap[variant ?? 'body']) as React.ElementType;
     const styleProps = mergeStylexProps(
       { className, style, sx: customSx },
       ...typographyVariants({ variant, tone, weight, align }),

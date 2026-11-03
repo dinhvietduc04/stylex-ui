@@ -15,8 +15,10 @@ export default async function UsersCatchAllPage({
     redirect('/login');
   }
 
+  const permissions = session.user.permissions ?? [];
+
   // Server-side permission check
-  if (!canWithPermissions('user:read', session.user.permissions || [])) {
+  if (!canWithPermissions('user:read', permissions || [])) {
     redirect('/admin/unauthorized');
   }
 

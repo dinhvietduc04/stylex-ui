@@ -241,29 +241,109 @@ function Ramp({
 
 const emberSteps: RampStep[] = [
   { step: '50', value: globalTokens.ember50, labelColor: 'oklch(0.3 0.08 45)' },
-  { step: '100', value: globalTokens.ember100, labelColor: 'oklch(0.3 0.08 45)' },
-  { step: '200', value: globalTokens.ember200, labelColor: 'oklch(0.3 0.08 45)' },
-  { step: '300', value: globalTokens.ember300, labelColor: 'oklch(0.28 0.07 45)' },
-  { step: '400', value: globalTokens.ember400, labelColor: 'oklch(0.24 0.06 45)' },
-  { step: '500', value: globalTokens.ember500, labelColor: 'oklch(0.2 0.05 45)' },
-  { step: '600', value: globalTokens.ember600, labelColor: 'oklch(0.99 0.01 70)' },
-  { step: '700', value: globalTokens.ember700, labelColor: 'oklch(0.99 0.01 70)' },
-  { step: '800', value: globalTokens.ember800, labelColor: 'oklch(0.99 0.01 70)' },
-  { step: '900', value: globalTokens.ember900, labelColor: 'oklch(0.99 0.01 70)' },
-  { step: '950', value: globalTokens.ember950, labelColor: 'oklch(0.95 0.02 70)' },
+  {
+    step: '100',
+    value: globalTokens.ember100,
+    labelColor: 'oklch(0.3 0.08 45)',
+  },
+  {
+    step: '200',
+    value: globalTokens.ember200,
+    labelColor: 'oklch(0.3 0.08 45)',
+  },
+  {
+    step: '300',
+    value: globalTokens.ember300,
+    labelColor: 'oklch(0.28 0.07 45)',
+  },
+  {
+    step: '400',
+    value: globalTokens.ember400,
+    labelColor: 'oklch(0.24 0.06 45)',
+  },
+  {
+    step: '500',
+    value: globalTokens.ember500,
+    labelColor: 'oklch(0.2 0.05 45)',
+  },
+  {
+    step: '600',
+    value: globalTokens.ember600,
+    labelColor: 'oklch(0.99 0.01 70)',
+  },
+  {
+    step: '700',
+    value: globalTokens.ember700,
+    labelColor: 'oklch(0.99 0.01 70)',
+  },
+  {
+    step: '800',
+    value: globalTokens.ember800,
+    labelColor: 'oklch(0.99 0.01 70)',
+  },
+  {
+    step: '900',
+    value: globalTokens.ember900,
+    labelColor: 'oklch(0.99 0.01 70)',
+  },
+  {
+    step: '950',
+    value: globalTokens.ember950,
+    labelColor: 'oklch(0.95 0.02 70)',
+  },
 ];
 
 const emeraldSteps: RampStep[] = [
-  { step: '50', value: globalTokens.emerald50, labelColor: 'oklch(0.28 0.06 168)' },
-  { step: '100', value: globalTokens.emerald100, labelColor: 'oklch(0.28 0.06 168)' },
-  { step: '200', value: globalTokens.emerald200, labelColor: 'oklch(0.28 0.06 168)' },
-  { step: '400', value: globalTokens.emerald400, labelColor: 'oklch(0.24 0.05 168)' },
-  { step: '500', value: globalTokens.emerald500, labelColor: 'oklch(0.2 0.04 168)' },
-  { step: '600', value: globalTokens.emerald600, labelColor: 'oklch(0.99 0.01 168)' },
-  { step: '700', value: globalTokens.emerald700, labelColor: 'oklch(0.99 0.01 168)' },
-  { step: '800', value: globalTokens.emerald800, labelColor: 'oklch(0.99 0.01 168)' },
-  { step: '900', value: globalTokens.emerald900, labelColor: 'oklch(0.99 0.01 168)' },
-  { step: '950', value: globalTokens.emerald950, labelColor: 'oklch(0.95 0.02 168)' },
+  {
+    step: '50',
+    value: globalTokens.emerald50,
+    labelColor: 'oklch(0.28 0.06 168)',
+  },
+  {
+    step: '100',
+    value: globalTokens.emerald100,
+    labelColor: 'oklch(0.28 0.06 168)',
+  },
+  {
+    step: '200',
+    value: globalTokens.emerald200,
+    labelColor: 'oklch(0.28 0.06 168)',
+  },
+  {
+    step: '400',
+    value: globalTokens.emerald400,
+    labelColor: 'oklch(0.24 0.05 168)',
+  },
+  {
+    step: '500',
+    value: globalTokens.emerald500,
+    labelColor: 'oklch(0.2 0.04 168)',
+  },
+  {
+    step: '600',
+    value: globalTokens.emerald600,
+    labelColor: 'oklch(0.99 0.01 168)',
+  },
+  {
+    step: '700',
+    value: globalTokens.emerald700,
+    labelColor: 'oklch(0.99 0.01 168)',
+  },
+  {
+    step: '800',
+    value: globalTokens.emerald800,
+    labelColor: 'oklch(0.99 0.01 168)',
+  },
+  {
+    step: '900',
+    value: globalTokens.emerald900,
+    labelColor: 'oklch(0.99 0.01 168)',
+  },
+  {
+    step: '950',
+    value: globalTokens.emerald950,
+    labelColor: 'oklch(0.95 0.02 168)',
+  },
 ];
 
 const surfaceSwatches = [
@@ -412,17 +492,17 @@ export function FoundationsSection() {
                 {s.token} · {s.px}px
               </span>
               <div {...stylex.props(styles.barTrack)}>
-                <div
-                  {...stylex.props(styles.bar)}
-                  style={{ width: s.value }}
-                />
+                <div {...stylex.props(styles.bar)} style={{ width: s.value }} />
               </div>
             </div>
           ))}
         </div>
       </Specimen>
 
-      <Specimen label="Radius" note="Ember rounds; Emerald tightens. Same tokens, different preset.">
+      <Specimen
+        label="Radius"
+        note="Ember rounds; Emerald tightens. Same tokens, different preset."
+      >
         <div {...stylex.props(styles.radiusRow)}>
           {radiusStepList.map((r) => (
             <div key={r.token} {...stylex.props(styles.radiusBox)}>
@@ -436,7 +516,11 @@ export function FoundationsSection() {
         </div>
       </Specimen>
 
-      <Specimen label="Elevation" note="Five steps, every one an offset blur rather than a halo." last>
+      <Specimen
+        label="Elevation"
+        note="Five steps, every one an offset blur rather than a halo."
+        last
+      >
         <div {...stylex.props(styles.elevationRow)}>
           {elevationSteps.map((e) => (
             <div key={e.token} {...stylex.props(styles.elevationBox)}>

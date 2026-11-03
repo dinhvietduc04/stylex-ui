@@ -1,29 +1,35 @@
 # CSS Configuration Strategy
 
 ## Overview
+
 This document outlines the CSS configuration strategy used across all apps in the project. The goal is to maintain consistency and ensure a unified approach to styling.
 
 ## Current Setup
 
 ### 1. **CSS Variables (`globals.css`)**
+
 - The `globals.css` file in `packages/ui/src/globals.css` defines CSS variables for theming, including colors and border radius, for both light and dark modes.
 - These variables are referenced in the `tailwind.config.js` files of each app to ensure a consistent design system.
 
 ### 2. **Tailwind Configuration (`tailwind.config.js`)**
+
 - Each app (`admin-shell`, `users-remote`, `web-shell`) has its own `tailwind.config.js` file.
 - These files are now identical in structure and content, ensuring consistency across all apps.
 - The configuration extends Tailwind's theme to use the CSS variables defined in `globals.css`.
 
 ### 3. **Hybrid Approach**
+
 - All apps use a hybrid approach where `globals.css` provides the design tokens (CSS variables), and `tailwind.config.js` extends Tailwind's theme to use these tokens.
 - This approach allows for a consistent design system while leveraging the power of Tailwind CSS for utility classes.
 
 ## Key Features
 
 ### CSS Variables
+
 The `globals.css` file defines the following CSS variables:
 
 - **Colors:**
+
   - `--background`, `--foreground`
   - `--card`, `--card-foreground`
   - `--popover`, `--popover-foreground`
@@ -38,6 +44,7 @@ The `globals.css` file defines the following CSS variables:
   - `--radius`
 
 ### Tailwind Configuration
+
 The `tailwind.config.js` files include:
 
 - **Dark Mode:** Enabled via the `class` strategy.
@@ -57,4 +64,5 @@ The `tailwind.config.js` files include:
 - **Automation:** Automate the synchronization of `tailwind.config.js` files across apps to prevent drift.
 
 ## Conclusion
+
 The current CSS configuration strategy ensures consistency across all apps by using a hybrid approach of CSS variables and Tailwind CSS. This strategy leverages the strengths of both approaches to provide a robust and maintainable design system.

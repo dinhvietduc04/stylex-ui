@@ -1,6 +1,13 @@
 'use client';
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, Button } from '@repo/ui';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  Button,
+} from '@repo/ui';
 import type { Session } from 'next-auth';
 
 interface HomeContentProps {
@@ -36,8 +43,8 @@ export function HomeContent({ session }: HomeContentProps) {
           </CardHeader>
           <CardContent>
             <p className="text-sm text-muted-foreground">
-              This is the customer-facing website. For admin features, visit
-              the admin portal.
+              This is the customer-facing website. For admin features, visit the
+              admin portal.
             </p>
           </CardContent>
         </Card>

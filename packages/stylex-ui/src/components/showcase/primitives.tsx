@@ -136,7 +136,11 @@ export function Section({
   children,
 }: SectionProps) {
   return (
-    <section id={id} aria-labelledby={`${id}-title`} {...stylex.props(styles.section)}>
+    <section
+      id={id}
+      aria-labelledby={`${id}-title`}
+      {...stylex.props(styles.section)}
+    >
       <div {...stylex.props(styles.head)}>
         {eyebrow || meta ? (
           <span {...stylex.props(styles.eyebrow)}>
@@ -149,9 +153,7 @@ export function Section({
           {title}
         </h2>
       </div>
-      {description ? (
-        <p {...stylex.props(styles.desc)}>{description}</p>
-      ) : null}
+      {description ? <p {...stylex.props(styles.desc)}>{description}</p> : null}
       <div {...stylex.props(styles.body)}>{children}</div>
     </section>
   );

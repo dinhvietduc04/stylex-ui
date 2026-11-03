@@ -61,7 +61,8 @@ const styles = stylex.create({
   brandBtn: {
     display: 'inline-flex',
     alignItems: 'center',
-    gap: '0.4375rem',    height: '1.75rem',
+    gap: '0.4375rem',
+    height: '1.75rem',
     paddingLeft: '0.5rem',
     paddingRight: '0.6875rem',
     borderRadius: '9999px',

@@ -1,11 +1,6 @@
 import Link from 'next/link';
 import { LayoutDashboard } from 'lucide-react';
-import {
-  Icon,
-  Text,
-  globalTokens,
-  semanticTokens,
-} from '@repo/stylex-ui';
+import { Icon, Text, globalTokens, semanticTokens } from '@repo/stylex-ui';
 
 const markStyle = {
   display: 'inline-flex',

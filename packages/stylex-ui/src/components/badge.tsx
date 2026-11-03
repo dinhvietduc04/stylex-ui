@@ -240,16 +240,10 @@ export const StatusDot = React.forwardRef<HTMLSpanElement, StatusDotProps>(
         aria-hidden={label ? 'true' : undefined}
       >
         {pulse ? (
-          <span
-            {...stylex.props(styles.dotPulseRing, colorMap[variant])}
-          />
+          <span {...stylex.props(styles.dotPulseRing, colorMap[variant])} />
         ) : null}
         <span
-          {...stylex.props(
-            styles.dotCore,
-            sizeMap[size],
-            colorMap[variant],
-          )}
+          {...stylex.props(styles.dotCore, sizeMap[size], colorMap[variant])}
         />
       </span>
     );
@@ -354,11 +348,7 @@ export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
     return (
       <span ref={ref} {...styleProps} {...props}>
         {dot || pulse ? (
-          <StatusDot
-            variant={resolvedVariant}
-            size="sm"
-            pulse={pulse}
-          />
+          <StatusDot variant={resolvedVariant} size="sm" pulse={pulse} />
         ) : null}
         {children}
       </span>

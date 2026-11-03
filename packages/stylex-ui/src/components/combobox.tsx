@@ -393,7 +393,11 @@ export function Combobox({
                 aria-label="Clear search query"
                 onClick={() => setQuery('')}
                 {...stylex.props(styles.clearBadge)}
-                style={{ border: 'none', background: 'transparent', cursor: 'pointer' }}
+                style={{
+                  border: 'none',
+                  background: 'transparent',
+                  cursor: 'pointer',
+                }}
               >
                 <X size={13} aria-hidden="true" />
               </button>
@@ -436,9 +440,7 @@ export function Combobox({
                         </span>
                       ) : null}
                     </span>
-                    {isSelected ? (
-                      <Check size={15} aria-hidden="true" />
-                    ) : null}
+                    {isSelected ? <Check size={15} aria-hidden="true" /> : null}
                   </button>
                 );
               })

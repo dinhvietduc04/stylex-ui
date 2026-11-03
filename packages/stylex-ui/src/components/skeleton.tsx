@@ -133,8 +133,7 @@ export const Skeleton = React.forwardRef<HTMLDivElement, SkeletonProps>(
               key={idx}
               {...mergeStylexProps(
                 {
-                  style:
-                    idx === lines - 1 ? { width: '68%' } : dimensionStyle,
+                  style: idx === lines - 1 ? { width: '68%' } : dimensionStyle,
                 },
                 ...skeletonVariants({ variant: 'text' }),
               )}

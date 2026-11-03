@@ -2,11 +2,7 @@
 
 import * as React from 'react';
 import * as stylex from '@stylexjs/stylex';
-import {
-  ChevronLeft,
-  ChevronRight,
-  X,
-} from 'lucide-react';
+import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 import { globalTokens } from '../tokens/global.stylex';
 import { semanticTokens } from '../tokens/semantic.stylex';
 import { componentTokens } from '../tokens/component.stylex';
@@ -365,12 +361,7 @@ function SidebarNode({
           {item.label.charAt(0).toUpperCase()}
         </span>
       ) : null}
-      <span
-        {...stylex.props(
-          styles.label,
-          collapsed && styles.labelCollapsed,
-        )}
-      >
+      <span {...stylex.props(styles.label, collapsed && styles.labelCollapsed)}>
         {item.label}
       </span>
       {!collapsed && item.badge ? (
@@ -565,12 +556,9 @@ function SidebarBody({
         )}
       >
         <div
-          {...stylex.props(
-            styles.brand,
-            collapsed && styles.brandCollapsed,
-          )}
+          {...stylex.props(styles.brand, collapsed && styles.brandCollapsed)}
         >
-          {collapsed ? brandCollapsed ?? brand : brand}
+          {collapsed ? (brandCollapsed ?? brand) : brand}
         </div>
         {showClose ? (
           <IconButton
@@ -582,21 +570,14 @@ function SidebarBody({
           />
         ) : showToggle ? (
           <IconButton
-            aria-label={
-              collapsed ? 'Expand sidebar' : 'Collapse sidebar'
-            }
-            title={
-              collapsed ? 'Expand sidebar' : 'Collapse sidebar'
-            }
+            aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+            title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
             variant="ghost"
             size="xs"
             shape="circle"
             onClick={onToggleCollapsed}
             icon={
-              <Icon
-                icon={collapsed ? ChevronRight : ChevronLeft}
-                size="sm"
-              />
+              <Icon icon={collapsed ? ChevronRight : ChevronLeft} size="sm" />
             }
           />
         ) : null}
@@ -642,10 +623,7 @@ function SidebarBody({
 
       {footer ? (
         <div
-          {...stylex.props(
-            styles.footer,
-            collapsed && styles.footerCollapsed,
-          )}
+          {...stylex.props(styles.footer, collapsed && styles.footerCollapsed)}
         >
           {footer}
         </div>
@@ -712,16 +690,11 @@ export function Sidebar({
   );
 
   const [expandedIds, setExpandedIds] = React.useState<Set<string>>(
-    () =>
-      new Set(
-        activeTrail.slice(0, -1).map(getNavigationItemKey),
-      ),
+    () => new Set(activeTrail.slice(0, -1).map(getNavigationItemKey)),
   );
 
   React.useEffect(() => {
-    const parentKeys = activeTrail
-      .slice(0, -1)
-      .map(getNavigationItemKey);
+    const parentKeys = activeTrail.slice(0, -1).map(getNavigationItemKey);
 
     if (parentKeys.length === 0) return;
 
@@ -826,10 +799,7 @@ export function Sidebar({
     <>
       <aside
         aria-label={ariaLabel}
-        {...stylex.props(
-          styles.aside,
-          isCollapsed && styles.asideCollapsed,
-        )}
+        {...stylex.props(styles.aside, isCollapsed && styles.asideCollapsed)}
       >
         {renderBody(isCollapsed, true)}
       </aside>

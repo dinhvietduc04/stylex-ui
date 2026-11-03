@@ -32,6 +32,7 @@ To publish shared packages to a private repository (e.g., GitHub Packages, npm p
 ### 2. Configure Authentication
 
 - For npm private registry, configure authentication in `.npmrc`:
+
   ```ini
   //registry.npmjs.org/:_authToken=your-token
   ```
@@ -45,6 +46,7 @@ To publish shared packages to a private repository (e.g., GitHub Packages, npm p
 ### 3. Publish the Package
 
 - Run the following command to publish the package:
+
   ```bash
   npm publish
   ```

@@ -6,33 +6,68 @@ import {
   redirectWithCleanSession,
 } from '@repo/auth-next/middleware';
 
+const UNAUTHORIZED_PATH = '/admin/unauthorized';
+
+function isUserAccessibleAdminRoute(path: string): boolean {
+  return path === '/admin/users' || path.startsWith('/admin/users');
+}
+
+const routePermissions: Array<{
+  prefix: string;
+  permission: Permission;
+}> = [
+  {
+    prefix: '/admin/users',
+    permission: 'user:read',
+  },
+];
+
+function loginPathWithCallback(request: NextRequest): string {
+  const callbackUrl = `${request.nextUrl.pathname}${request.nextUrl.search}`;
+  return `/login?callbackUrl=${encodeURIComponent(callbackUrl)}`;
+}
+
 export async function middleware(request: NextRequest) {
   const auth = await getMiddlewareAuth(request);
   const path = request.nextUrl.pathname;
+  const isAdminRoute = path === '/admin' || path.startsWith('/admin/');
+  const isMetricsRoute =
+    path === '/metrics-dashboard' || path.startsWith('/metrics-dashboard/');
+  const isProtectedRoute = isAdminRoute || isMetricsRoute;
 
   // Redirect to login if not authenticated
   if (!auth.token) {
-    if (path.startsWith('/admin')) {
-      return redirectWithCleanSession(request, auth, '/login');
+    if (isProtectedRoute) {
+      return redirectWithCleanSession(
+        request,
+        auth,
+        loginPathWithCallback(request),
+      );
     }
     return nextWithCleanSession(request, auth);
   }
 
-  // Map routes to required permissions
-  const routePermissions: Array<{
-    prefix: string;
-    permission: Permission;
-  }> = [{
-    prefix: '/admin/users', permission: 'user:read'},
-  ];
+  const permissions = auth.token.permissions ?? [];
+  const isUnauthorizedRoute = path === UNAUTHORIZED_PATH;
 
-  const requiredPermission = routePermissions.find(({ prefix }) => path === prefix || path.startsWith(`${prefix}/`));
+  if (
+    isProtectedRoute &&
+    !isUnauthorizedRoute &&
+    !isUserAccessibleAdminRoute(path) &&
+    !canWithPermissions('admin:access', permissions)
+  ) {
+    return redirectWithCleanSession(request, auth, UNAUTHORIZED_PATH);
+  }
 
-  if (requiredPermission) {
-    const permissions = auth.token.permissions || [];
-    if (!canWithPermissions(requiredPermission.permission, permissions)) {
-      return redirectWithCleanSession(request, auth, '/admin/unauthorized');
-    }
+  const requiredPermission = routePermissions.find(
+    ({ prefix }) => path === prefix || path.startsWith(`${prefix}/`),
+  );
+
+  if (
+    requiredPermission &&
+    !canWithPermissions(requiredPermission.permission, permissions)
+  ) {
+    return redirectWithCleanSession(request, auth, UNAUTHORIZED_PATH);
   }
 
   return nextWithCleanSession(request, auth);

@@ -122,7 +122,10 @@ export const CardDescription = React.forwardRef<
 >(({ sx: customSx, className, style, ...props }, ref) => (
   <p
     ref={ref}
-    {...mergeStylexProps({ className, style, sx: customSx }, styles.description)}
+    {...mergeStylexProps(
+      { className, style, sx: customSx },
+      styles.description,
+    )}
     {...props}
   />
 ));
