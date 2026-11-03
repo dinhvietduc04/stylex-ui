@@ -15,6 +15,7 @@ import {
   emeraldDarkTheme,
   emeraldComponentTheme,
   emberComponentTheme,
+  chartThemeScope,
 } from './themes.stylex';
 
 export type BrandPreset = 'ember' | 'emerald';
@@ -79,11 +80,13 @@ export function getActiveThemes(
     return [
       resolvedMode === 'dark' ? emeraldDarkTheme : emeraldLightTheme,
       emeraldComponentTheme,
+      chartThemeScope,
     ] as const;
   }
   return [
     resolvedMode === 'dark' ? emberDarkTheme : emberLightTheme,
     emberComponentTheme,
+    chartThemeScope,
   ] as const;
 }
 

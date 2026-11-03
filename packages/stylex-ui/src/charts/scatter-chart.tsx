@@ -1,0 +1,111 @@
+'use client';
+
+import * as React from 'react';
+import { ChartDataTable } from './components/chart-data-table';
+import { ChartLegend } from './components/chart-legend';
+import { ChartSkeleton } from './components/chart-skeleton';
+import { ChartViewport } from './components/chart-viewport';
+import type { ScatterImplProps } from './impl/recharts/scatter-impl';
+import { chartLoaders } from './lib/chart-loaders';
+import { useChartVisibility } from './lib/use-chart-visibility';
+import type { ScatterChartProps } from './types';
+
+const ScatterImpl = React.lazy(chartLoaders.scatter) as unknown as <
+  TDatum extends object,
+>(
+  props: ScatterImplProps<TDatum>,
+) => React.ReactElement;
+
+export function ScatterChart<TDatum extends object>({
+  data,
+  xKey,
+  xLabel,
+  series,
+  height = 320,
+  ariaLabel,
+  ariaDescription,
+  loading = false,
+  error,
+  emptyMessage,
+  showLegend,
+  showGrid = true,
+  showDataTable = true,
+  animate = true,
+  locale = 'en-US',
+  renderTooltip,
+  sizeKey,
+  xFormat,
+  minSize,
+  maxSize,
+  className,
+  style,
+  sx,
+}: ScatterChartProps<TDatum>) {
+  const { hiddenSeries, visibleSeries, toggleSeries } =
+    useChartVisibility(series);
+
+  const hasData = data.length > 0;
+  const hasVisibleSeries = visibleSeries.length > 0;
+  const legendVisible = showLegend ?? series.length > 1;
+  const resolvedEmptyMessage =
+    hasData && !hasVisibleSeries ? 'No series selected.' : emptyMessage;
+
+  return (
+    <ChartViewport
+      height={height}
+      ariaLabel={ariaLabel}
+      ariaDescription={ariaDescription}
+      loading={loading}
+      error={error}
+      isEmpty={!hasData || !hasVisibleSeries}
+      emptyMessage={resolvedEmptyMessage}
+      legend={
+        legendVisible ? (
+          <ChartLegend
+            series={series}
+            hiddenSeries={[...hiddenSeries]}
+            onToggleSeries={toggleSeries}
+          />
+        ) : null
+      }
+      dataTable={
+        showDataTable ? (
+          <ChartDataTable
+            data={data}
+            xKey={xKey}
+            xLabel={xLabel ?? 'X'}
+            xFormat={xFormat}
+            xCurrency={series[0]?.currency}
+            series={series}
+            caption={ariaLabel}
+            locale={locale}
+          />
+        ) : null
+      }
+      className={className}
+      style={style}
+      sx={sx}
+    >
+      {hasData && hasVisibleSeries ? (
+        <React.Suspense fallback={<ChartSkeleton height="100%" />}>
+          <ScatterImpl
+            data={data}
+            xKey={xKey}
+            series={visibleSeries}
+            ariaDescription={ariaDescription}
+            locale={locale}
+            animate={animate}
+            showGrid={showGrid}
+            renderTooltip={renderTooltip}
+            sizeKey={sizeKey}
+            xFormat={xFormat}
+            minSize={minSize}
+            maxSize={maxSize}
+          />
+        </React.Suspense>
+      ) : null}
+    </ChartViewport>
+  );
+}
+
+ScatterChart.displayName = 'ScatterChart';

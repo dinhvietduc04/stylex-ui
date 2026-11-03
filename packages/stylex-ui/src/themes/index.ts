@@ -5,6 +5,7 @@ export {
   emeraldDarkTheme,
   emeraldComponentTheme,
   emberComponentTheme,
+  chartThemeScope,
 } from './themes.stylex';
 
 export {
