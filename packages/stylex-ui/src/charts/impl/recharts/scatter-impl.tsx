@@ -11,11 +11,7 @@ import {
 } from 'recharts';
 import { formatCompactChartValue } from '../../lib/format';
 import { chartTheme, resolveChartSeriesColor } from '../../theme/chart-theme';
-import type {
-  ChartSeries,
-  ChartTooltipPayload,
-  ChartValueFormat,
-} from '../../types';
+import type { ChartSeries, ChartValueFormat } from '../../types';
 import { ChartGrid } from './shared/axes';
 import { ScatterTooltipContent } from './shared/tooltip-content';
 import type { CartesianImplProps } from './shared/types';

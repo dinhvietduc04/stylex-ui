@@ -3,8 +3,7 @@
 import * as React from 'react';
 import * as stylex from '@stylexjs/stylex';
 import { useForm, Controller } from 'react-hook-form';
-import { Check, Hash, Lock, Mail, Search, Send, User } from 'lucide-react';
-import { globalTokens } from '../../tokens/global.stylex';
+import { Check, Hash, Lock, Mail, Send } from 'lucide-react';
 import { semanticTokens } from '../../tokens/semantic.stylex';
 import { Input, PasswordInput, Textarea, FormField } from '../input';
 import { SimpleSelect, type SelectOption } from '../select';

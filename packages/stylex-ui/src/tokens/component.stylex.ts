@@ -83,4 +83,15 @@ export const componentTokens = stylex.defineVars({
   headerHeight: '3.75rem',
   headerBg: semanticTokens.bgSurface,
   headerBorder: semanticTokens.borderDefault,
+
+  // Table
+  tableRadius: globalTokens.radiusLg,
+  tableBg: semanticTokens.bgSurface,
+  tableBorder: semanticTokens.borderDefault,
+  tableHeaderBg: semanticTokens.bgSurfaceSubtle,
+  tableHeaderText: semanticTokens.textSecondary,
+  tableRowHoverBg: semanticTokens.bgSurfaceHover,
+  tableRowSelectedBg: semanticTokens.brandPrimarySubtle,
+  tableDivider: semanticTokens.borderSubtle,
+  tableFooterBg: semanticTokens.bgSurfaceSubtle,
 });

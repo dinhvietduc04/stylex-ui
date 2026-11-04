@@ -48,8 +48,7 @@ export function MetricsDashboardContent() {
   } = useMetricsDashboard();
 
   const [chartSeriesId, setChartSeriesId] = useState('revenue');
-  const [isTestingSkeleton, setIsTestingSkeleton] = useState(true);
-  
+
   return (
     <div className="space-y-6" aria-busy={status === 'loading'}>
       <p className="sr-only" role="status">

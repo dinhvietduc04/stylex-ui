@@ -1,4 +1,10 @@
-import { BarChart3, LayoutDashboard, ShieldCheck, Users } from 'lucide-react';
+import {
+  BarChart3,
+  LayoutDashboard,
+  ShieldCheck,
+  Users,
+  Table2,
+} from 'lucide-react';
 import type {
   BreadcrumbItem,
   NavigationItem,
@@ -54,6 +60,13 @@ export const adminNavigation: AdminNavigationSection[] = [
             remote: 'users',
           },
         ],
+      },
+      {
+        id: 'data-tables',
+        label: 'Data tables',
+        href: '/admin/data-tables',
+        icon: Table2,
+        permission: 'admin:access',
       },
     ],
   },

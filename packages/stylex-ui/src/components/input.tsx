@@ -255,7 +255,7 @@ const styles = stylex.create({
   },
 });
 
-interface FormFieldControlA11y {
+export interface FormFieldControlA11y {
   descriptionId?: string;
   errorId?: string;
   hasError: boolean;
@@ -263,7 +263,11 @@ interface FormFieldControlA11y {
 
 const FormFieldContext = React.createContext<FormFieldControlA11y | null>(null);
 
-function useFormFieldA11y(): FormFieldControlA11y | null {
+/**
+ * Lets non-input controls (for example `SimpleSelect`) reuse the label,
+ * description, and error wiring provided by `FormField`.
+ */
+export function useFormFieldA11y(): FormFieldControlA11y | null {
   return React.useContext(FormFieldContext);
 }
 

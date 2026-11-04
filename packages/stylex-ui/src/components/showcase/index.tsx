@@ -13,6 +13,7 @@ import {
   Sparkles,
   TextCursorInput,
   Type,
+  Table2,
   type LucideIcon,
 } from 'lucide-react';
 import { globalTokens } from '../../tokens/global.stylex';
@@ -33,6 +34,7 @@ import { FormsSection, SelectionSection } from './forms';
 import { StatusSection } from './status';
 import { OverlaysSection } from './overlays';
 import { LoadingSection } from './loading';
+import { DataSection } from './data';
 
 interface SectionLink {
   id: string;
@@ -107,6 +109,14 @@ const sections: SectionLink[] = [
     meta: 'Skeletons',
     blurb: 'Shape-matching placeholders for text, media, and cards.',
     icon: Sparkles,
+  },
+  {
+    id: 'data',
+    label: 'Data',
+    group: 'Components',
+    meta: 'Table & pagination',
+    blurb: 'Table primitives, empty states, and a controlled pagination bar.',
+    icon: Table2,
   },
 ];
 
@@ -923,7 +933,7 @@ function Shell() {
           ))}
 
           <div {...stylex.props(styles.navFoot)}>
-            <span>8 component groups</span>
+            <span>9 component groups</span>
             <span>2 brand presets</span>
             <span>Zero-runtime CSS</span>
           </div>
@@ -1124,6 +1134,7 @@ function Shell() {
           <StatusSection />
           <OverlaysSection />
           <LoadingSection />
+          <DataSection />
         </main>
       </div>
 

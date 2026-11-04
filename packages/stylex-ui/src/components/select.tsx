@@ -9,6 +9,7 @@ import { globalTokens } from '../tokens/global.stylex';
 import { semanticTokens } from '../tokens/semantic.stylex';
 import { componentTokens } from '../tokens/component.stylex';
 import { mergeStylexProps } from '../lib/stylex-utils';
+import { useFormFieldA11y } from './input';
 
 const styles = stylex.create({
   trigger: {
@@ -55,7 +56,7 @@ const styles = stylex.create({
   },
   content: {
     position: 'relative',
-    zIndex: globalTokens.zDropdown,
+    zIndex: globalTokens.zPopover,
     minWidth: '8rem',
     maxHeight: '20rem',
     overflow: 'hidden',
@@ -287,6 +288,8 @@ export interface SimpleSelectProps {
   id?: string;
   name?: string;
   'aria-label'?: string;
+  'aria-describedby'?: string;
+  'aria-invalid'?: boolean;
 }
 
 export function SimpleSelect({
@@ -300,7 +303,16 @@ export function SimpleSelect({
   id,
   name,
   'aria-label': ariaLabel,
+  'aria-describedby': ariaDescribedBy,
+  'aria-invalid': ariaInvalid,
 }: SimpleSelectProps) {
+  const fieldA11y = useFormFieldA11y();
+  const hasError = Boolean(error || ariaInvalid || fieldA11y?.hasError);
+  const describedBy =
+    [ariaDescribedBy, fieldA11y?.descriptionId, fieldA11y?.errorId]
+      .filter(Boolean)
+      .join(' ') || undefined;
+
   return (
     <Select
       value={value}
@@ -309,7 +321,13 @@ export function SimpleSelect({
       disabled={disabled}
       name={name}
     >
-      <SelectTrigger id={id} error={error} aria-label={ariaLabel}>
+      <SelectTrigger
+        id={id}
+        error={hasError}
+        aria-label={ariaLabel}
+        aria-describedby={describedBy}
+        aria-invalid={hasError || undefined}
+      >
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
       <SelectContent>

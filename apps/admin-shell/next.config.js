@@ -4,6 +4,11 @@ const path = require('path');
 const nextConfig = {
   reactStrictMode: true,
   outputFileTracingRoot: path.join(__dirname, '../..'),
+
+  devIndicators: false,
+  experimental: {
+    devtoolSegmentExplorer: false,
+  },
   
   // Runtime Module Federation loading (Turbopack-compatible)
   // We use runtime loading instead of webpack ModuleFederationPlugin

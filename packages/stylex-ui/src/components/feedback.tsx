@@ -7,6 +7,8 @@ import {
   toast as sonnerToast,
   type ExternalToast,
 } from 'sonner';
+import * as DialogPrimitive from '@radix-ui/react-dialog';
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import { AlertTriangle, Trash2, Info, CheckCircle2 } from 'lucide-react';
 import { globalTokens } from '../tokens/global.stylex';
 import { semanticTokens } from '../tokens/semantic.stylex';
@@ -63,6 +65,9 @@ const styles = stylex.create({
     fontSize: globalTokens.fontSizeSm,
     color: semanticTokens.textSecondary,
     lineHeight: globalTokens.lineHeightNormal,
+  },
+  confirmLayer: {
+    zIndex: globalTokens.zConfirm,
   },
 });
 
@@ -139,7 +144,11 @@ export function ConfirmDialog({
       open={open}
       onOpenChange={onOpenChange}
       size="sm"
+      title={title}
+      hideTitle
       hideCloseButton
+      sx={styles.confirmLayer}
+      overlaySx={styles.confirmLayer}
       footer={
         <>
           <Button
@@ -163,11 +172,17 @@ export function ConfirmDialog({
         </>
       }
     >
+      <VisuallyHidden>
+        <DialogPrimitive.Description>
+          {description ?? 'Confirm this action.'}
+        </DialogPrimitive.Description>
+      </VisuallyHidden>
+
       <div {...stylex.props(styles.confirmBody)}>
         <div {...stylex.props(styles.iconCircle, iconStyleMap[variant])}>
           {renderVariantIcon()}
         </div>
-        <div {...stylex.props(styles.contentCol)}>
+        <div {...stylex.props(styles.contentCol)} aria-hidden="true">
           <h3 {...stylex.props(styles.confirmTitle)}>{title}</h3>
           {description ? (
             <p {...stylex.props(styles.confirmDesc)}>{description}</p>

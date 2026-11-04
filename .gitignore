@@ -17,6 +17,7 @@ out/
 coverage/
 .eslintcache
 .cache/
+.playwright-mcp/
 
 # environment (keep examples committed)
 .env

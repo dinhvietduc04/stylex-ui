@@ -93,15 +93,6 @@ export function NotificationsDrawer({
           {notifications.slice(0, 10).map((notification) => (
             <div
               key={notification.id}
-              role="button"
-              tabIndex={0}
-              onClick={() => markNotificationRead(notification.id)}
-              onKeyDown={(event) => {
-                if (event.key === 'Enter' || event.key === ' ') {
-                  event.preventDefault();
-                  markNotificationRead(notification.id);
-                }
-              }}
               style={{
                 backgroundColor: notification.read
                   ? semanticTokens.bgSurface
@@ -117,8 +108,12 @@ export function NotificationsDrawer({
               }}
             >
               <div className="flex items-start justify-between gap-3">
-                <div className="flex-1 space-y-1">
-                  <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  className="flex min-w-0 flex-1 cursor-pointer flex-col gap-1 border-0 bg-transparent p-0 text-left"
+                  onClick={() => markNotificationRead(notification.id)}
+                >
+                  <span className="flex items-center gap-2">
                     <Badge
                       variant={notificationBadgeVariant[notification.type]}
                       size="sm"
@@ -129,9 +124,10 @@ export function NotificationsDrawer({
                     {!notification.read ? (
                       <StatusDot variant="primary" size="sm" pulse />
                     ) : null}
-                  </div>
+                  </span>
 
                   <Text
+                    as="span"
                     size="sm"
                     weight={notification.read ? 'medium' : 'semibold'}
                   >
@@ -139,21 +135,18 @@ export function NotificationsDrawer({
                   </Text>
 
                   {notification.message ? (
-                    <Text size="sm" tone="muted">
+                    <Text as="span" size="sm" tone="muted">
                       {notification.message}
                     </Text>
                   ) : null}
-                </div>
+                </button>
 
                 <IconButton
                   aria-label="Remove notification"
                   variant="ghost"
                   size="sm"
                   icon={<X size={14} />}
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    removeNotification(notification.id);
-                  }}
+                  onClick={() => removeNotification(notification.id)}
                 />
               </div>
             </div>
