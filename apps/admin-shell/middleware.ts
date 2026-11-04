@@ -9,7 +9,12 @@ import {
 const UNAUTHORIZED_PATH = '/admin/unauthorized';
 
 function isUserAccessibleAdminRoute(path: string): boolean {
-  return path === '/admin/users' || path.startsWith('/admin/users');
+  return (
+    path === '/admin' ||
+    path === '/admin/' ||
+    path === '/admin/users' ||
+    path.startsWith('/admin/users/')
+  );
 }
 
 const routePermissions: Array<{
@@ -48,7 +53,8 @@ export async function middleware(request: NextRequest) {
   }
 
   const permissions = auth.token.permissions ?? [];
-  const isUnauthorizedRoute = path === UNAUTHORIZED_PATH;
+  const isUnauthorizedRoute =
+    path === UNAUTHORIZED_PATH || path === `${UNAUTHORIZED_PATH}/`;
 
   if (
     isProtectedRoute &&

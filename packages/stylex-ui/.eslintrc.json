@@ -1,0 +1,26 @@
+{
+  "root": true,
+  "extends": ["eslint-config-custom/base"],
+  "parserOptions": {
+    "project": ["./tsconfig.json"],
+    "tsconfigRootDir": "."
+  },
+  "rules": {
+    "@typescript-eslint/array-type": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-misused-promises": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/no-shadow": "off",
+    "@typescript-eslint/no-unnecessary-condition": "off",
+    "@typescript-eslint/no-unnecessary-type-assertion": "off",
+    "@typescript-eslint/prefer-nullish-coalescing": "off",
+    "@typescript-eslint/restrict-template-expressions": "off",
+    "@typescript-eslint/unbound-method": "off",
+    "import/no-default-export": "off",
+    "import/order": "off",
+    "no-nested-ternary": "off",
+    "no-unneeded-ternary": "off",
+    "prefer-template": "off",
+    "tsdoc/syntax": "off"
+  }
+}

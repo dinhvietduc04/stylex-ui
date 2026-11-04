@@ -159,6 +159,7 @@ export const globalTokens = stylex.defineVars({
   zOverlay: 1040,
   zModal: 1050,
   zDrawer: 1060,
+  zConfirm: 1065,
   zPopover: 1070,
   zToast: 1080,
   zTooltip: 1090,

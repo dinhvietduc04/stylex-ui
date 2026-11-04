@@ -1,10 +1,16 @@
 'use client';
 
 import { usePathname, useSearchParams, useRouter } from 'next/navigation';
-import { useCallback, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { ModuleFederationRemote } from './ModuleFederationRemote';
 import type { Session as CoreSession } from '@repo/auth-core';
 import { SkeletonCard } from '@repo/stylex-ui';
+
+const BASE_PATH = '/admin/users';
+
+function normalizeForCompare(path: string): string {
+  return path === BASE_PATH ? BASE_PATH : path.replace(/\/$/, '');
+}
 
 interface UsersRemoteProps {
   session: CoreSession | null;
@@ -16,10 +22,8 @@ export function UsersRemote({ session }: UsersRemoteProps) {
   const router = useRouter();
   const lastNavigatedPath = useRef<string | null>(null);
 
-  // Derive routing props for hosted mode
-  const basePath = '/admin/users';
-  // Normalize pathname: remove basePath and ensure it starts with /
-  const pathWithoutBase = pathname.replace(basePath, '');
+  // Normalize pathname: remove the base path and ensure it starts with /
+  const pathWithoutBase = pathname.replace(BASE_PATH, '');
   const subPath =
     pathWithoutBase === ''
       ? '/'
@@ -32,11 +36,9 @@ export function UsersRemote({ session }: UsersRemoteProps) {
     (to: string) => {
       // Normalize the 'to' path
       const normalizedTo = to.startsWith('/') ? to : '/' + to;
-      const newPath = basePath + normalizedTo;
+      const newPath = BASE_PATH + normalizedTo;
 
       // Normalize paths for comparison (remove trailing slashes except for root)
-      const normalizeForCompare = (p: string) =>
-        p === basePath ? basePath : p.replace(/\/$/, '');
       const normalizedNewPath = normalizeForCompare(newPath);
       const normalizedCurrentPath = normalizeForCompare(pathname);
 
@@ -54,9 +56,15 @@ export function UsersRemote({ session }: UsersRemoteProps) {
     [pathname, router],
   );
 
+  // Once the shell commits a pathname, the previous request is complete, so a
+  // later navigation to that same path must not be suppressed.
+  useEffect(() => {
+    lastNavigatedPath.current = null;
+  }, [pathname]);
+
   const routingProps = {
     mode: 'hosted' as const,
-    basePath,
+    basePath: BASE_PATH,
     pathname: subPath,
     search,
     onNavigate: handleNavigate,

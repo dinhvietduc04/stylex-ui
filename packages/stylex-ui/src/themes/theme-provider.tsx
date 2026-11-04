@@ -148,7 +148,10 @@ function InnerThemeBoundary({
     setBrandState((prev) => (prev === 'ember' ? 'emerald' : 'ember'));
   }, []);
 
-  const activeThemes = getActiveThemes(brand, resolvedMode);
+  const activeThemes = React.useMemo(
+    () => getActiveThemes(brand, resolvedMode),
+    [brand, resolvedMode],
+  );
 
   // Sync active theme classes onto document.body so Radix Portals (Modals, Drawers, Select, Popover, Toast)
   // rendered at the end of document.body inherit the exact StyleX theme variables!

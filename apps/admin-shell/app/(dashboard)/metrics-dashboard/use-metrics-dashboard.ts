@@ -11,6 +11,13 @@ import type {
 type DashboardStatus = 'loading' | 'ready' | 'error';
 type LogsStatus = 'loading' | 'ready' | 'loading-more' | 'error';
 
+interface LoadLogsOptions {
+  level: MetricsLogLevelFilter;
+  range: MetricsRange;
+  cursor?: string;
+  append?: boolean;
+}
+
 async function fetchJson<T>(url: string, signal: AbortSignal): Promise<T> {
   const response = await fetch(url, {
     signal,
@@ -53,15 +60,11 @@ export function useMetricsDashboard() {
 
   const loadDashboard = useCallback(async (nextRange: MetricsRange) => {
     dashboardAbort.current?.abort();
-    logsAbort.current?.abort();
 
     const controller = new AbortController();
     dashboardAbort.current = controller;
 
     setStatus('loading');
-    setLogsStatus('loading');
-    setLogs(null);
-    setLogsError(null);
     setError(null);
 
     try {
@@ -71,30 +74,23 @@ export function useMetricsDashboard() {
       );
 
       setData(response);
-      setLogs(response.logs);
       setRange(response.range);
-      setLogLevel('all');
-      setLogsStatus('ready');
       setStatus('ready');
     } catch (requestError) {
       if (isAbortError(requestError)) return;
 
       setStatus('error');
-      setLogsStatus('error');
       setError(getErrorMessage(requestError));
     }
   }, []);
 
   const loadLogs = useCallback(
     async ({
-      nextLevel = logLevel,
+      level,
+      range: nextRange,
       cursor,
       append = false,
-    }: {
-      nextLevel?: MetricsLogLevelFilter;
-      cursor?: string;
-      append?: boolean;
-    } = {}) => {
+    }: LoadLogsOptions) => {
       logsAbort.current?.abort();
 
       const controller = new AbortController();
@@ -104,8 +100,8 @@ export function useMetricsDashboard() {
       setLogsError(null);
 
       const params = new URLSearchParams({
-        range,
-        level: nextLevel,
+        range: nextRange,
+        level,
         limit: '10',
       });
 
@@ -136,51 +132,58 @@ export function useMetricsDashboard() {
         setLogsError(getErrorMessage(requestError));
       }
     },
-    [logLevel, range],
+    [],
   );
 
   const changeRange = useCallback(
     (nextRange: MetricsRange) => {
       setRange(nextRange);
       setLogLevel('all');
+      setLogs(null);
       void loadDashboard(nextRange);
+      void loadLogs({ level: 'all', range: nextRange });
     },
-    [loadDashboard],
+    [loadDashboard, loadLogs],
   );
 
   const refresh = useCallback(() => {
     void loadDashboard(range);
-  }, [loadDashboard, range]);
+    void loadLogs({ level: logLevel, range });
+  }, [loadDashboard, loadLogs, logLevel, range]);
 
   const changeLogLevel = useCallback(
     (nextLevel: MetricsLogLevelFilter) => {
       setLogLevel(nextLevel);
-      void loadLogs({ nextLevel });
+      setLogs(null);
+      void loadLogs({ level: nextLevel, range });
     },
-    [loadLogs],
+    [loadLogs, range],
   );
 
   const loadMoreLogs = useCallback(() => {
     if (!logs?.nextCursor) return;
 
     void loadLogs({
+      level: logLevel,
+      range,
       cursor: logs.nextCursor,
       append: true,
     });
-  }, [loadLogs, logs?.nextCursor]);
+  }, [loadLogs, logLevel, logs?.nextCursor, range]);
 
   const retryLogs = useCallback(() => {
-    void loadLogs({ nextLevel: logLevel });
-  }, [loadLogs, logLevel]);
+    void loadLogs({ level: logLevel, range });
+  }, [loadLogs, logLevel, range]);
 
   useEffect(() => {
     void loadDashboard('7d');
+    void loadLogs({ level: 'all', range: '7d' });
 
     return () => {
       dashboardAbort.current?.abort();
       logsAbort.current?.abort();
     };
-  }, [loadDashboard]);
+  }, [loadDashboard, loadLogs]);
 
   return {
     data,

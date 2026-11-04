@@ -200,6 +200,7 @@ export interface ModalProps {
   size?: ModalSize;
   hideCloseButton?: boolean;
   sx?: StyleXStyles;
+  overlaySx?: StyleXStyles;
   hideTitle?: boolean;
 }
 
@@ -216,6 +217,7 @@ export function Modal({
   hideCloseButton = false,
   hideTitle = false,
   sx: customSx,
+  overlaySx,
 }: ModalProps) {
   const sizeMap = {
     sm: styles.modalSm,
@@ -223,6 +225,9 @@ export function Modal({
     lg: styles.modalLg,
     xl: styles.modalXl,
   } as const;
+
+  const hasVisibleHeader =
+    Boolean(description) || Boolean(title && !hideTitle) || !hideCloseButton;
 
   return (
     <DialogPrimitive.Root
@@ -234,11 +239,11 @@ export function Modal({
         <DialogPrimitive.Trigger asChild>{trigger}</DialogPrimitive.Trigger>
       ) : null}
       <DialogPrimitive.Portal>
-        <DialogOverlay />
+        <DialogOverlay sx={overlaySx} />
         <DialogPrimitive.Content
           {...stylex.props(styles.modalContent, sizeMap[size], customSx)}
         >
-          {title || description || !hideCloseButton ? (
+          {hasVisibleHeader ? (
             <div {...stylex.props(styles.header)}>
               <div {...stylex.props(styles.headerTitles)}>
                 {title ? (
@@ -271,6 +276,12 @@ export function Modal({
                 </DialogPrimitive.Close>
               ) : null}
             </div>
+          ) : null}
+
+          {!hasVisibleHeader ? (
+            <VisuallyHidden>
+              <DialogPrimitive.Title>{title ?? 'Dialog'}</DialogPrimitive.Title>
+            </VisuallyHidden>
           ) : null}
 
           <div {...stylex.props(styles.body)}>{children}</div>

@@ -47,32 +47,20 @@ export const authConfig: NextAuthConfig = {
         email: { label: 'Email', type: 'email' },
         password: { label: 'Password', type: 'password' },
       },
-      async authorize(credentials, request) {
+      async authorize(credentials) {
         try {
-          console.log('🔐 AUTHORIZE FUNCTION CALLED!');
-          console.log(
-            '🔐 Credentials received:',
-            JSON.stringify(credentials, null, 2),
-          );
-          console.log('🔐 Request headers:', request?.headers);
-
           if (!credentials?.email || !credentials?.password) {
-            console.log('❌ Missing credentials - returning null');
             return null;
           }
 
-          console.log('🔍 Calling validateCredentials...');
           const user = await validateCredentials(
             credentials.email as string,
             credentials.password as string,
           );
 
           if (!user) {
-            console.log('❌ Invalid credentials for:', credentials.email);
             return null;
           }
-
-          console.log('✅ User authenticated successfully:', user.email);
 
           // Create user object with all required properties
           const userObject = {
@@ -85,10 +73,6 @@ export const authConfig: NextAuthConfig = {
             sub: user.id,
           };
 
-          console.log(
-            '🔄 Returning user object:',
-            JSON.stringify(userObject, null, 2),
-          );
           return userObject;
         } catch (error) {
           console.error('❌ Authorization error:', error);
@@ -130,15 +114,6 @@ export const authConfig: NextAuthConfig = {
   useSecureCookies,
   // Debug settings for development
   debug: process.env.NODE_ENV === 'development',
-  // Additional security settings
-  events: {
-    async signIn(message) {
-      console.log('🔐 SignIn event:', message);
-    },
-    async signOut(message) {
-      console.log('🔐 SignOut event:', message);
-    },
-  },
 };
 
 // Legacy export for compatibility

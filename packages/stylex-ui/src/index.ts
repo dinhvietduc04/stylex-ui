@@ -45,6 +45,11 @@ export * from './components/app-shell';
 export * from './components/app-header';
 export * from './components/user-menu';
 
+// Task 5.1: Data Table Primitives
+export * from './components/table';
+export * from './components/table-toolbar';
+export * from './components/empty-state';
+export * from './components/pagination';
 // The design-system showcase is intentionally NOT exported from the package
 // root. It only backs the /design-system route and is exposed at
 // `@repo/stylex-ui/showcase`.

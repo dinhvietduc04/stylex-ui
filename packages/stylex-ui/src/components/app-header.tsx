@@ -2,7 +2,6 @@ import * as React from 'react';
 import * as stylex from '@stylexjs/stylex';
 import { Menu } from 'lucide-react';
 import { globalTokens } from '../tokens/global.stylex';
-import { semanticTokens } from '../tokens/semantic.stylex';
 import { componentTokens } from '../tokens/component.stylex';
 import { IconButton } from './button';
 import { Breadcrumbs } from './breadcrumbs';
