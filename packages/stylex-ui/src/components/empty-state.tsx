@@ -24,6 +24,10 @@ const styles = stylex.create({
     paddingLeft: globalTokens.space4,
     paddingRight: globalTokens.space4,
   },
+  rootLg: {
+    paddingTop: globalTokens.space20,
+    paddingBottom: globalTokens.space20,
+  },
   iconFrame: {
     display: 'grid',
     placeItems: 'center',
@@ -44,6 +48,12 @@ const styles = stylex.create({
     marginBottom: globalTokens.space3,
     borderRadius: globalTokens.radiusMd,
   },
+  iconFrameLg: {
+    width: globalTokens.space20,
+    height: globalTokens.space20,
+    marginBottom: globalTokens.space5,
+    borderRadius: globalTokens.radius2xl,
+  },
   title: {
     margin: 0,
     fontFamily: globalTokens.fontDisplay,
@@ -55,6 +65,10 @@ const styles = stylex.create({
   titleSm: {
     fontSize: globalTokens.fontSizeMd,
   },
+  titleLg: {
+    fontSize: globalTokens.fontSize3xl,
+    letterSpacing: '-0.02em',
+  },
   description: {
     maxWidth: '46ch',
     margin: 0,
@@ -64,6 +78,10 @@ const styles = stylex.create({
     color: semanticTokens.textMuted,
     textWrap: 'pretty',
   },
+  descriptionLg: {
+    fontSize: globalTokens.fontSizeMd,
+    marginTop: globalTokens.space3,
+  },
   actions: {
     display: 'flex',
     flexWrap: 'wrap',
@@ -71,6 +89,10 @@ const styles = stylex.create({
     justifyContent: 'center',
     gap: globalTokens.space2,
     marginTop: globalTokens.space5,
+  },
+  actionsLg: {
+    gap: globalTokens.space3,
+    marginTop: globalTokens.space6,
   },
 });
 
@@ -81,7 +103,9 @@ export interface EmptyStateProps
   description?: React.ReactNode;
   primaryAction?: React.ReactNode;
   secondaryAction?: React.ReactNode;
-  size?: 'sm' | 'md';
+  size?: 'sm' | 'md' | 'lg';
+  /** Heading element used for the title. Defaults to `p`. */
+  titleAs?: 'p' | 'h1' | 'h2' | 'h3';
   sx?: StyleXStyles;
 }
 
@@ -94,6 +118,7 @@ export const EmptyState = React.forwardRef<HTMLDivElement, EmptyStateProps>(
       primaryAction,
       secondaryAction,
       size,
+      titleAs: TitleElement = 'p',
       sx: customSx,
       className,
       style,
@@ -102,6 +127,7 @@ export const EmptyState = React.forwardRef<HTMLDivElement, EmptyStateProps>(
     ref,
   ) => {
     const isSm = size === 'sm';
+    const isLg = size === 'lg';
 
     return (
       <div
@@ -110,25 +136,42 @@ export const EmptyState = React.forwardRef<HTMLDivElement, EmptyStateProps>(
           { className, style, sx: customSx },
           styles.root,
           isSm && styles.rootSm,
+          isLg && styles.rootLg,
         )}
         {...props}
       >
         {icon ? (
           <span
             aria-hidden="true"
-            {...stylex.props(styles.iconFrame, isSm && styles.iconFrameSm)}
+            {...stylex.props(
+              styles.iconFrame,
+              isSm && styles.iconFrameSm,
+              isLg && styles.iconFrameLg,
+            )}
           >
             {icon}
           </span>
         ) : null}
-        <p {...stylex.props(styles.title, isSm && styles.titleSm)}>{title}</p>
+        <TitleElement
+          {...stylex.props(
+            styles.title,
+            isSm && styles.titleSm,
+            isLg && styles.titleLg,
+          )}
+        >
+          {title}
+        </TitleElement>
 
         {description ? (
-          <p {...stylex.props(styles.description)}>{description}</p>
+          <p
+            {...stylex.props(styles.description, isLg && styles.descriptionLg)}
+          >
+            {description}
+          </p>
         ) : null}
 
         {primaryAction || secondaryAction ? (
-          <div {...stylex.props(styles.actions)}>
+          <div {...stylex.props(styles.actions, isLg && styles.actionsLg)}>
             {primaryAction}
             {secondaryAction}
           </div>

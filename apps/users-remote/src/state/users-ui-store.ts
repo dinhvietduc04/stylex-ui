@@ -20,6 +20,9 @@ interface UsersUIState {
   // Actions
   setUsers: (users: User[]) => void;
   setLoading: (loading: boolean) => void;
+  addUser: (user: User) => void;
+  updateUser: (user: User) => void;
+  removeUser: (id: string) => void;
   openDialog: () => void;
   closeDialog: () => void;
   setEditingUser: (user: User | null) => void;
@@ -42,6 +45,23 @@ export const useUsersUIStore = create<UsersUIState>((set, get) => ({
   // Actions
   setUsers: (users) => set({ users }),
   setLoading: (loading) => set({ loading }),
+
+  addUser: (user) =>
+    set((state) => ({
+      users: [user, ...state.users],
+    })),
+
+  updateUser: (user) =>
+    set((state) => ({
+      users: state.users.map((candidate) =>
+        candidate.id === user.id ? user : candidate,
+      ),
+    })),
+
+  removeUser: (id) =>
+    set((state) => ({
+      users: state.users.filter((candidate) => candidate.id !== id),
+    })),
 
   openDialog: () => {
     set({ dialogOpen: true });

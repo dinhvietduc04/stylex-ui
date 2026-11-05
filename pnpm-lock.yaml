@@ -147,6 +147,9 @@ importers:
       '@repo/stores':
         specifier: workspace:*
         version: link:../../packages/stores
+      '@repo/stylex-ui':
+        specifier: workspace:*
+        version: link:../../packages/stylex-ui
       '@repo/ui':
         specifier: workspace:*
         version: link:../../packages/ui

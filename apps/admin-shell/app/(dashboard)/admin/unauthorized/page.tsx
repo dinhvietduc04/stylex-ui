@@ -1,41 +1,23 @@
 import Link from 'next/link';
-import {
-  Button,
-  Card,
-  CardContent,
-  CardHeader,
-  CardDescription,
-  CardTitle,
-  Text,
-  globalTokens,
-} from '@repo/stylex-ui';
+import { Home } from 'lucide-react';
+import { Button } from '@repo/stylex-ui';
+
+import { StatusPage } from '@/components/layout/status-page';
 
 export default function UnauthorizedPage() {
   return (
-    <div className="flex min-h-[60vh] items-center justify-center">
-      <Card className="w-full max-w-md">
-        <CardHeader>
-          <CardTitle>Access Denied</CardTitle>
-          <CardDescription>
-            You don&apos;t have permission to access this resource.
-          </CardDescription>
-        </CardHeader>
-
-        <CardContent>
-          <Text
-            tone="muted"
-            style={{
-              marginBottom: globalTokens.space4,
-            }}
-          >
-            Please contact your administrator if you believe this is an error.
-          </Text>
-
-          <Button asChild>
-            <Link href="/admin">Go to Dashboard</Link>
-          </Button>
-        </CardContent>
-      </Card>
-    </div>
+    <StatusPage
+      code={403}
+      title="Access denied"
+      description="Your account doesn't have permission to view this page. If you believe you should have access, contact an administrator."
+      primaryAction={
+        <Button asChild>
+          <Link href="/admin">
+            <Home size={16} aria-hidden="true" />
+            Go to dashboard
+          </Link>
+        </Button>
+      }
+    />
   );
 }

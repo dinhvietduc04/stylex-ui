@@ -9,13 +9,14 @@ import {
   Label,
   Badge,
 } from '@repo/ui';
+import { Button as StylexButton, EmptyState } from '@repo/stylex-ui';
 import type { User } from '@repo/api-contracts';
 
 interface UserDetailsProps {
   users: User[];
   canWrite: boolean;
   onEdit: (user: User) => void;
-  onDelete: (id: string) => void;
+  onDelete: (id: string) => Promise<boolean>;
 }
 
 export function UserDetails({
@@ -28,19 +29,29 @@ export function UserDetails({
   const navigate = useNavigate();
   const user = users.find((u) => u.id === id);
 
+  const handleDelete = async () => {
+    if (!user) return;
+
+    const deleted = await onDelete(user.id);
+
+    if (deleted) {
+      navigate('/');
+    }
+  };
+
   if (!user) {
     return (
-      <div className="flex flex-col items-center justify-center py-20 px-4">
-        <div className="text-destructive mb-4">
-          <h2 className="text-2xl font-semibold">User not found</h2>
-          <p className="text-muted-foreground mt-2">
-            The user you're looking for doesn't exist.
-          </p>
-        </div>
-        <Button onClick={() => navigate('/')} variant="outline">
-          Back to Users
-        </Button>
-      </div>
+      <EmptyState
+        size="lg"
+        titleAs="h2"
+        title="User not found"
+        description="The user you're looking for doesn't exist or has been deleted."
+        primaryAction={
+          <StylexButton onClick={() => navigate('/')}>
+            Back to Users
+          </StylexButton>
+        }
+      />
     );
   }
 
@@ -165,7 +176,9 @@ export function UserDetails({
               </Button>
               <Button
                 variant="destructive"
-                onClick={() => onDelete(user.id)}
+                onClick={() => {
+                  void handleDelete();
+                }}
                 className="gap-2"
               >
                 <svg

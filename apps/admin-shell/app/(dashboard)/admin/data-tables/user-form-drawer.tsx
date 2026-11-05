@@ -8,6 +8,7 @@ import {
   Input,
   SimpleSelect,
   Text,
+  toast,
   useZodForm,
   type SelectOption,
 } from '@repo/stylex-ui';
@@ -66,12 +67,17 @@ export function UserFormDrawer({
       await onSave(values);
       onOpenChange(false);
     } catch (error) {
+      const message =
+        error instanceof Error
+          ? error.message
+          : 'Could not save the user. Try again.';
+
       setError('root.server', {
         type: 'server',
-        message:
-          error instanceof Error
-            ? error.message
-            : 'Could not save the user. Try again.',
+        message,
+      });
+      toast.error(isEdit ? 'Could not update user' : 'Could not add user', {
+        description: message,
       });
     }
   });
