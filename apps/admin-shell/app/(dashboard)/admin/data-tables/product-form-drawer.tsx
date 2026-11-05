@@ -9,6 +9,7 @@ import {
   SimpleSelect,
   Text,
   Textarea,
+  toast,
   useZodForm,
   type SelectOption,
 } from '@repo/stylex-ui';
@@ -61,13 +62,19 @@ export function ProductFormDrawer({
       await onSave(values);
       onOpenChange(false);
     } catch (error) {
+      const message =
+        error instanceof Error
+          ? error.message
+          : 'Could not save the product. Try again.';
+
       setError('root.server', {
         type: 'server',
-        message:
-          error instanceof Error
-            ? error.message
-            : 'Could not save the product. Try again.',
+        message,
       });
+      toast.error(
+        isEdit ? 'Could not update product' : 'Could not add product',
+        { description: message },
+      );
     }
   });
 

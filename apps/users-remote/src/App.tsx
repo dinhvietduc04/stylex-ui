@@ -1,6 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import './globals.css';
-import { BrowserRouter, MemoryRouter, Routes, Route } from 'react-router-dom';
+import {
+  BrowserRouter,
+  MemoryRouter,
+  Routes,
+  Route,
+  useNavigate,
+} from 'react-router-dom';
 import type {
   User,
   CreateUserRequest,
@@ -12,6 +18,14 @@ import { getShellStore } from '@repo/stores';
 import { useUsersUIStore } from './state/users-ui-store';
 import type { RoutingProps } from '@repo/api-contracts';
 import { useStandaloneAuth, RouterSync } from '@repo/remote-utils';
+import {
+  Button,
+  ConfirmProvider,
+  EmptyState,
+  Toaster,
+  toast,
+  useConfirm,
+} from '@repo/stylex-ui';
 import { UserDetails } from './components/UserDetails/UserDetails';
 import { UserList } from './components/UserList/UserList';
 import { UserListSkeleton } from './components/UserList/UserListSkeleton';
@@ -22,13 +36,44 @@ interface UsersAppProps {
   routingProps?: RoutingProps;
 }
 
-export default function UsersApp({
+function getErrorMessage(error: unknown, fallback: string): string {
+  return error instanceof Error && error.message ? error.message : fallback;
+}
+
+function UsersNotFound() {
+  const navigate = useNavigate();
+
+  return (
+    <EmptyState
+      size="lg"
+      titleAs="h1"
+      icon={
+        <span style={{ fontSize: '1.5rem', fontWeight: 700, lineHeight: 1 }}>
+          404
+        </span>
+      }
+      title="Page not found"
+      description="This users page doesn't exist or may have moved."
+      primaryAction={
+        <Button onClick={() => navigate('/')}>Back to users</Button>
+      }
+    />
+  );
+}
+
+export default function UsersApp(props: UsersAppProps) {
+  return (
+    <ConfirmProvider>
+      <UsersAppContent {...props} />
+      <Toaster position="bottom-right" />
+    </ConfirmProvider>
+  );
+}
+
+function UsersAppContent({
   session: propSession,
   routingProps,
 }: UsersAppProps) {
-  // Detect standalone mode: when routingProps is undefined, we're running standalone
-  const isStandalone = routingProps === undefined;
-
   // Try to get standalone session (will be null if not in provider)
   const standaloneSession = useStandaloneAuth();
 
@@ -46,6 +91,9 @@ export default function UsersApp({
     formData,
     setUsers,
     setLoading,
+    addUser,
+    updateUser,
+    removeUser,
     openDialog,
     closeDialog,
     setEditingUser,
@@ -55,6 +103,7 @@ export default function UsersApp({
 
   // Local state for form submission
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const confirm = useConfirm();
 
   // Permission check based on session
   const canWrite = session?.user?.permissions?.includes('user:write') || false;
@@ -64,21 +113,24 @@ export default function UsersApp({
     formData.name.trim() && formData.email.trim() && formData.role.trim(),
   );
 
-  useEffect(() => {
-    loadUsers();
-  }, []);
-
-  const loadUsers = async () => {
+  const loadUsers = useCallback(async () => {
     setLoading(true);
     try {
       const data = await mockUserApi.list();
       setUsers(data);
     } catch (error) {
+      toast.error('Could not load users', {
+        description: getErrorMessage(error, 'Refresh the page to try again.'),
+      });
       console.error('Failed to load users:', error);
     } finally {
       setLoading(false);
     }
-  };
+  }, [setLoading, setUsers]);
+
+  useEffect(() => {
+    void loadUsers();
+  }, [loadUsers]);
 
   const handleCreate = () => {
     setEditingUser(null);
@@ -96,21 +148,57 @@ export default function UsersApp({
     openDialog();
   };
 
-  const handleDelete = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this user?')) return;
+  const handleDelete = async (id: string): Promise<boolean> => {
+    const userToDelete = users.find((candidate) => candidate.id === id);
+
+    if (!userToDelete) return false;
+
+    const confirmed = await confirm({
+      title: 'Delete user?',
+      description: (
+        <>
+          This permanently removes <strong>{userToDelete.name}</strong> from the
+          directory. This can&apos;t be undone.
+        </>
+      ),
+      confirmText: 'Delete user',
+      cancelText: 'Cancel',
+      variant: 'danger',
+    });
+
+    if (!confirmed) return false;
+
+    // Optimistic update: remove the row immediately instead of refetching the
+    // whole list and flashing the loading skeleton again.
+    const previousUsers = users;
+    removeUser(id);
+
     try {
-      const userToDelete = users.find((u) => u.id === id);
       await mockUserApi.delete(id);
+
+      toast.warning('User deleted', {
+        description: `${userToDelete.name} has been removed from the system.`,
+      });
+
       getShellStore()
         .getState()
         .addNotification({
           type: 'warning',
           title: 'User Deleted',
-          message: `${userToDelete?.name || 'User'} has been removed from the system.`,
+          message: `${userToDelete.name} has been removed from the system.`,
         });
-      await loadUsers();
+
+      return true;
     } catch (error) {
+      setUsers(previousUsers);
+      toast.error('Could not delete user', {
+        description: getErrorMessage(
+          error,
+          'The user was restored. Please try again.',
+        ),
+      });
       console.error('Failed to delete user:', error);
+      return false;
     }
   };
 
@@ -120,27 +208,48 @@ export default function UsersApp({
     setIsSubmitting(true);
     try {
       if (editingUser) {
-        await mockUserApi.update(editingUser.id, formData as UpdateUserRequest);
+        const updated = await mockUserApi.update(
+          editingUser.id,
+          formData as UpdateUserRequest,
+        );
+
+        updateUser(updated);
+        toast.success('User updated', {
+          description: `${updated.name}'s profile has been updated successfully.`,
+        });
+
         getShellStore()
           .getState()
           .addNotification({
             type: 'success',
             title: 'User Updated',
-            message: `${formData.name}'s profile has been updated successfully.`,
+            message: `${updated.name}'s profile has been updated successfully.`,
           });
       } else {
-        await mockUserApi.create(formData);
+        const created = await mockUserApi.create(formData);
+
+        addUser(created);
+        toast.success('User created', {
+          description: `${created.name} has been added to the system.`,
+        });
+
         getShellStore()
           .getState()
           .addNotification({
             type: 'success',
             title: 'User Created',
-            message: `${formData.name} has been added to the system.`,
+            message: `${created.name} has been added to the system.`,
           });
       }
+
       closeDialog();
-      await loadUsers();
     } catch (error) {
+      toast.error('Could not save user', {
+        description: getErrorMessage(
+          error,
+          'Your changes were not saved. Please try again.',
+        ),
+      });
       console.error('Failed to save user:', error);
     } finally {
       setIsSubmitting(false);
@@ -195,34 +304,35 @@ export default function UsersApp({
         <Route
           path="/"
           element={
-            <>
-              <UserList
-                users={users}
-                canWrite={canWrite}
-                onEdit={handleEdit}
-                onDelete={handleDelete}
-                onCreate={handleCreate}
-              />
-              <UserFormDialog
-                open={dialogOpen}
-                onOpenChange={(open) => {
-                  if (open) {
-                    openDialog();
-                  } else {
-                    closeDialog();
-                  }
-                }}
-                editingUser={editingUser}
-                formData={formData}
-                isSubmitting={isSubmitting}
-                isFormValid={isFormValid}
-                onFormDataChange={setFormData}
-                onSubmit={handleSubmit}
-              />
-            </>
+            <UserList
+              users={users}
+              canWrite={canWrite}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
+              onCreate={handleCreate}
+            />
           }
         />
+        <Route path="*" element={<UsersNotFound />} />
       </Routes>
+      <UserFormDialog
+        open={dialogOpen}
+        onOpenChange={(open) => {
+          if (open) {
+            openDialog();
+          } else {
+            closeDialog();
+          }
+        }}
+        editingUser={editingUser}
+        formData={formData}
+        isSubmitting={isSubmitting}
+        isFormValid={isFormValid}
+        onFormDataChange={setFormData}
+        onSubmit={() => {
+          void handleSubmit();
+        }}
+      />
     </RouterComponent>
   );
 }

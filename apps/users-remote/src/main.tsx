@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import App from './App';
 import './globals.css';
 import { StandaloneAuthProvider } from '@repo/remote-utils';
+import { StylexThemeProvider } from '@repo/stylex-ui';
 import { createMockSession } from './providers/createMockSession';
 
 const container = document.getElementById('root');
@@ -14,9 +15,11 @@ container.textContent = '';
 try {
   createRoot(container).render(
     <React.StrictMode>
-      <StandaloneAuthProvider createMockSession={createMockSession}>
-        <App session={null} />
-      </StandaloneAuthProvider>
+      <StylexThemeProvider defaultBrand="emerald" defaultMode="light">
+        <StandaloneAuthProvider createMockSession={createMockSession}>
+          <App session={null} />
+        </StandaloneAuthProvider>
+      </StylexThemeProvider>
     </React.StrictMode>,
   );
 } catch (error) {

@@ -42,7 +42,7 @@ export const mockUserApi = {
     role: string;
   }): Promise<User> => {
     const user: User = {
-      id: String(mockUsers.length + 1),
+      id: crypto.randomUUID(),
       ...data,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
@@ -54,14 +54,17 @@ export const mockUserApi = {
     id: string,
     data: { email?: string; name?: string; role?: string },
   ): Promise<User> => {
-    const index = mockUsers.findIndex((u) => u.id === id);
-    if (index === -1) throw new Error('User not found');
-    mockUsers[index] = {
-      ...mockUsers[index],
+    const existing = mockUsers.find((u) => u.id === id);
+    if (!existing) throw new Error('User not found');
+
+    const updated: User = {
+      ...existing,
       ...data,
       updatedAt: new Date().toISOString(),
     };
-    return mockUsers[index];
+    mockUsers = mockUsers.map((user) => (user.id === id ? updated : user));
+
+    return updated;
   },
   delete: async (id: string): Promise<void> => {
     mockUsers = mockUsers.filter((u) => u.id !== id);
