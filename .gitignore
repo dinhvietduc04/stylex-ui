@@ -17,7 +17,11 @@ out/
 coverage/
 .eslintcache
 .cache/
+
+# agent / tooling artifacts
 .playwright-mcp/
+.opencode/
+.impeccable/
 
 # environment (keep examples committed)
 .env
